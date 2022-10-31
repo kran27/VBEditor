@@ -6,7 +6,7 @@ Imports AltUI.Controls
 Public Class Form1
     Private f As String
     Private ext As String
-    Private m As Map
+    Private m As New Map
     Private Sub DarkButton1_Click(sender As Object, e As EventArgs) Handles DarkButton1.Click
         Dim ofd As New OpenFileDialog With {.Filter = "Van Buren Data File|*.AMO;*.ARM;*.CON;*.CRT;*.DOR;*.INT;*.ITM;*.MAP;*.USE;*.VEG;*.WEA", .Multiselect = False, .ValidateNames = True}
         If ofd.ShowDialog = DialogResult.OK Then
@@ -28,13 +28,13 @@ Public Class Form1
                 Case ".itm"
                     MsgBox("Not yet implemented")
                 Case ".map"
-                    m.EMAP = GetRegions("EMAP")(0).ToEMAPc
-                    m.EME2 = GetRegions("EME2")
-                    'm.EMEP = GetRegions("EMEP")
-                    'm.ECAM = GetRegions("ECAM")
-                    'm.EMNP = GetRegions("EMNP")
-                    'm.EMEF = GetRegions("EMEF")
-                    Button1.BackColor = m.EMAP.col : Button1.FlatAppearance.MouseOverBackColor = col : Button1.FlatAppearance.MouseDownBackColor = col
+                    m.EMAP = f.GetRegions("EMAP")(0).ToEMAPc
+                    'm.EME2 = f.GetRegions("EME2")
+                    'm.EMEP = f.GetRegions("EMEP")
+                    'm.ECAM = f.GetRegions("ECAM")
+                    'm.EMNP = f.GetRegions("EMNP")
+                    'm.EMEF = f.GetRegions("EMEF")
+                    Button1.BackColor = m.EMAP.col : Button1.FlatAppearance.MouseOverBackColor = m.EMAP.col : Button1.FlatAppearance.MouseDownBackColor = m.EMAP.col
                     DarkTextBox1.Text = m.EMAP.s1
                     DarkTextBox2.Text = m.EMAP.s2
                     DarkTextBox3.Text = m.EMAP.s3
@@ -64,9 +64,9 @@ Public Class Form1
         m.EMAP.il = DarkCheckBox1.Checked
         Dim t As New List(Of Byte)
         t.AddRange(m.EMAP.ToEMAPb)
-        For Each b In m.EME2.ToEME2b
-            t.AddRange(b)
-        Next
+        'For Each b In m.EME2.ToEME2b
+        't.AddRange(b)
+        'Next
         '    t.AddRange(m.EMEP.ToEMEPb)
         '    t.AddRange(m.ECAM.ToECAMb)
         '    t.AddRange(m.EMNP.ToEMNPb)
@@ -79,8 +79,15 @@ Public Class Map
     Property EME2 As EME2c()
     Property EMEP As EMEPc
     Property ECAM As ECAMc
+    Property Triggers As Trigger()
+    Property EPTH As EPTHc
+    Property EMSD As EMSDc
     Property EMNP As EMNPc
     Property EMEF As EMEFc
+End Class
+Public Class Trigger
+    Property EMTR As EMTRc
+    Property ExTR As ExTRc
 End Class
 Public Class EMAPc
     Property s1 As String
@@ -91,7 +98,6 @@ Public Class EMAPc
     Property le As Integer
 End Class
 Public Class EME2c
-
     Property inv As String()
 End Class
 Public Class EMEPc
@@ -103,10 +109,24 @@ End Class
 Public Class EMNPc
 
     End Class
-    Public Class EMEFc
+Public Class EMEFc
 
-    End Class
-    Friend Module Functions
+End Class
+Public Class EMSDc
+
+End Class
+Public Class EPTHc
+
+End Class
+Public Class EMTRc
+    Property r As PointF()
+End Class
+'use ExTR instead of ESTR/ETTR as layout is identical
+Public Class ExTRc
+    Property type As String
+
+End Class
+Friend Module Functions
     <System.Runtime.CompilerServices.Extension>
     Public Function ToEMAPc(b As Byte()) As EMAPc
         Dim s1o = 16 + 2 : Dim s1l = b(s1o - 2)
@@ -142,7 +162,6 @@ Public Class EMNPc
         Return out
     End Function
     Private ReadOnly Empty(-1) As Integer
-
     <System.Runtime.CompilerServices.Extension>
     Public Function Locate(ByVal self() As Byte, ByVal candidate() As Byte) As Integer()
         If IsEmptyLocate(self, candidate) Then
@@ -180,12 +199,13 @@ Public Class EMNPc
     Private Function IsEmptyLocate(ByVal array() As Byte, ByVal candidate() As Byte) As Boolean
         Return array Is Nothing OrElse candidate Is Nothing OrElse array.Length = 0 OrElse candidate.Length = 0 OrElse candidate.Length > array.Length
     End Function
-    Public Function GetRegions(h1s As String) As List(Of Byte())
+    <System.Runtime.CompilerServices.Extension>
+    Public Function GetRegions(f As String, hs As String) As List(Of Byte())
         Dim hl As New List(Of Byte())
-        Dim file = IO.File.ReadAllBytes(name)
-        Dim h1n = Encoding.ASCII.GetBytes(h1s)
-        Dim h1c = file.Locate(h1n)
-        For Each l In h1c
+        Dim file = IO.File.ReadAllBytes(f)
+        Dim hn = Encoding.ASCII.GetBytes(hs)
+        Dim hc = file.Locate(hn)
+        For Each l In hc
             Dim tb = file.Skip(l + 8).Take(4).ToArray()
             Dim tl = BitConverter.ToInt32(tb, 0)
             Dim h1 = file.Skip(l).Take(tl).ToArray()

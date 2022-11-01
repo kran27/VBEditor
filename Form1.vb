@@ -39,11 +39,15 @@ Public Class Form1
 
                     'm.EME2 = f.GetRegions("EME2")
 
-                    'm.EMEP = f.GetRegions("EMEP")
+                    Dim tEMEP = f.GetRegions("EMEP")
+                    m.EMEP = New EMEPc(tEMEP.Count - 1) {}
+                    For i = 0 To tEMEP.Count - 1
+                        m.EMEP(i) = tEMEP(i).ToEMEPc
+                    Next
 
-                    'm.ECAM = f.GetRegions("ECAM")
+                    m.ECAM = f.GetRegions("ECAM")(0).ToECAMc
 
-                    Dim triggers = f.GetTriggers
+                    m.Triggers = f.GetTriggers
 
                     'm.EPTH = f.GetRegions("EPTH")
 
@@ -77,15 +81,6 @@ Public Class Form1
         m.EMAP.s3 = DarkTextBox3.Text
         m.EMAP.il = DarkCheckBox1.Checked
         Dim t As New List(Of Byte)
-        t.AddRange(m.EMAP.ToEMAPb)
-        'For Each b In m.EME2.ToEME2b
-        't.AddRange(b)
-        'Next
-        '    t.AddRange(m.EMEP.ToEMEPb)
-        '    t.AddRange(m.ECAM.ToECAMb)
-        '    t.AddRange(m.EMNP.ToEMNPb)
-        '    t.AddRange(m.EMEF.ToEMEFb)
-        IO.File.WriteAllBytes("out.map", t.ToArray)
     End Sub
 End Class
 #Region "Filetype Classes"
@@ -93,7 +88,7 @@ End Class
 Public Class Map
     Property EMAP As EMAPc
     Property EME2 As EME2c()
-    Property EMEP As EMEPc
+    Property EMEP As EMEPc()
     Property ECAM As ECAMc
     Property Triggers As Trigger()
     Property EPTH As EPTHc
@@ -122,10 +117,17 @@ Public Class EME2c
     Property inv As String()
 End Class
 Public Class EMEPc
-
+    Property index As Integer
+    Property x As Single
+    Property z As Single
+    Property y As Single
+    Property r As Single
 End Class
 Public Class ECAMc
-
+    Property x As Single
+    Property z As Single
+    Property y As Single
+    Property r As Single
 End Class
 Public Class EMEFc
 
@@ -145,10 +147,12 @@ Public Class EMTRc
 End Class
 ' Called ExTR instead of E(T/S/B)TR for easier handling within triggers
 Public Class ExTRc
-    Property type As String ' T, S, or B
-    Property s As String
+    Property type As String ' So we know which file is being created, T, S, or B. (or M, but it's ignored if that happens)
+    Property s As String ' used for types T and S
+    Property index As Integer ' used for type B
 End Class
 #End Region
+' 3D float coordinate class because it makes my life easier
 Public Class Point3
     Property x As Single
     Property z As Single
@@ -193,7 +197,28 @@ Friend Module Functions
         If Not Encoding.ASCII.GetString(New Byte() {b(1)}) = "B" Then MsgBox(Encoding.ASCII.GetString(b.Skip(14).Take(b(8)).ToArray()))
         Return New ExTRc With {
             .type = Encoding.ASCII.GetString(b.Skip(1).Take(1).ToArray()),
-            .s = Encoding.ASCII.GetString(b.Skip(14).Take(b(8)).ToArray())
+            .s = Encoding.ASCII.GetString(b.Skip(14).Take(b(8)).ToArray()),
+            .index = b(12)
+        }
+    End Function
+
+    <System.Runtime.CompilerServices.Extension>
+    Public Function ToECAMc(b As Byte()) As ECAMc
+        Return New ECAMc With {
+            .x = BitConverter.ToSingle(b, 12),
+            .z = BitConverter.ToSingle(b, 16),
+            .y = BitConverter.ToSingle(b, 20),
+            .r = BitConverter.ToSingle(b, 24)
+        }
+    End Function
+    <System.Runtime.CompilerServices.Extension>
+    Public Function ToEMEPc(b As Byte()) As EMEPc
+        Return New EMEPc With {
+            .index = b(12),
+            .x = BitConverter.ToSingle(b, 73),
+            .z = BitConverter.ToSingle(b, 77),
+            .y = BitConverter.ToSingle(b, 81),
+            .r = BitConverter.ToSingle(b, 105)
         }
     End Function
 #End Region
@@ -272,7 +297,7 @@ Friend Module Functions
     End Function
     ' Finds all triggers for .map files, and the subsequest trigger info chunk
     <System.Runtime.CompilerServices.Extension>
-    Public Function GetTriggers(f As String) As List(Of Trigger)
+    Public Function GetTriggers(f As String) As Trigger()
         Dim hl As New List(Of Trigger)
         Dim file = IO.File.ReadAllBytes(f)
         Dim hc = file.Locate(Encoding.ASCII.GetBytes("EMTR"))
@@ -283,7 +308,7 @@ Friend Module Functions
             Dim h2 = file.Skip(l + tl).Take(file(l + tl + 8)).ToArray
             hl.Add(New Trigger With {.EMTR = h1.ToEMTRc, .ExTR = h2.ToExTRc})
         Next
-        Return hl
+        Return hl.ToArray
     End Function
     ' Writes from "newBytes" into "b", starting at the given index
     <System.Runtime.CompilerServices.Extension>

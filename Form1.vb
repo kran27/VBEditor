@@ -111,6 +111,28 @@ Public Class Form1
         m.EMAP.s3 = DarkTextBox3.Text
         m.EMAP.il = DarkCheckBox1.Checked
         Dim t As New List(Of Byte)
+        t.AddRange(m.EMAP.ToEMAPb)
+        For Each EME2 In m.EME2
+            t.AddRange(EME2.ToEME2b)
+        Next
+        For Each EMEP In m.EMEP
+            t.AddRange(EMEP.ToEMEPb)
+        Next
+        t.AddRange(m.ECAM.ToECAMb)
+        For Each tr In m.Triggers
+            t.AddRange(tr.EMTR.ToEMTRb)
+            t.AddRange(tr.ExTR.ToExTRb)
+        Next
+        For Each EPTH In m.EPTH
+            t.AddRange(EPTH.ToEPTHb)
+        Next
+        For Each EMSD In m.EMSD
+            t.AddRange(EMSD.ToEMSDb)
+        Next
+        t.AddRange(m.EMNP)
+        For Each EMEF In m.EMEF
+            t.AddRange(EMEF.ToEMEFb)
+        Next
     End Sub
 End Class
 #Region "Filetype Classes"
@@ -157,16 +179,10 @@ Public Class EEOVc
 End Class
 Public Class EMEPc
     Property index As Integer
-    Property x As Single
-    Property z As Single
-    Property y As Single
-    Property r As Single
+    Property p As Point4
 End Class
 Public Class ECAMc
-    Property x As Single
-    Property z As Single
-    Property y As Single
-    Property r As Single
+    Property p As Point4
 End Class
 Public Class EMEFc
     Property s1 As String
@@ -183,20 +199,18 @@ Public Class EPTHc
     Property p As List(Of Point6)
 End Class
 Public Class EMTRc
-    ' first Int32 after chunk size, unknown usage
-    Property n1 As Integer
-    ' second Int32 after chunk size, # of coordinate groups
-    Property n2 As Integer
+
+    Property n1 As Integer ' first Int32 after chunk size, unknown usage
+    Property n2 As Integer ' second Int32 after chunk size, # of coordinate groups
     Property r As List(Of Point3)
 End Class
-' Called ExTR instead of E(T/S/B)TR for easier handling within triggers
-Public Class ExTRc
+
+Public Class ExTRc ' Called ExTR instead of E(T/S/B)TR for easier handling within triggers
     Property type As String ' So we know which file is being created, T, S, or B. (or M, but it's ignored if that happens)
     Property s As String ' used for types T and S
     Property index As Integer ' used for type B
 End Class
 #End Region
-' 3D float coordinate class because it makes my life easier
 Public Class Point3
     Property x As Single
     Property z As Single
@@ -219,7 +233,6 @@ Public Class Point4
         Me.r = r
     End Sub
 End Class
-' x,y,z, rotation, 2 unknowns that seem to always be 0
 Public Class Point6
     Property x As Single
     Property z As Single
@@ -277,20 +290,14 @@ Friend Module Functions
     <System.Runtime.CompilerServices.Extension>
     Public Function ToECAMc(b As Byte()) As ECAMc
         Return New ECAMc With {
-            .x = BitConverter.ToSingle(b, 12),
-            .z = BitConverter.ToSingle(b, 16),
-            .y = BitConverter.ToSingle(b, 20),
-            .r = BitConverter.ToSingle(b, 24)
+            .p = New Point4(BitConverter.ToSingle(b, 12), BitConverter.ToSingle(b, 16), BitConverter.ToSingle(b, 20), BitConverter.ToSingle(b, 24))
         }
     End Function
     <System.Runtime.CompilerServices.Extension>
     Public Function ToEMEPc(b As Byte()) As EMEPc
         Return New EMEPc With {
             .index = b(12),
-            .x = BitConverter.ToSingle(b, 73),
-            .z = BitConverter.ToSingle(b, 77),
-            .y = BitConverter.ToSingle(b, 81),
-            .r = BitConverter.ToSingle(b, 105)
+            .p = New Point4(BitConverter.ToSingle(b, 73), BitConverter.ToSingle(b, 77), BitConverter.ToSingle(b, 81), BitConverter.ToSingle(b, 105))
         }
     End Function
     <System.Runtime.CompilerServices.Extension>
@@ -383,7 +390,51 @@ Friend Module Functions
         out.OverwriteBytes(24 + c.s1.Length + c.s2.Length + c.s3.Length, New Byte() {c.col.R})
         out.OverwriteBytes(25 + c.s1.Length + c.s2.Length + c.s3.Length, New Byte() {c.col.G})
         out.OverwriteBytes(26 + c.s1.Length + c.s2.Length + c.s3.Length, New Byte() {c.col.B})
-        IO.File.WriteAllBytes("out.bin", out)
+        Return out
+    End Function
+    ' convert EMEP to a byte array
+    <System.Runtime.CompilerServices.Extension>
+    Public Function ToEMEPb(c As EMEPc) As Byte()
+        Dim out = New Byte(108) {}
+        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EMEP"))
+        out.OverwriteBytes(4, New Byte() {109})
+        out.OverwriteBytes(12, New Byte() {c.index})
+        out.OverwriteBytes(73, BitConverter.GetBytes(c.p.x))
+        out.OverwriteBytes(77, BitConverter.GetBytes(c.p.z))
+        out.OverwriteBytes(81, BitConverter.GetBytes(c.p.y))
+        out.OverwriteBytes(105, BitConverter.GetBytes(c.p.r))
+        Return out
+    End Function
+    ' convert ECAM to a byte array
+    <System.Runtime.CompilerServices.Extension>
+    Public Function ToECAMb(c As ECAMc) As Byte()
+        Dim out = New Byte(27) {}
+        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("ECAM"))
+        out.OverwriteBytes(8, New Byte() {28})
+        out.OverwriteBytes(12, BitConverter.GetBytes(c.p.x))
+        out.OverwriteBytes(16, BitConverter.GetBytes(c.p.y))
+        out.OverwriteBytes(20, BitConverter.GetBytes(c.p.z))
+        out.OverwriteBytes(24, BitConverter.GetBytes(c.p.r))
+    End Function
+    ' convert EPTH to a byte array
+    <System.Runtime.CompilerServices.Extension>
+    Public Function ToEPTHb(c As EPTHc) As Byte()
+        Dim out = New Byte(113 + c.name.Length) {}
+        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EPTH"))
+        out.OverwriteBytes(8, New Byte() {114 + c.name.Length})
+        out.OverwriteBytes(12, New Byte() {c.name.Length})
+        out.OverwriteBytes(14, Encoding.ASCII.GetBytes(c.name))
+        out.OverwriteBytes(14 + c.name.Length, New Byte() {c.p.Count})
+        Dim i = 0
+        For Each p In c.p
+            out.OverwriteBytes(18 + c.name.Length + i, BitConverter.GetBytes(p.x))
+            out.OverwriteBytes(22 + c.name.Length + i, BitConverter.GetBytes(p.z))
+            out.OverwriteBytes(26 + c.name.Length + i, BitConverter.GetBytes(p.y))
+            out.OverwriteBytes(30 + c.name.Length + i, BitConverter.GetBytes(p.r))
+            out.OverwriteBytes(34 + c.name.Length + i, BitConverter.GetBytes(p.u1))
+            out.OverwriteBytes(38 + c.name.Length + i, BitConverter.GetBytes(p.u2))
+            i += 24
+        Next
         Return out
     End Function
 #End Region

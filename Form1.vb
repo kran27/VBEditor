@@ -1,7 +1,6 @@
 ﻿Imports System.Runtime.ConstrainedExecution
 Imports System.Runtime.InteropServices
 Imports System.Text
-Imports System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar
 Imports AltUI.Controls
 
 Public Class Form1
@@ -37,25 +36,56 @@ Public Class Form1
                     DarkTextBox3.Text = m.EMAP.s3
                     DarkCheckBox1.Checked = m.EMAP.il
 
-                    'm.EME2 = f.GetRegions("EME2")
+                    Dim tEME2 = f.GetRegions("EME2")
+                    If tEME2.Count > 0 Then
+                        For Each e2 In tEME2
+                            For Each i In e2.ToEME2c.EEOV.inv
+                                MsgBox(i)
+                            Next
+                        Next
+                        m.EME2 = New EME2c(tEME2.Count - 1) {}
+                        For i = 0 To tEME2.Count - 1
+                            m.EME2(i) = tEME2(i).ToEME2c
+                        Next
+                    End If
 
                     Dim tEMEP = f.GetRegions("EMEP")
-                    m.EMEP = New EMEPc(tEMEP.Count - 1) {}
-                    For i = 0 To tEMEP.Count - 1
-                        m.EMEP(i) = tEMEP(i).ToEMEPc
-                    Next
+                    If tEMEP.Count > 0 Then
+                        m.EMEP = New EMEPc(tEMEP.Count - 1) {}
+                        For i = 0 To tEMEP.Count - 1
+                            m.EMEP(i) = tEMEP(i).ToEMEPc
+                        Next
+                    End If
 
                     m.ECAM = f.GetRegions("ECAM")(0).ToECAMc
 
                     m.Triggers = f.GetTriggers
 
-                    'm.EPTH = f.GetRegions("EPTH")
+                    Dim tEPTH = f.GetRegions("EPTH")
+                    If tEPTH.Count > 0 Then
+                        m.EPTH = New EPTHc(tEPTH.Count - 1) {}
+                        For i = 0 To tEPTH.Count - 1
+                            m.EPTH(i) = tEPTH(i).ToEPTHc
+                        Next
+                    End If
 
-                    'm.EMSD = f.GetRegions("EMSD")
+                    Dim tEMSD = f.GetRegions("EMSD")
+                    If tEMSD.Count > 0 Then
+                        m.EMSD = New EMSDc(tEMSD.Count - 1) {}
+                        For i = 0 To tEMEP.Count - 1
+                            m.EMSD(i) = tEMSD(i).ToEMSDc
+                        Next
+                    End If
 
                     m.EMNP = f.GetRegions("EMNP")(0)
 
-                    'm.EMEF = f.GetRegions("EMEF")
+                    Dim tEMEF = f.GetRegions("EMEF")
+                    If tEMEF.Count > 0 Then
+                        m.EMEF = New EMEFc(tEMEF.Count - 1) {}
+                        For i = 0 To tEMEP.Count - 1
+                            m.EMEF(i) = tEMEF(i).ToEMEFc
+                        Next
+                    End If
 
                 Case ".use"
                     MsgBox("Not yet implemented")
@@ -91,11 +121,10 @@ Public Class Map
     Property EMEP As EMEPc()
     Property ECAM As ECAMc
     Property Triggers As Trigger()
-    Property EPTH As EPTHc
-    Property EMSD As EMSDc
-    ' EMNP never changes, doesn't need unique class.
-    Property EMNP As Byte()
-    Property EMEF As EMEFc
+    Property EPTH As EPTHc()
+    Property EMSD As EMSDc()
+    Property EMNP As Byte() ' EMNP never changes, doesn't need unique class.
+    Property EMEF As EMEFc()
 End Class
 #End Region
 #Region "Header Classes"
@@ -114,6 +143,16 @@ Public Class EMAPc
     Property le As Integer
 End Class
 Public Class EME2c
+    Property name As String
+    Property l As Point4
+    Property EEOV As EEOVc
+End Class
+Public Class EEOVc
+    Property s1 As String
+    Property s2 As String
+    Property s3 As String
+    Property s4 As String
+    Property s5 As String
     Property inv As String()
 End Class
 Public Class EMEPc
@@ -130,13 +169,18 @@ Public Class ECAMc
     Property r As Single
 End Class
 Public Class EMEFc
-
+    Property s1 As String
+    Property l As Point3
+    Property s2 As String
 End Class
 Public Class EMSDc
-
+    Property s1 As String
+    Property l As Point3
+    Property s2 As String
 End Class
 Public Class EPTHc
-
+    Property name As String
+    Property p As List(Of Point6)
 End Class
 Public Class EMTRc
     ' first Int32 after chunk size, unknown usage
@@ -161,6 +205,35 @@ Public Class Point3
         Me.x = x
         Me.z = z
         Me.y = y
+    End Sub
+End Class
+Public Class Point4
+    Property x As Single
+    Property z As Single
+    Property y As Single
+    Property r As Single
+    Sub New(x As Single, z As Single, y As Single, r As Single)
+        Me.x = x
+        Me.z = z
+        Me.y = y
+        Me.r = r
+    End Sub
+End Class
+' x,y,z, rotation, 2 unknowns that seem to always be 0
+Public Class Point6
+    Property x As Single
+    Property z As Single
+    Property y As Single
+    Property r As Single
+    Property u1 As Single
+    Property u2 As Single
+    Sub New(x As Single, z As Single, y As Single, r As Single, u1 As Single, u2 As Single)
+        Me.x = x
+        Me.z = z
+        Me.y = y
+        Me.r = r
+        Me.u1 = u1
+        Me.u2 = u2
     End Sub
 End Class
 Friend Module Functions
@@ -194,7 +267,6 @@ Friend Module Functions
     End Function
     <System.Runtime.CompilerServices.Extension>
     Public Function ToExTRc(b As Byte()) As ExTRc
-        If Not Encoding.ASCII.GetString(New Byte() {b(1)}) = "B" Then MsgBox(Encoding.ASCII.GetString(b.Skip(14).Take(b(8)).ToArray()))
         Return New ExTRc With {
             .type = Encoding.ASCII.GetString(b.Skip(1).Take(1).ToArray()),
             .s = Encoding.ASCII.GetString(b.Skip(14).Take(b(8)).ToArray()),
@@ -219,6 +291,76 @@ Friend Module Functions
             .z = BitConverter.ToSingle(b, 77),
             .y = BitConverter.ToSingle(b, 81),
             .r = BitConverter.ToSingle(b, 105)
+        }
+    End Function
+    <System.Runtime.CompilerServices.Extension>
+    Public Function ToEMEFc(b As Byte()) As EMEFc
+        Return New EMEFc With {
+            .s1 = Encoding.ASCII.GetString(b.Skip(14).Take(b(12)).ToArray()),
+            .l = New Point3(BitConverter.ToSingle(b, 14 + b(12)), BitConverter.ToSingle(b, 18 + b(12)), BitConverter.ToSingle(b, 22 + b(12))),
+            .s2 = Encoding.ASCII.GetString(b.Skip(41 + b(12)).Take(b(39 + b(12))).ToArray())
+        }
+    End Function
+    <System.Runtime.CompilerServices.Extension>
+    Public Function ToEMSDc(b As Byte()) As EMSDc
+        Return New EMSDc With {
+            .s1 = Encoding.ASCII.GetString(b.Skip(14).Take(b(12)).ToArray()),
+            .l = New Point3(BitConverter.ToSingle(b, 14 + b(12)), BitConverter.ToSingle(b, 18 + b(12)), BitConverter.ToSingle(b, 22 + b(12))),
+            .s2 = Encoding.ASCII.GetString(b.Skip(28 + b(12)).Take(b(26 + b(12))).ToArray())
+        }
+    End Function
+    <System.Runtime.CompilerServices.Extension>
+    Public Function ToEPTHc(b As Byte()) As EPTHc
+        Dim l As New List(Of Point6)
+        For i = 18 + b(12) To b.Length - 1 Step 24
+            l.Add(New Point6(BitConverter.ToSingle(b, i), BitConverter.ToSingle(b, i + 4), BitConverter.ToSingle(b, i + 8), BitConverter.ToSingle(b, i + 12), BitConverter.ToSingle(b, i + 16), BitConverter.ToSingle(b, i + 20)))
+        Next
+        Return New EPTHc With {
+            .name = Encoding.ASCII.GetString(b.Skip(14).Take(b(12)).ToArray()),
+            .p = l
+        }
+    End Function
+    <System.Runtime.CompilerServices.Extension>
+    Public Function ToEME2c(b As Byte()) As EME2c
+        Dim cl = b.Locate(Encoding.ASCII.GetBytes("EEOV"))(0)
+        Return New EME2c With {
+            .name = Encoding.ASCII.GetString(b.Skip(14).Take(b(12)).ToArray()),
+            .l = New Point4(BitConverter.ToSingle(b, 14 + b(12)), BitConverter.ToSingle(b, 18 + b(12)), BitConverter.ToSingle(b, 22 + b(12)), BitConverter.ToSingle(b, 26 + b(12))),
+            .EEOV = b.Skip(cl).Take(b(cl + 8)).ToArray().ToEEOVc
+        }
+    End Function
+    <System.Runtime.CompilerServices.Extension>
+    Public Function ToEEOVc(b As Byte()) As EEOVc
+        Dim s1o = 12 + 2 : Dim s1l = b(s1o - 2)
+        Dim s2o = s1o + s1l + 13 : Dim s2l = b(s2o - 2)
+        Dim s3o = s2o + s2l + 2 : Dim s3l = b(s3o - 2)
+        Dim s4o = s3o + s3l + 11 : Dim s4l = b(s4o - 2)
+        Dim s5o = s4o + s4l + 3
+
+        Dim ps4 = b(s4o + s4l)
+
+        If ps4 = 2 Then
+            s5o += 2
+        End If
+
+        Dim s5l = b(s5o - 2)
+
+        Dim inv = New List(Of String)
+        Dim io = s5o + s5l + 6
+        Dim ao = 0
+        For i = 0 To b(io - 6) - 1
+            io += ao
+            Dim itemN = Encoding.ASCII.GetString(b.Skip(io).Take(b(io - 2)).ToArray())
+            If itemN.Length > 0 Then inv.Add(itemN)
+            ao = b(io - 2) + 2
+        Next
+        Return New EEOVc With {
+            .s1 = Encoding.ASCII.GetString(b.Skip(s1o).Take(s1l).ToArray()),
+            .s2 = Encoding.ASCII.GetString(b.Skip(s2o).Take(s2l).ToArray()),
+            .s3 = Encoding.ASCII.GetString(b.Skip(s3o).Take(s3l).ToArray()),
+            .s4 = Encoding.ASCII.GetString(b.Skip(s4o).Take(s4l).ToArray()),
+            .s5 = If(ps4 > 0, Encoding.ASCII.GetString(b.Skip(s5o).Take(s5l).ToArray()), ""),
+            .inv = inv.ToArray()
         }
     End Function
 #End Region

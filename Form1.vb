@@ -38,11 +38,6 @@ Public Class Form1
 
                     Dim tEME2 = f.GetRegions("EME2")
                     If tEME2.Count > 0 Then
-                        For Each e2 In tEME2
-                            For Each i In e2.ToEME2c.EEOV.inv
-                                MsgBox(i)
-                            Next
-                        Next
                         m.EME2 = New EME2c(tEME2.Count - 1) {}
                         For i = 0 To tEME2.Count - 1
                             m.EME2(i) = tEME2(i).ToEME2c
@@ -69,13 +64,7 @@ Public Class Form1
                         Next
                     End If
 
-                    Dim tEMSD = f.GetRegions("EMSD")
-                    If tEMSD.Count > 0 Then
-                        m.EMSD = New EMSDc(tEMSD.Count - 1) {}
-                        For i = 0 To tEMEP.Count - 1
-                            m.EMSD(i) = tEMSD(i).ToEMSDc
-                        Next
-                    End If
+                    m.EMSD = (From EMSD In f.GetRegions("EMSD") Select EMSD.ToEMSDc).ToArray()
 
                     m.EMNP = f.GetRegions("EMNP")(0)
 
@@ -112,9 +101,9 @@ Public Class Form1
         m.EMAP.il = DarkCheckBox1.Checked
         Dim t As New List(Of Byte)
         t.AddRange(m.EMAP.ToEMAPb)
-        For Each EME2 In m.EME2
-            t.AddRange(EME2.ToEME2b)
-        Next
+        'For Each EME2 In m.EME2
+        '    t.AddRange(EME2.ToEME2b)
+        'Next
         For Each EMEP In m.EMEP
             t.AddRange(EMEP.ToEMEPb)
         Next
@@ -133,6 +122,7 @@ Public Class Form1
         For Each EMEF In m.EMEF
             t.AddRange(EMEF.ToEMEFb)
         Next
+        IO.File.WriteAllBytes("D:\Van Buren\Override\test.map", t.ToArray)
     End Sub
 End Class
 #Region "Filetype Classes"
@@ -186,7 +176,7 @@ Public Class ECAMc
 End Class
 Public Class EMEFc
     Property s1 As String
-    Property l As Point3
+    Property l As Point4
     Property s2 As String
 End Class
 Public Class EMSDc
@@ -199,9 +189,7 @@ Public Class EPTHc
     Property p As List(Of Point6)
 End Class
 Public Class EMTRc
-
-    Property n1 As Integer ' first Int32 after chunk size, unknown usage
-    Property n2 As Integer ' second Int32 after chunk size, # of coordinate groups
+    Property n As Integer
     Property r As List(Of Point3)
 End Class
 
@@ -273,8 +261,7 @@ Friend Module Functions
             l.Add(New Point3(BitConverter.ToSingle(b, i), BitConverter.ToSingle(b, i + 4), BitConverter.ToSingle(b, i + 8)))
         Next
         Return New EMTRc With {
-            .n1 = b(12),
-            .n2 = b(16),
+            .n = b(12),
             .r = l
         }
     End Function
@@ -282,11 +269,10 @@ Friend Module Functions
     Public Function ToExTRc(b As Byte()) As ExTRc
         Return New ExTRc With {
             .type = Encoding.ASCII.GetString(b.Skip(1).Take(1).ToArray()),
-            .s = Encoding.ASCII.GetString(b.Skip(14).Take(b(8)).ToArray()),
+            .s = Encoding.ASCII.GetString(b.Skip(14).Take(b(12)).ToArray()),
             .index = b(12)
         }
     End Function
-
     <System.Runtime.CompilerServices.Extension>
     Public Function ToECAMc(b As Byte()) As ECAMc
         Return New ECAMc With {
@@ -304,7 +290,7 @@ Friend Module Functions
     Public Function ToEMEFc(b As Byte()) As EMEFc
         Return New EMEFc With {
             .s1 = Encoding.ASCII.GetString(b.Skip(14).Take(b(12)).ToArray()),
-            .l = New Point3(BitConverter.ToSingle(b, 14 + b(12)), BitConverter.ToSingle(b, 18 + b(12)), BitConverter.ToSingle(b, 22 + b(12))),
+            .l = New Point4(BitConverter.ToSingle(b, 14 + b(12)), BitConverter.ToSingle(b, 18 + b(12)), BitConverter.ToSingle(b, 22 + b(12)), BitConverter.ToSingle(b, 26 + b(12))),
             .s2 = Encoding.ASCII.GetString(b.Skip(41 + b(12)).Take(b(39 + b(12))).ToArray())
         }
     End Function
@@ -312,8 +298,8 @@ Friend Module Functions
     Public Function ToEMSDc(b As Byte()) As EMSDc
         Return New EMSDc With {
             .s1 = Encoding.ASCII.GetString(b.Skip(14).Take(b(12)).ToArray()),
-            .l = New Point3(BitConverter.ToSingle(b, 14 + b(12)), BitConverter.ToSingle(b, 18 + b(12)), BitConverter.ToSingle(b, 22 + b(12))),
-            .s2 = Encoding.ASCII.GetString(b.Skip(28 + b(12)).Take(b(26 + b(12))).ToArray())
+                   .s2 = Encoding.ASCII.GetString(b.Skip(28 + b(12)).Take(b(26 + b(12))).ToArray()),
+            .l = New Point3(BitConverter.ToSingle(b, 14 + b(12)), BitConverter.ToSingle(b, 18 + b(12)), BitConverter.ToSingle(b, 22 + b(12)))
         }
     End Function
     <System.Runtime.CompilerServices.Extension>
@@ -397,7 +383,7 @@ Friend Module Functions
     Public Function ToEMEPb(c As EMEPc) As Byte()
         Dim out = New Byte(108) {}
         out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EMEP"))
-        out.OverwriteBytes(4, New Byte() {109})
+        out.OverwriteBytes(8, New Byte() {109})
         out.OverwriteBytes(12, New Byte() {c.index})
         out.OverwriteBytes(73, BitConverter.GetBytes(c.p.x))
         out.OverwriteBytes(77, BitConverter.GetBytes(c.p.z))
@@ -415,11 +401,12 @@ Friend Module Functions
         out.OverwriteBytes(16, BitConverter.GetBytes(c.p.y))
         out.OverwriteBytes(20, BitConverter.GetBytes(c.p.z))
         out.OverwriteBytes(24, BitConverter.GetBytes(c.p.r))
+        Return out
     End Function
     ' convert EPTH to a byte array
     <System.Runtime.CompilerServices.Extension>
     Public Function ToEPTHb(c As EPTHc) As Byte()
-        Dim out = New Byte(113 + c.name.Length) {}
+        Dim out = New Byte(17 + (c.p.Count * 24) + c.name.Length) {}
         out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EPTH"))
         out.OverwriteBytes(8, New Byte() {114 + c.name.Length})
         out.OverwriteBytes(12, New Byte() {c.name.Length})
@@ -435,6 +422,86 @@ Friend Module Functions
             out.OverwriteBytes(38 + c.name.Length + i, BitConverter.GetBytes(p.u2))
             i += 24
         Next
+        Return out
+    End Function
+    ' convert EMTR to a byte array
+    <System.Runtime.CompilerServices.Extension>
+    Public Function ToEMTRb(c As EMTRc) As Byte()
+        Dim out = New Byte(19 + (c.r.Count * 12)) {}
+        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EMTR"))
+        out.OverwriteBytes(8, BitConverter.GetBytes(20 + (c.r.Count * 12)))
+        out.OverwriteBytes(12, New Byte() {c.n})
+        out.OverwriteBytes(16, New Byte() {c.r.Count})
+        Dim i = 0
+        For Each r In c.r
+            out.OverwriteBytes(20 + i, BitConverter.GetBytes(r.x))
+            out.OverwriteBytes(24 + i, BitConverter.GetBytes(r.z))
+            out.OverwriteBytes(28 + i, BitConverter.GetBytes(r.y))
+            i += 12
+        Next
+        Return out
+    End Function
+    ' convert ExTR to a byte array
+    <System.Runtime.CompilerServices.Extension>
+    Public Function ToExTRb(c As ExTRc) As Byte()
+        Select Case c.type
+            Case "B"
+                Dim out = New Byte(18) {}
+                out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EBTR"))
+                out.OverwriteBytes(8, New Byte() {19})
+                out.OverwriteBytes(12, New Byte() {c.index})
+                out.OverwriteBytes(16, Encoding.ASCII.GetBytes("FFF"))
+                Return out
+            Case "S"
+                Dim out = New Byte(17 + c.s.Length) {}
+                out.OverwriteBytes(0, Encoding.ASCII.GetBytes("ESTR"))
+                out.OverwriteBytes(8, New Byte() {18 + c.s.Length})
+                out.OverwriteBytes(12, New Byte() {c.s.Length})
+                out.OverwriteBytes(14, Encoding.ASCII.GetBytes(c.s))
+                Return out
+            Case "T"
+                Dim out = New Byte(15 + c.s.Length) {}
+                out.OverwriteBytes(0, Encoding.ASCII.GetBytes("ETTR"))
+                out.OverwriteBytes(8, New Byte() {16 + c.s.Length})
+                out.OverwriteBytes(12, New Byte() {c.s.Length})
+                out.OverwriteBytes(14, Encoding.ASCII.GetBytes(c.s))
+                out.OverwriteBytes(14 + c.s.Length, New Byte() {1, 1})
+                Return out
+            Case Else ' in case of an EMTR following another EMTR, which is known to happen at least once
+                Return Array.Empty(Of Byte)
+        End Select
+    End Function
+    ' convert EMSD to a byte array
+    <System.Runtime.CompilerServices.Extension>
+    Public Function ToEMSDb(c As EMSDc) As Byte()
+        Dim out = New Byte(29 + c.s1.Length + c.s2.Length) {}
+        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EMSD"))
+        out.OverwriteBytes(8, New Byte() {30 + c.s1.Length + c.s2.Length})
+        out.OverwriteBytes(12, New Byte() {c.s1.Length})
+        out.OverwriteBytes(14, Encoding.ASCII.GetBytes(c.s1))
+        out.OverwriteBytes(14 + c.s1.Length, BitConverter.GetBytes(c.l.x))
+        out.OverwriteBytes(18 + c.s1.Length, BitConverter.GetBytes(c.l.z))
+        out.OverwriteBytes(22 + c.s1.Length, BitConverter.GetBytes(c.l.y))
+        out.OverwriteBytes(26 + c.s1.Length, New Byte() {c.s2.Length})
+        out.OverwriteBytes(28 + c.s1.Length, Encoding.ASCII.GetBytes(c.s2))
+        out.OverwriteBytes(28 + c.s1.Length + c.s2.Length, New Byte() {1, 1})
+        Return out
+    End Function
+    ' convert EMEF to a byte array
+    <System.Runtime.CompilerServices.Extension>
+    Public Function ToEMEFb(c As EMEFc) As Byte()
+        Dim out = New Byte(41 + c.s1.Length + c.s2.Length) {}
+        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EMEF"))
+        out.OverwriteBytes(8, New Byte() {42 + c.s1.Length + c.s2.Length})
+        out.OverwriteBytes(12, New Byte() {c.s1.Length})
+        out.OverwriteBytes(14, Encoding.ASCII.GetBytes(c.s1))
+        out.OverwriteBytes(14 + c.s1.Length, BitConverter.GetBytes(c.l.x))
+        out.OverwriteBytes(18 + c.s1.Length, BitConverter.GetBytes(c.l.z))
+        out.OverwriteBytes(22 + c.s1.Length, BitConverter.GetBytes(c.l.y))
+        out.OverwriteBytes(26 + c.s1.Length, BitConverter.GetBytes(c.l.r))
+        out.OverwriteBytes(39 + c.s1.Length, New Byte() {c.s2.Length})
+        out.OverwriteBytes(41 + c.s1.Length, Encoding.ASCII.GetBytes(c.s2))
+        out.OverwriteBytes(41 + c.s1.Length + c.s2.Length, New Byte() {1})
         Return out
     End Function
 #End Region

@@ -29,52 +29,31 @@ Public Class Form1
                 Case ".itm"
                     MsgBox("Not yet implemented")
                 Case ".map"
+                    m = New Map
+
                     m.EMAP = f.GetRegions("EMAP")(0).ToEMAPc
+
                     Button1.BackColor = m.EMAP.col : Button1.FlatAppearance.MouseOverBackColor = m.EMAP.col : Button1.FlatAppearance.MouseDownBackColor = m.EMAP.col
                     DarkTextBox1.Text = m.EMAP.s1
                     DarkTextBox2.Text = m.EMAP.s2
                     DarkTextBox3.Text = m.EMAP.s3
                     DarkCheckBox1.Checked = m.EMAP.il
 
-                    Dim tEME2 = f.GetRegions("EME2")
-                    If tEME2.Count > 0 Then
-                        m.EME2 = New EME2c(tEME2.Count - 1) {}
-                        For i = 0 To tEME2.Count - 1
-                            m.EME2(i) = tEME2(i).ToEME2c
-                        Next
-                    End If
+                    m.EME2 = (From x In f.GetRegions("EME2") Select x.ToEME2c).ToArray
 
-                    Dim tEMEP = f.GetRegions("EMEP")
-                    If tEMEP.Count > 0 Then
-                        m.EMEP = New EMEPc(tEMEP.Count - 1) {}
-                        For i = 0 To tEMEP.Count - 1
-                            m.EMEP(i) = tEMEP(i).ToEMEPc
-                        Next
-                    End If
+                    m.EMEP = (From x In f.GetRegions("EMEP") Select x.ToEMEPc).ToArray
 
                     m.ECAM = f.GetRegions("ECAM")(0).ToECAMc
 
                     m.Triggers = f.GetTriggers
 
-                    Dim tEPTH = f.GetRegions("EPTH")
-                    If tEPTH.Count > 0 Then
-                        m.EPTH = New EPTHc(tEPTH.Count - 1) {}
-                        For i = 0 To tEPTH.Count - 1
-                            m.EPTH(i) = tEPTH(i).ToEPTHc
-                        Next
-                    End If
+                    m.EPTH = (From x In f.GetRegions("EPTH") Select x.ToEPTHc).ToArray
 
-                    m.EMSD = (From EMSD In f.GetRegions("EMSD") Select EMSD.ToEMSDc).ToArray()
+                    m.EMSD = (From x In f.GetRegions("EMSD") Select x.ToEMSDc).ToArray()
 
                     m.EMNP = f.GetRegions("EMNP")(0)
 
-                    Dim tEMEF = f.GetRegions("EMEF")
-                    If tEMEF.Count > 0 Then
-                        m.EMEF = New EMEFc(tEMEF.Count - 1) {}
-                        For i = 0 To tEMEP.Count - 1
-                            m.EMEF(i) = tEMEF(i).ToEMEFc
-                        Next
-                    End If
+                    m.EMEF = (From x In f.GetRegions("EMEF") Select x.ToEMEFc).ToArray()
 
                 Case ".use"
                     MsgBox("Not yet implemented")
@@ -100,29 +79,47 @@ Public Class Form1
         m.EMAP.s3 = DarkTextBox3.Text
         m.EMAP.il = DarkCheckBox1.Checked
         Dim t As New List(Of Byte)
+
         t.AddRange(m.EMAP.ToEMAPb)
+
         'For Each EME2 In m.EME2
         '    t.AddRange(EME2.ToEME2b)
         'Next
+
         For Each EMEP In m.EMEP
             t.AddRange(EMEP.ToEMEPb)
         Next
+
         t.AddRange(m.ECAM.ToECAMb)
-        For Each tr In m.Triggers
-            t.AddRange(tr.EMTR.ToEMTRb)
-            t.AddRange(tr.ExTR.ToExTRb)
+
+        If m.Triggers IsNot Nothing Then
+            For Each tr In m.Triggers
+                t.AddRange(tr.EMTR.ToEMTRb)
+                t.AddRange(tr.ExTR.ToExTRb)
+            Next
+        End If
+
+        If m.EPTH IsNot Nothing Then
+            For Each EPTH In m.EPTH
+                t.AddRange(EPTH.ToEPTHb)
+            Next
+        End If
+
+        Dim tEMSD = f.GetRegions("EMSD")
+        MsgBox(tEMSD.Count)
+        For Each EMSD In tEMSD
+            t.AddRange(EMSD.ToEMSDc.ToEMSDb())
         Next
-        For Each EPTH In m.EPTH
-            t.AddRange(EPTH.ToEPTHb)
-        Next
-        For Each EMSD In m.EMSD
-            t.AddRange(EMSD.ToEMSDb)
-        Next
+
         t.AddRange(m.EMNP)
-        For Each EMEF In m.EMEF
-            t.AddRange(EMEF.ToEMEFb)
+
+        Dim tEMEF = f.GetRegions("EMEF")
+        MsgBox(tEMEF.Count)
+        For Each EMEF In tEMEF
+            t.AddRange(EMEF.ToEMEFc.ToEMEFb())
         Next
-        IO.File.WriteAllBytes("D:\Van Buren\Override\test.map", t.ToArray)
+
+        IO.File.WriteAllBytes("C:\Games\F3\Override\test.map", t.ToArray)
     End Sub
 End Class
 #Region "Filetype Classes"
@@ -176,8 +173,10 @@ Public Class ECAMc
 End Class
 Public Class EMEFc
     Property s1 As String
-    Property l As Point4
     Property s2 As String
+    Property l As Point4
+    Property b1 As Integer
+    Property b2 As Integer
 End Class
 Public Class EMSDc
     Property s1 As String
@@ -291,8 +290,10 @@ Friend Module Functions
         Return New EMEFc With {
             .s1 = Encoding.ASCII.GetString(b.Skip(14).Take(b(12)).ToArray()),
             .l = New Point4(BitConverter.ToSingle(b, 14 + b(12)), BitConverter.ToSingle(b, 18 + b(12)), BitConverter.ToSingle(b, 22 + b(12)), BitConverter.ToSingle(b, 26 + b(12))),
-            .s2 = Encoding.ASCII.GetString(b.Skip(41 + b(12)).Take(b(39 + b(12))).ToArray())
-        }
+            .s2 = Encoding.ASCII.GetString(b.Skip(41 + b(12)).Take(b(39 + b(12))).ToArray()),
+            .b1 = b(38 + b(12)),
+            .b2 = b.Last
+            }
     End Function
     <System.Runtime.CompilerServices.Extension>
     Public Function ToEMSDc(b As Byte()) As EMSDc
@@ -376,6 +377,7 @@ Friend Module Functions
         out.OverwriteBytes(24 + c.s1.Length + c.s2.Length + c.s3.Length, New Byte() {c.col.R})
         out.OverwriteBytes(25 + c.s1.Length + c.s2.Length + c.s3.Length, New Byte() {c.col.G})
         out.OverwriteBytes(26 + c.s1.Length + c.s2.Length + c.s3.Length, New Byte() {c.col.B})
+        out.OverwriteBytes(32 + c.s1.Length + c.s2.Length + c.s3.Length, New Byte() {1})
         Return out
     End Function
     ' convert EMEP to a byte array
@@ -408,7 +410,7 @@ Friend Module Functions
     Public Function ToEPTHb(c As EPTHc) As Byte()
         Dim out = New Byte(17 + (c.p.Count * 24) + c.name.Length) {}
         out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EPTH"))
-        out.OverwriteBytes(8, New Byte() {114 + c.name.Length})
+        out.OverwriteBytes(8, New Byte() {18 + (c.p.Count * 24) + c.name.Length})
         out.OverwriteBytes(12, New Byte() {c.name.Length})
         out.OverwriteBytes(14, Encoding.ASCII.GetBytes(c.name))
         out.OverwriteBytes(14 + c.name.Length, New Byte() {c.p.Count})
@@ -499,9 +501,10 @@ Friend Module Functions
         out.OverwriteBytes(18 + c.s1.Length, BitConverter.GetBytes(c.l.z))
         out.OverwriteBytes(22 + c.s1.Length, BitConverter.GetBytes(c.l.y))
         out.OverwriteBytes(26 + c.s1.Length, BitConverter.GetBytes(c.l.r))
+        out.OverwriteBytes(38 + c.s1.Length, New Byte() {c.b1})
         out.OverwriteBytes(39 + c.s1.Length, New Byte() {c.s2.Length})
         out.OverwriteBytes(41 + c.s1.Length, Encoding.ASCII.GetBytes(c.s2))
-        out.OverwriteBytes(41 + c.s1.Length + c.s2.Length, New Byte() {1})
+        out.OverwriteBytes(41 + c.s1.Length + c.s2.Length, New Byte() {c.b2})
         Return out
     End Function
 #End Region

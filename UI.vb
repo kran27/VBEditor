@@ -58,42 +58,54 @@
                     For Each EME2 In m.EME2
                         EME2cb.Items.Add(EME2.name)
                     Next
-                    EME2cb.SelectedIndex = 0
-                    EME2ToUI()
+                    If m.EME2.Count > 0 Then
+                        EME2cb.SelectedIndex = 0
+                        EME2ToUI()
+                    End If
                     ECAMToUI()
-                    EMEPcb.Items.Clear()
-                    For i = 1 To m.EMEP.Length
-                        EMEPcb.Items.Add(i)
-                    Next
-                    EMEPcb.SelectedIndex = 0
-                    EMEPToUI()
-                    Triggercb.Items.Clear()
-                    Dim a = ""
-                    For i = 1 To m.Triggers.Length
-                        If m.Triggers(i - 1).ExTR.s = "S" Or m.Triggers(i - 1).ExTR.s = "T" Then a = $" ({m.Triggers(i - 1).ExTR.s})"
-                        Triggercb.Items.Add($"{i}{a}")
-                        a = ""
-                    Next
-                    Triggercb.SelectedIndex = 0
-                    TriggerToUI()
-                    EPTHcb.Items.Clear()
-                    For i = 1 To m.EPTH.Length
-                        EPTHcb.Items.Add($"{i} ({m.EPTH(i - 1).name})")
-                    Next
-                    EPTHcb.SelectedIndex = 0
-                    EPTHToUI()
-                    EMSDcb.Items.Clear()
-                    For i = 1 To m.EMSD.Length
-                        EMSDcb.Items.Add($"{i} ({m.EMSD(i - 1).s2.Replace(".psf", "")})")
-                    Next
-                    EMSDcb.SelectedIndex = 0
-                    EMSDToUI()
-                    EMEFcb.Items.Clear()
-                    For i = 1 To m.EMEF.Length
-                        EMEFcb.Items.Add($"{i} ({m.EMEF(i - 1).s2.Replace(".veg", "")})")
-                    Next
-                    EMEFcb.SelectedIndex = 0
-                    EMEFToUI()
+                    If m.EMEP.Count > 0 Then
+                        EMEPcb.Items.Clear()
+                        For i = 1 To m.EMEP.Length
+                            EMEPcb.Items.Add(i)
+                        Next
+                        EMEPcb.SelectedIndex = 0
+                        EMEPToUI()
+                    End If
+                    If m.Triggers.Count() > 0 Then
+                        Triggercb.Items.Clear()
+                        Dim a = ""
+                        For i = 1 To m.Triggers.Length
+                            If m.Triggers(i - 1).ExTR.s = "S" Or m.Triggers(i - 1).ExTR.s = "T" Then a = $" ({m.Triggers(i - 1).ExTR.s})"
+                            Triggercb.Items.Add($"{i}{a}")
+                            a = ""
+                        Next
+                        Triggercb.SelectedIndex = 0
+                        TriggerToUI()
+                    End If
+                    If m.EPTH.Count > 0 Then
+                        EPTHcb.Items.Clear()
+                        For i = 1 To m.EPTH.Length
+                            EPTHcb.Items.Add($"{i} ({m.EPTH(i - 1).name})")
+                        Next
+                        EPTHcb.SelectedIndex = 0
+                        EPTHToUI()
+                    End If
+                    If m.EMSD.count > 0 Then
+                        EMSDcb.Items.Clear()
+                        For i = 1 To m.EMSD.Length
+                            EMSDcb.Items.Add($"{i} ({m.EMSD(i - 1).s2.Replace(".psf", "")})")
+                        Next
+                        EMSDcb.SelectedIndex = 0
+                        EMSDToUI()
+                    End If
+                    If m.EMEF.Count > 0 Then
+                        EMEFcb.Items.Clear()
+                        For i = 1 To m.EMEF.Length
+                            EMEFcb.Items.Add($"{i} ({m.EMEF(i - 1).s2.Replace(".veg", "")})")
+                        Next
+                        EMEFcb.SelectedIndex = 0
+                        EMEFToUI()
+                    End If
                 Case ".use"
                     MsgBox("Not yet implemented")
                 Case ".veg"
@@ -298,13 +310,13 @@
         Dim sfd As New SaveFileDialog With {.Filter = $"Van Buren Data File|*{ext}", .ValidateNames = True, .DefaultExt = ext}
         If sfd.ShowDialog = DialogResult.OK Then
             UIToEMAP()
-            UIToEME2(EME2cb.SelectedIndex)
-            UIToEMEP(EMEPcb.SelectedIndex)
+            If m.EME2.Count > 0 Then UIToEME2(EME2cb.SelectedIndex)
+            If m.EMEP.Count > 0 Then UIToEMEP(EMEPcb.SelectedIndex)
             UIToECAM()
-            UIToTrigger(Triggercb.SelectedIndex, Triggerpcb.SelectedIndex)
-            UIToEPTH(EPTHcb.SelectedIndex, EPTHpcb.SelectedIndex)
-            UIToEMSD(EMSDcb.SelectedIndex)
-            UIToEMEF(EMEFcb.SelectedIndex)
+            If m.Triggers.Count > 0 Then UIToTrigger(Triggercb.SelectedIndex, Triggerpcb.SelectedIndex)
+            If m.EPTH.Count > 0 Then UIToEPTH(EPTHcb.SelectedIndex, EPTHpcb.SelectedIndex)
+            If m.EMSD.Count > 0 Then UIToEMSD(EMSDcb.SelectedIndex)
+            If m.EMEF.Count > 0 Then UIToEMEF(EMEFcb.SelectedIndex)
             Dim b As New List(Of Byte)
             b.AddRange(m.EMAP.ToEMAPb)
             b.AddRange(m.EME2.SelectMany(Function(x) x.ToEME2b()))

@@ -30,31 +30,30 @@ Public Class Form1
                     MsgBox("Not yet implemented")
                 Case ".map"
                     m = New Map
-
                     m.EMAP = f.GetRegions("EMAP")(0).ToEMAPc
-
-                    Button1.BackColor = m.EMAP.col : Button1.FlatAppearance.MouseOverBackColor = m.EMAP.col : Button1.FlatAppearance.MouseDownBackColor = m.EMAP.col
-                    DarkTextBox1.Text = m.EMAP.s1
-                    DarkTextBox2.Text = m.EMAP.s2
-                    DarkTextBox3.Text = m.EMAP.s3
-                    DarkCheckBox1.Checked = m.EMAP.il
-
                     m.EME2 = (From x In f.GetRegions("EME2") Select x.ToEME2c).ToArray
-
                     m.EMEP = (From x In f.GetRegions("EMEP") Select x.ToEMEPc).ToArray
-
                     m.ECAM = f.GetRegions("ECAM")(0).ToECAMc
-
                     m.Triggers = f.GetTriggers
-
                     m.EPTH = (From x In f.GetRegions("EPTH") Select x.ToEPTHc).ToArray
-
                     m.EMSD = (From x In f.GetRegions("EMSD") Select x.ToEMSDc).ToArray()
-
                     m.EMNP = f.GetRegions("EMNP")(0)
-
                     m.EMEF = (From x In f.GetRegions("EMEF") Select x.ToEMEFc).ToArray()
 
+                    EMAPToUI()
+                    EME2cb.Items.Clear()
+                    For Each EME2 In m.EME2
+                        EME2cb.Items.Add(EME2.name)
+                    Next
+                    EME2cb.SelectedIndex = 0
+                    EME2ToUI()
+                    ECAMToUI()
+                    EMEPcb.Items.Clear()
+                    For i = 1 To m.EMEP.Length
+                        EMEPcb.Items.Add(i)
+                    Next
+                    EMEPcb.SelectedIndex = 0
+                    EMEPToUI()
                 Case ".use"
                     MsgBox("Not yet implemented")
                 Case ".veg"
@@ -64,62 +63,102 @@ Public Class Form1
             End Select
         End If
     End Sub
+#Region "Load classes into UI"
+    Private Sub EMAPToUI()
+        EMAPcolp.BackColor = m.EMAP.col : EMAPcolp.FlatAppearance.MouseOverBackColor = m.EMAP.col : EMAPcolp.FlatAppearance.MouseDownBackColor = m.EMAP.col
+        EMAPs1.Text = m.EMAP.s1.Replace(".8", "")
+        EMAPs2.Text = m.EMAP.s2.Replace(".rle", "")
+        EMAPs3.Text = m.EMAP.s3.Replace(".dds", "")
+        EMAPilcb.Checked = m.EMAP.il
+    End Sub
+    Private Sub EME2ToUI() Handles EME2cb.SelectedIndexChanged
+        EME2n.Text = m.EME2(EME2cb.SelectedIndex).name
+        EME2s1.Text = m.EME2(EME2cb.SelectedIndex).EEOV.s1
+        EME2s2.Text = m.EME2(EME2cb.SelectedIndex).EEOV.s2
+        EME2s3.Text = m.EME2(EME2cb.SelectedIndex).EEOV.s3.Replace(".amx", "")
+        EME2s4.Text = m.EME2(EME2cb.SelectedIndex).EEOV.s4.Replace(".dds", "")
+        EME2s5.Text = m.EME2(EME2cb.SelectedIndex).EEOV.s5.Replace(".veg", "")
+        EME2x.Text = m.EME2(EME2cb.SelectedIndex).l.x
+        EME2y.Text = m.EME2(EME2cb.SelectedIndex).l.y
+        EME2z.Text = m.EME2(EME2cb.SelectedIndex).l.z
+        EME2r.Text = m.EME2(EME2cb.SelectedIndex).l.r
+        Dim dt As New DataTable
+        dt.Columns.Add("item name", GetType(String))
+        For Each item In m.EME2(EME2cb.SelectedIndex).EEOV.inv
+            dt.Rows.Add(item)
+        Next
+        EME2dgv.DataSource = dt
+        For Each col As DataGridViewColumn In EME2dgv.Columns
+            col.MinimumWidth = EME2dgv.Width - 18
+            col.Width = EME2dgv.Width - 18
+        Next
+    End Sub
+    Private Sub EMEPToUI() Handles EMEPcb.SelectedIndexChanged
+        EMEPnud.Value = m.EMEP(EMEPcb.SelectedIndex).index
+        EMEPx.Text = m.EMEP(EMEPcb.SelectedIndex).p.x
+        EMEPy.Text = m.EMEP(EMEPcb.SelectedIndex).p.y
+        EMEPz.Text = m.EMEP(EMEPcb.SelectedIndex).p.z
+        EMEPr.Text = m.EMEP(EMEPcb.SelectedIndex).p.r
+    End Sub
+    Private Sub ECAMToUI()
+        ECAMx.Text = m.ECAM.p.x
+        ECAMy.Text = m.ECAM.p.y
+        ECAMz.Text = m.ECAM.p.z
+        ECAMr.Text = m.ECAM.p.r
+    End Sub
+#End Region
+    Private Sub DataGridView1_ScrollChanged() Handles EME2dgv.Scroll
+        EME2dsb.ScrollTo((EME2dgv.FirstDisplayedScrollingRowIndex / (EME2dgv.Rows.Count - EME2dgv.DisplayedRowCount(False))) * EME2dsb.Maximum)
+    End Sub
+    Private Sub DarkScrollBar1_Click(sender As Object, e As EventArgs) Handles EME2dsb.MouseDown
+        Timer1.Start()
+    End Sub
+    Private Sub DarkScrollBar1_MouseUp(sender As Object, e As EventArgs) Handles EME2dsb.MouseUp
+        Timer1.Stop()
+    End Sub
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        EME2dgv.FirstDisplayedScrollingRowIndex = (EME2dsb.Value / (EME2dsb.Maximum)) * (EME2dgv.Rows.Count - EME2dgv.DisplayedRowCount(False))
+    End Sub
 
-    Private Sub DarkButton2_Click(sender As Object, e As EventArgs) Handles DarkButton2.Click
+    Private Sub DarkButton2_Click(sender As Object, e As EventArgs) Handles EMAPslb.Click
         Dim cd As New ColorDialog With {.Color = m.EMAP.col, .FullOpen = True}
         If cd.ShowDialog() = DialogResult.OK Then
-            Button1.BackColor = cd.Color : Button1.FlatAppearance.MouseDownBackColor = cd.Color : Button1.FlatAppearance.MouseOverBackColor = cd.Color
+            EMAPcolp.BackColor = cd.Color : EMAPcolp.FlatAppearance.MouseDownBackColor = cd.Color : EMAPcolp.FlatAppearance.MouseOverBackColor = cd.Color
             m.EMAP.col = cd.Color
         End If
     End Sub
 
-    Private Sub DarkButton3_Click(sender As Object, e As EventArgs) Handles DarkButton3.Click
-        m.EMAP.s1 = DarkTextBox1.Text
-        m.EMAP.s2 = DarkTextBox2.Text
-        m.EMAP.s3 = DarkTextBox3.Text
-        m.EMAP.il = DarkCheckBox1.Checked
-        Dim t As New List(Of Byte)
+    Private Sub DarkButton3_Click(sender As Object, e As EventArgs) Handles MapSave.Click
+        Dim sfd As New SaveFileDialog With {.Filter = $"Van Buren Data File|*{ext}", .ValidateNames = True, .DefaultExt = ext}
+        If sfd.ShowDialog = DialogResult.OK Then
+            m.EMAP.s1 = EMAPs1.Text
+            m.EMAP.s2 = EMAPs2.Text
+            m.EMAP.s3 = EMAPs3.Text
+            m.EMAP.il = EMAPilcb.Checked
+            m.EMAP.col = EMAPcolp.BackColor
 
-        t.AddRange(m.EMAP.ToEMAPb)
-
-        'For Each EME2 In m.EME2
-        '    t.AddRange(EME2.ToEME2b)
-        'Next
-
-        For Each EMEP In m.EMEP
-            t.AddRange(EMEP.ToEMEPb)
-        Next
-
-        t.AddRange(m.ECAM.ToECAMb)
-
-        If m.Triggers IsNot Nothing Then
-            For Each tr In m.Triggers
-                t.AddRange(tr.EMTR.ToEMTRb)
-                t.AddRange(tr.ExTR.ToExTRb)
-            Next
+            Dim b As New List(Of Byte)
+            b.AddRange(m.EMAP.ToEMAPb)
+            b.AddRange(m.EME2.SelectMany(Function(x) x.ToEME2b()))
+            b.AddRange(m.EMEP.SelectMany(Function(x) x.ToEMEPb()))
+            b.AddRange(m.ECAM.ToECAMb())
+            b.AddRange(m.Triggers.SelectMany(Function(x) x.ToTriggerB()))
+            b.AddRange(m.EPTH.SelectMany(Function(x) x.ToEPTHb()))
+            b.AddRange(m.EMSD.SelectMany(Function(x) x.ToEMSDb()))
+            b.AddRange(m.EMNP)
+            b.AddRange(m.EMEF.SelectMany(Function(x) x.ToEMEFb()))
+            IO.File.WriteAllBytes(sfd.FileName, b.ToArray)
         End If
+    End Sub
 
-        If m.EPTH IsNot Nothing Then
-            For Each EPTH In m.EPTH
-                t.AddRange(EPTH.ToEPTHb)
-            Next
-        End If
+    Private Sub MyBase_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        EME2dgv.GridColor = AltUI.Config.ThemeProvider.Theme.Colors.GreySelection
+        EME2dgv.BackgroundColor = AltUI.Config.ThemeProvider.BackgroundColour
+        EME2dgv.DefaultCellStyle = New DataGridViewCellStyle With {.BackColor = AltUI.Config.ThemeProvider.BackgroundColour, .ForeColor = AltUI.Config.ThemeProvider.Theme.Colors.LightText, .SelectionBackColor = AltUI.Config.ThemeProvider.Theme.Colors.BlueSelection, .SelectionForeColor = AltUI.Config.ThemeProvider.Theme.Colors.LightText}
+    End Sub
 
-        Dim tEMSD = f.GetRegions("EMSD")
-        MsgBox(tEMSD.Count)
-        For Each EMSD In tEMSD
-            t.AddRange(EMSD.ToEMSDc.ToEMSDb())
-        Next
+    Private Sub EMEPgb_Enter(sender As Object, e As EventArgs) Handles EMEPgb.Enter
 
-        t.AddRange(m.EMNP)
-
-        Dim tEMEF = f.GetRegions("EMEF")
-        MsgBox(tEMEF.Count)
-        For Each EMEF In tEMEF
-            t.AddRange(EMEF.ToEMEFc.ToEMEFb())
-        Next
-
-        IO.File.WriteAllBytes("C:\Games\F3\Override\test.map", t.ToArray)
     End Sub
 End Class
 #Region "Filetype Classes"
@@ -154,6 +193,7 @@ End Class
 Public Class EME2c
     Property name As String
     Property l As Point4
+    Property b As Integer
     Property EEOV As EEOVc
 End Class
 Public Class EEOVc
@@ -161,6 +201,7 @@ Public Class EEOVc
     Property s2 As String
     Property s3 As String
     Property s4 As String
+    Property ps4 As Integer
     Property s5 As String
     Property inv As String()
 End Class
@@ -320,6 +361,7 @@ Friend Module Functions
         Return New EME2c With {
             .name = Encoding.ASCII.GetString(b.Skip(14).Take(b(12)).ToArray()),
             .l = New Point4(BitConverter.ToSingle(b, 14 + b(12)), BitConverter.ToSingle(b, 18 + b(12)), BitConverter.ToSingle(b, 22 + b(12)), BitConverter.ToSingle(b, 26 + b(12))),
+            .b = b(cl - 1),
             .EEOV = b.Skip(cl).Take(b(cl + 8)).ToArray().ToEEOVc
         }
     End Function
@@ -338,25 +380,28 @@ Friend Module Functions
         End If
 
         Dim s5l = b(s5o - 2)
+        If s5l = 1 Then s5l = 0
 
         Dim inv = New List(Of String)
         Dim io = s5o + s5l + 6
-        Dim ao = 0
-        For i = 0 To b(io - 6) - 1
-            io += ao
-            Dim itemN = Encoding.ASCII.GetString(b.Skip(io).Take(b(io - 2)).ToArray())
-            If itemN.Length > 0 Then inv.Add(itemN)
-            ao = b(io - 2) + 2
+        Dim itemN = ""
+        For i = io To b.Length - 1
+            Try : itemN = Encoding.ASCII.GetString(b.Skip(io).Take(b(io - 2)).ToArray()) : Catch : Exit For : End Try
+            If Not itemN.Length = 0 Then inv.Add(itemN)
+            io += b(io - 2) + 2
         Next
+
         Return New EEOVc With {
             .s1 = Encoding.ASCII.GetString(b.Skip(s1o).Take(s1l).ToArray()),
             .s2 = Encoding.ASCII.GetString(b.Skip(s2o).Take(s2l).ToArray()),
             .s3 = Encoding.ASCII.GetString(b.Skip(s3o).Take(s3l).ToArray()),
             .s4 = Encoding.ASCII.GetString(b.Skip(s4o).Take(s4l).ToArray()),
             .s5 = If(ps4 > 0, Encoding.ASCII.GetString(b.Skip(s5o).Take(s5l).ToArray()), ""),
+                   .ps4 = ps4,
             .inv = inv.ToArray()
         }
     End Function
+
 #End Region
 #Region "Class to byte array"
     ' Functions that read from internal classes and rebuild chunks that F3 can read
@@ -507,6 +552,59 @@ Friend Module Functions
         out.OverwriteBytes(41 + c.s1.Length + c.s2.Length, New Byte() {c.b2})
         Return out
     End Function
+    ' convert EME2 to a byte array
+    <System.Runtime.CompilerServices.Extension>
+    Public Function ToEME2b(c As EME2c) As Byte()
+        Dim EEOV = c.EEOV.ToEEOVb
+        Dim out = New Byte(38 + c.name.Length + EEOV.Length) {}
+        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EME2"))
+        out.OverwriteBytes(8, BitConverter.GetBytes(39 + c.name.Length + EEOV.Length))
+        out.OverwriteBytes(12, New Byte() {c.name.Length})
+        out.OverwriteBytes(14, Encoding.ASCII.GetBytes(c.name))
+        out.OverwriteBytes(14 + c.name.Length, BitConverter.GetBytes(c.l.x))
+        out.OverwriteBytes(18 + c.name.Length, BitConverter.GetBytes(c.l.z))
+        out.OverwriteBytes(22 + c.name.Length, BitConverter.GetBytes(c.l.y))
+        out.OverwriteBytes(26 + c.name.Length, BitConverter.GetBytes(c.l.r))
+        out.OverwriteBytes(38 + c.name.Length, New Byte() {c.b})
+        out.OverwriteBytes(39 + c.name.Length, EEOV)
+        Return out
+    End Function
+    ' convert EEOV to a byte array
+    <System.Runtime.CompilerServices.Extension>
+    Public Function ToEEOVb(c As EEOVc) As Byte()
+        Dim invl = c.inv.Sum(Function(e) e.Length + 2)
+        Dim a = If(c.ps4 = 2, 2, 0)
+        Dim out = New Byte(46 + c.s1.Length + c.s2.Length + c.s3.Length + c.s4.Length + c.s5.Length + invl + a) {}
+        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EEOV"))
+        out.OverwriteBytes(8, New Byte() {47 + c.s1.Length + c.s2.Length + c.s3.Length + c.s4.Length + c.s5.Length + invl + a})
+        out.OverwriteBytes(12, New Byte() {c.s1.Length})
+        out.OverwriteBytes(14, Encoding.ASCII.GetBytes(c.s1))
+        out.OverwriteBytes(25 + c.s1.Length, New Byte() {c.s2.Length})
+        out.OverwriteBytes(27 + c.s1.Length, Encoding.ASCII.GetBytes(c.s2))
+        out.OverwriteBytes(27 + c.s1.Length + c.s2.Length, New Byte() {c.s3.Length})
+        out.OverwriteBytes(29 + c.s1.Length + c.s2.Length, Encoding.ASCII.GetBytes(c.s3))
+        out.OverwriteBytes(36 + c.s1.Length + c.s2.Length + c.s3.Length, New Byte() {&H80, &H3F})
+        out.OverwriteBytes(38 + c.s1.Length + c.s2.Length + c.s3.Length, New Byte() {c.s4.Length})
+        out.OverwriteBytes(40 + c.s1.Length + c.s2.Length + c.s3.Length, Encoding.ASCII.GetBytes(c.s4))
+        out.OverwriteBytes(40 + c.s1.Length + c.s2.Length + c.s3.Length + c.s4.Length, New Byte() {c.ps4})
+        out.OverwriteBytes(41 + c.s1.Length + c.s2.Length + c.s3.Length + c.s4.Length + a, New Byte() {c.s5.Length})
+        out.OverwriteBytes(43 + c.s1.Length + c.s2.Length + c.s3.Length + c.s4.Length + a, Encoding.ASCII.GetBytes(c.s5))
+        Dim i = 0
+        For Each inv In c.inv
+            out.OverwriteBytes(47 + c.s1.Length + c.s2.Length + c.s3.Length + c.s4.Length + c.s5.Length + a + i, New Byte() {inv.Length})
+            out.OverwriteBytes(49 + c.s1.Length + c.s2.Length + c.s3.Length + c.s4.Length + c.s5.Length + a + i, Encoding.ASCII.GetBytes(inv))
+            i += inv.Length + 2
+        Next
+        Return out
+    End Function
+    ' convert Trigger to a byte array
+    <System.Runtime.CompilerServices.Extension>
+    Public Function ToTriggerB(c as Trigger) As Byte()
+        Dim b As New List(Of Byte)
+        b.AddRange(c.EMTR.ToEMTRb())
+        b.AddRange(c.ExTR.ToExTRb())
+        Return b.ToArray()
+    End Function
 #End Region
 #Region "Byte array search"
     ' Code for finding location of given byte array within another
@@ -558,7 +656,7 @@ Friend Module Functions
         Next
         Return hl
     End Function
-    ' Finds all triggers for .map files, and the subsequest trigger info chunk
+    ' Finds all triggers for .map files, and the subsequent trigger info chunk
     <System.Runtime.CompilerServices.Extension>
     Public Function GetTriggers(f As String) As Trigger()
         Dim hl As New List(Of Trigger)

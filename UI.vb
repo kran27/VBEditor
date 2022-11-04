@@ -52,9 +52,8 @@
                     m.EMSD = (From x In f.GetRegions("EMSD") Select x.ToEMSDc).ToArray()
                     m.EMNP = f.GetRegions("EMNP")(0)
                     m.EMEF = (From x In f.GetRegions("EMEF") Select x.ToEMEFc).ToArray()
-
+                    ResetUI()
                     EMAPToUI()
-                    EME2cb.Items.Clear()
                     For Each EME2 In m.EME2
                         EME2cb.Items.Add(EME2.name)
                     Next
@@ -64,7 +63,6 @@
                     End If
                     ECAMToUI()
                     If m.EMEP.Count > 0 Then
-                        EMEPcb.Items.Clear()
                         For i = 1 To m.EMEP.Length
                             EMEPcb.Items.Add(i)
                         Next
@@ -72,7 +70,6 @@
                         EMEPToUI()
                     End If
                     If m.Triggers.Count() > 0 Then
-                        Triggercb.Items.Clear()
                         Dim a = ""
                         For i = 1 To m.Triggers.Length
                             If m.Triggers(i - 1).ExTR.s = "S" Or m.Triggers(i - 1).ExTR.s = "T" Then a = $" ({m.Triggers(i - 1).ExTR.s})"
@@ -83,15 +80,13 @@
                         TriggerToUI()
                     End If
                     If m.EPTH.Count > 0 Then
-                        EPTHcb.Items.Clear()
                         For i = 1 To m.EPTH.Length
                             EPTHcb.Items.Add($"{i} ({m.EPTH(i - 1).name})")
                         Next
                         EPTHcb.SelectedIndex = 0
                         EPTHToUI()
                     End If
-                    If m.EMSD.count > 0 Then
-                        EMSDcb.Items.Clear()
+                    If m.EMSD.Count > 0 Then
                         For i = 1 To m.EMSD.Length
                             EMSDcb.Items.Add($"{i} ({m.EMSD(i - 1).s2.Replace(".psf", "")})")
                         Next
@@ -99,7 +94,6 @@
                         EMSDToUI()
                     End If
                     If m.EMEF.Count > 0 Then
-                        EMEFcb.Items.Clear()
                         For i = 1 To m.EMEF.Length
                             EMEFcb.Items.Add($"{i} ({m.EMEF(i - 1).s2.Replace(".veg", "")})")
                         Next
@@ -115,7 +109,26 @@
             End Select
         End If
     End Sub
-#Region "Load classes into UI"
+    Private Sub ResetUI()
+        For Each c In Controls
+            If TypeOf c Is AltUI.Controls.DarkGroupBox Then
+                For Each c2 In c.controls
+                    If TypeOf c2 Is AltUI.Controls.DarkGroupBox Then
+                        For Each c3 In c2.controls
+                            If TypeOf c3 Is AltUI.Controls.DarkTextBox Then
+                                c3.text = ""
+                            ElseIf TypeOf c3 Is AltUI.Controls.DarkNumericUpDown Then
+                                c3.value = 0
+                            ElseIf TypeOf c3 Is AltUI.Controls.DarkComboBox AndAlso Not c3.name = "Triggertcb" Then
+                                c3.items.clear
+                            End If
+                        Next
+                    End If
+                Next
+            End If
+        Next
+    End Sub
+#Region "Load classes into ui"
     Private Sub EMAPToUI()
         EMAPcolp.BackColor = m.EMAP.col : EMAPcolp.FlatAppearance.MouseOverBackColor = m.EMAP.col : EMAPcolp.FlatAppearance.MouseDownBackColor = m.EMAP.col
         EMAPs1.Text = m.EMAP.s1.Replace(".8", "")
@@ -239,9 +252,9 @@
 #Region "Load UI into classes"
     Private Sub UIToEMAP()
         m.EMAP.col = EMAPcolp.BackColor
-        m.EMAP.s1 = EMAPs1.Text & ".8"
-        m.EMAP.s2 = EMAPs2.Text & ".rle"
-        m.EMAP.s3 = EMAPs3.Text & ".dds"
+        m.EMAP.s1 = EMAPs1.Text & If(EME2s5.Text.Length > 0, ".8", "")
+        m.EMAP.s2 = EMAPs2.Text & If(EME2s5.Text.Length > 0, ".rle", "")
+        m.EMAP.s3 = EMAPs3.Text & If(EME2s5.Text.Length > 0, ".dds", "")
         m.EMAP.il = EMAPilcb.Checked
     End Sub
     Private Sub UIToECAM()
@@ -249,12 +262,12 @@
     End Sub
     Private Sub UIToEMEF(i As Integer)
         m.EMEF(i).s1 = EMEFs1.Text
-        m.EMEF(i).s2 = EMEFs2.Text & ".veg"
+        m.EMEF(i).s2 = EMEFs2.Text & If(EME2s5.Text.Length > 0, ".veg", "")
         m.EMEF(i).l = New Point4(EMEFx.Text, EMEFz.Text, EMEFy.Text, EMEFr.Text)
     End Sub
     Private Sub UIToEMSD(i As Integer)
         m.EMSD(i).s1 = EMSDs1.Text
-        m.EMSD(i).s2 = EMSDs2.Text & ".psf"
+        m.EMSD(i).s2 = EMSDs2.Text & If(EME2s5.Text.Length > 0, ".psf", "")
         m.EMSD(i).l = New Point3(EMSDx.Text, EMSDz.Text, EMSDy.Text)
     End Sub
     Private Sub UIToEPTH(i As Integer, pi As Integer)
@@ -276,9 +289,10 @@
         m.EME2(i).name = EME2n.Text
         m.EME2(i).EEOV.s1 = EME2s1.Text
         m.EME2(i).EEOV.s2 = EME2s2.Text
-        m.EME2(i).EEOV.s3 = EME2s3.Text & ".amx"
-        m.EME2(i).EEOV.s4 = EME2s4.Text & ".dds"
+        m.EME2(i).EEOV.s3 = EME2s3.Text & If(EME2s5.Text.Length > 0, ".amx", "")
+        m.EME2(i).EEOV.s4 = EME2s4.Text & If(EME2s5.Text.Length > 0, ".dds", "")
         m.EME2(i).EEOV.s5 = EME2s5.Text & If(EME2s5.Text.Length > 0, ".veg", "")
+        If EME2s5.Text.Length > 0 AndAlso Not m.EME2(EME2cb.SelectedIndex).EEOV.ps4 = 2 Then m.EME2(EME2cb.SelectedIndex).EEOV.ps4 = 1
         m.EME2(i).l = New Point4(EME2x.Text, EME2z.Text, EME2y.Text, EME2r.Text)
         Dim s = (From row As DataGridViewRow In EME2dgv.Rows Select row.Cells.Item(0).Value).Cast(Of String)().ToList()
         s.Remove(s.Last)

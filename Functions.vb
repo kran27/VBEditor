@@ -299,7 +299,7 @@ Friend Module Functions
         Dim a = If(c.ps4 = 2, 2, 0)
         Dim out = New Byte(46 + c.s1.Length + c.s2.Length + c.s3.Length + c.s4.Length + c.s5.Length + invl + a) {}
         out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EEOV"))
-        out.OverwriteBytes(8, New Byte() {47 + c.s1.Length + c.s2.Length + c.s3.Length + c.s4.Length + c.s5.Length + invl + a})
+        out.OverwriteBytes(8, BitConverter.GetBytes(47 + c.s1.Length + c.s2.Length + c.s3.Length + c.s4.Length + c.s5.Length + invl + a))
         out.OverwriteBytes(12, New Byte() {c.s1.Length})
         out.OverwriteBytes(14, Encoding.ASCII.GetBytes(c.s1))
         out.OverwriteBytes(25 + c.s1.Length, New Byte() {c.s2.Length})

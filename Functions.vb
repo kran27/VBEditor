@@ -54,10 +54,8 @@ Friend Module Functions
         Return New EMEFc With {
             .s1 = Encoding.ASCII.GetString(b.Skip(14).Take(b(12)).ToArray()),
             .l = New Point4(BitConverter.ToSingle(b, 14 + b(12)), BitConverter.ToSingle(b, 18 + b(12)), BitConverter.ToSingle(b, 22 + b(12)), BitConverter.ToSingle(b, 26 + b(12))),
-            .s2 = Encoding.ASCII.GetString(b.Skip(41 + b(12)).Take(b(39 + b(12))).ToArray()),
-            .b1 = b(38 + b(12)),
-            .b2 = b.Last
-            }
+            .s2 = Encoding.ASCII.GetString(b.Skip(41 + b(12)).Take(b(39 + b(12))).ToArray())
+                        }
     End Function
     <System.Runtime.CompilerServices.Extension>
     Public Function ToEMSDc(b As Byte()) As EMSDc
@@ -69,9 +67,9 @@ Friend Module Functions
     End Function
     <System.Runtime.CompilerServices.Extension>
     Public Function ToEPTHc(b As Byte()) As EPTHc
-        Dim l As New List(Of Point6)
+        Dim l As New List(Of Point4)
         For i = 18 + b(12) To b.Length - 1 Step 24
-            l.Add(New Point6(BitConverter.ToSingle(b, i), BitConverter.ToSingle(b, i + 4), BitConverter.ToSingle(b, i + 8), BitConverter.ToSingle(b, i + 12), BitConverter.ToSingle(b, i + 16), BitConverter.ToSingle(b, i + 20)))
+            l.Add(New Point4(BitConverter.ToSingle(b, i), BitConverter.ToSingle(b, i + 4), BitConverter.ToSingle(b, i + 8), BitConverter.ToSingle(b, i + 12)))
         Next
         Return New EPTHc With {
             .name = Encoding.ASCII.GetString(b.Skip(14).Take(b(12)).ToArray()),
@@ -84,7 +82,6 @@ Friend Module Functions
         Return New EME2c With {
             .name = Encoding.ASCII.GetString(b.Skip(14).Take(b(12)).ToArray()),
             .l = New Point4(BitConverter.ToSingle(b, 14 + b(12)), BitConverter.ToSingle(b, 18 + b(12)), BitConverter.ToSingle(b, 22 + b(12)), BitConverter.ToSingle(b, 26 + b(12))),
-            .b = b(cl - 1),
             .EEOV = b.Skip(cl).Take(b(cl + 8)).ToArray().ToEEOVc
         }
     End Function
@@ -188,8 +185,6 @@ Friend Module Functions
             out.OverwriteBytes(22 + c.name.Length + i, BitConverter.GetBytes(p.z))
             out.OverwriteBytes(26 + c.name.Length + i, BitConverter.GetBytes(p.y))
             out.OverwriteBytes(30 + c.name.Length + i, BitConverter.GetBytes(p.r))
-            out.OverwriteBytes(34 + c.name.Length + i, BitConverter.GetBytes(p.u1))
-            out.OverwriteBytes(38 + c.name.Length + i, BitConverter.GetBytes(p.u2))
             i += 24
         Next
         Return out
@@ -269,10 +264,10 @@ Friend Module Functions
         out.OverwriteBytes(18 + c.s1.Length, BitConverter.GetBytes(c.l.z))
         out.OverwriteBytes(22 + c.s1.Length, BitConverter.GetBytes(c.l.y))
         out.OverwriteBytes(26 + c.s1.Length, BitConverter.GetBytes(c.l.r))
-        out.OverwriteBytes(38 + c.s1.Length, New Byte() {c.b1})
+        out.OverwriteBytes(38 + c.s1.Length, New Byte() {1})
         out.OverwriteBytes(39 + c.s1.Length, New Byte() {c.s2.Length})
         out.OverwriteBytes(41 + c.s1.Length, Encoding.ASCII.GetBytes(c.s2))
-        out.OverwriteBytes(41 + c.s1.Length + c.s2.Length, New Byte() {c.b2})
+        out.OverwriteBytes(41 + c.s1.Length + c.s2.Length, New Byte() {1})
         Return out
     End Function
     ' convert EME2 to a byte array
@@ -288,7 +283,7 @@ Friend Module Functions
         out.OverwriteBytes(18 + c.name.Length, BitConverter.GetBytes(c.l.z))
         out.OverwriteBytes(22 + c.name.Length, BitConverter.GetBytes(c.l.y))
         out.OverwriteBytes(26 + c.name.Length, BitConverter.GetBytes(c.l.r))
-        out.OverwriteBytes(38 + c.name.Length, New Byte() {c.b})
+        out.OverwriteBytes(38 + c.name.Length, New Byte() {1})
         out.OverwriteBytes(39 + c.name.Length, EEOV)
         Return out
     End Function
@@ -299,6 +294,7 @@ Friend Module Functions
         Dim a = If(c.ps4 = 2, 2, 0)
         Dim out = New Byte(46 + c.s1.Length + c.s2.Length + c.s3.Length + c.s4.Length + c.s5.Length + invl + a) {}
         out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EEOV"))
+        If c.inv.Length > 0 Then out.OverwriteBytes(4, New Byte() {2})
         out.OverwriteBytes(8, BitConverter.GetBytes(47 + c.s1.Length + c.s2.Length + c.s3.Length + c.s4.Length + c.s5.Length + invl + a))
         out.OverwriteBytes(12, New Byte() {c.s1.Length})
         out.OverwriteBytes(14, Encoding.ASCII.GetBytes(c.s1))
@@ -312,6 +308,7 @@ Friend Module Functions
         out.OverwriteBytes(40 + c.s1.Length + c.s2.Length + c.s3.Length + c.s4.Length, New Byte() {c.ps4})
         out.OverwriteBytes(41 + c.s1.Length + c.s2.Length + c.s3.Length + c.s4.Length + a, New Byte() {c.s5.Length})
         out.OverwriteBytes(43 + c.s1.Length + c.s2.Length + c.s3.Length + c.s4.Length + a, Encoding.ASCII.GetBytes(c.s5))
+        out.OverwriteBytes(43 + c.s1.Length + c.s2.Length + c.s3.Length + c.s4.Length + c.s5.Length + a, New Byte() {c.inv.Length})
         Dim i = 0
         For Each inv In c.inv
             out.OverwriteBytes(47 + c.s1.Length + c.s2.Length + c.s3.Length + c.s4.Length + c.s5.Length + a + i, New Byte() {inv.Length})
@@ -381,7 +378,7 @@ Friend Module Functions
     End Function
     ' Finds all triggers for .map files, and the subsequent trigger info chunk
     <System.Runtime.CompilerServices.Extension>
-    Public Function GetTriggers(f As String) As Trigger()
+    Public Function GetTriggers(f As String) As List(Of Trigger)
         Dim hl As New List(Of Trigger)
         Dim file = IO.File.ReadAllBytes(f)
         Dim hc = file.Locate(Encoding.ASCII.GetBytes("EMTR"))
@@ -392,7 +389,7 @@ Friend Module Functions
             Dim h2 = file.Skip(l + tl).Take(file(l + tl + 8)).ToArray
             hl.Add(New Trigger With {.EMTR = h1.ToEMTRc, .ExTR = h2.ToExTRc})
         Next
-        Return hl.ToArray
+        Return hl
     End Function
     ' Writes from "newBytes" into "b", starting at the given index
     <System.Runtime.CompilerServices.Extension>

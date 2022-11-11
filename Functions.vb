@@ -1,9 +1,10 @@
-﻿Imports System.Text
+﻿Imports System.Runtime.CompilerServices
+Imports System.Text
 
 Friend Module Functions
 #Region "Byte array to Class"
     ' Functions to convert from F3-readable byte arrays extracted from files, into easily-manipulatable custom classes
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function ToEMAPc(b As Byte()) As EMAPc
         Dim s1o = 16 + 2 : Dim s1l = b(s1o - 2)
         Dim s2o = s1o + s1l + 2 : Dim s2l = b(s2o - 2)
@@ -17,7 +18,7 @@ Friend Module Functions
             .le = b(s3o + s3l)
         }
     End Function
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function ToEMTRc(b As Byte()) As EMTRc
         Dim l As New List(Of Point3)
         For i = 20 To b.Length - 1 Step 12
@@ -28,7 +29,7 @@ Friend Module Functions
             .r = l
         }
     End Function
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function ToExTRc(b As Byte()) As ExTRc
         Return New ExTRc With {
             .type = Encoding.ASCII.GetString(b.Skip(1).Take(1).ToArray()),
@@ -36,20 +37,20 @@ Friend Module Functions
             .index = b(12)
         }
     End Function
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function ToECAMc(b As Byte()) As ECAMc
         Return New ECAMc With {
             .p = New Point4(BitConverter.ToSingle(b, 12), BitConverter.ToSingle(b, 16), BitConverter.ToSingle(b, 20), BitConverter.ToSingle(b, 24))
         }
     End Function
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function ToEMEPc(b As Byte()) As EMEPc
         Return New EMEPc With {
             .index = b(12),
             .p = New Point4(BitConverter.ToSingle(b, 73), BitConverter.ToSingle(b, 77), BitConverter.ToSingle(b, 81), BitConverter.ToSingle(b, 105))
         }
     End Function
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function ToEMEFc(b As Byte()) As EMEFc
         Return New EMEFc With {
             .s1 = Encoding.ASCII.GetString(b.Skip(14).Take(b(12)).ToArray()),
@@ -57,7 +58,7 @@ Friend Module Functions
             .s2 = Encoding.ASCII.GetString(b.Skip(41 + b(12)).Take(b(39 + b(12))).ToArray())
                         }
     End Function
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function ToEMSDc(b As Byte()) As EMSDc
         Return New EMSDc With {
             .s1 = Encoding.ASCII.GetString(b.Skip(14).Take(b(12)).ToArray()),
@@ -65,7 +66,7 @@ Friend Module Functions
             .l = New Point3(BitConverter.ToSingle(b, 14 + b(12)), BitConverter.ToSingle(b, 18 + b(12)), BitConverter.ToSingle(b, 22 + b(12)))
         }
     End Function
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function ToEPTHc(b As Byte()) As EPTHc
         Dim l As New List(Of Point4)
         For i = 18 + b(12) To b.Length - 1 Step 24
@@ -76,7 +77,7 @@ Friend Module Functions
             .p = l
         }
     End Function
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function ToEME2c(b As Byte()) As EME2c
         Dim cl = b.Locate(Encoding.ASCII.GetBytes("EEOV"))(0)
         Return New EME2c With {
@@ -85,7 +86,7 @@ Friend Module Functions
             .EEOV = b.Skip(cl).Take(b(cl + 8)).ToArray().ToEEOVc
         }
     End Function
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function ToEEOVc(b As Byte()) As EEOVc
         Dim s1o = 12 + 2 : Dim s1l = b(s1o - 2)
         Dim s2o = s1o + s1l + 13 : Dim s2l = b(s2o - 2)
@@ -125,7 +126,7 @@ Friend Module Functions
 #End Region
 #Region "Class to byte array"
     ' Functions that read from internal classes and rebuild chunks that F3 can read
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function ToEMAPb(c As EMAPc) As Byte()
         Dim s = 49 + c.s1.Length + c.s2.Length + c.s3.Length
         Dim out = New Byte(s - 1) {}
@@ -146,7 +147,7 @@ Friend Module Functions
         Return out
     End Function
     ' convert EMEP to a byte array
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function ToEMEPb(c As EMEPc) As Byte()
         Dim out = New Byte(108) {}
         out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EMEP"))
@@ -159,7 +160,7 @@ Friend Module Functions
         Return out
     End Function
     ' convert ECAM to a byte array
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function ToECAMb(c As ECAMc) As Byte()
         Dim out = New Byte(27) {}
         out.OverwriteBytes(0, Encoding.ASCII.GetBytes("ECAM"))
@@ -171,7 +172,7 @@ Friend Module Functions
         Return out
     End Function
     ' convert EPTH to a byte array
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function ToEPTHb(c As EPTHc) As Byte()
         Dim out = New Byte(17 + (c.p.Count * 24) + c.name.Length) {}
         out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EPTH"))
@@ -190,7 +191,7 @@ Friend Module Functions
         Return out
     End Function
     ' convert EMTR to a byte array
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function ToEMTRb(c As EMTRc) As Byte()
         Dim out = New Byte(19 + (c.r.Count * 12)) {}
         out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EMTR"))
@@ -207,7 +208,7 @@ Friend Module Functions
         Return out
     End Function
     ' convert ExTR to a byte array
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function ToExTRb(c As ExTRc) As Byte()
         Select Case c.type
             Case "B"
@@ -237,7 +238,7 @@ Friend Module Functions
         End Select
     End Function
     ' convert EMSD to a byte array
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function ToEMSDb(c As EMSDc) As Byte()
         Dim out = New Byte(29 + c.s1.Length + c.s2.Length) {}
         out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EMSD"))
@@ -253,7 +254,7 @@ Friend Module Functions
         Return out
     End Function
     ' convert EMEF to a byte array
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function ToEMEFb(c As EMEFc) As Byte()
         Dim out = New Byte(41 + c.s1.Length + c.s2.Length) {}
         out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EMEF"))
@@ -271,7 +272,7 @@ Friend Module Functions
         Return out
     End Function
     ' convert EME2 to a byte array
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function ToEME2b(c As EME2c) As Byte()
         Dim EEOV = c.EEOV.ToEEOVb
         Dim out = New Byte(38 + c.name.Length + EEOV.Length) {}
@@ -288,7 +289,7 @@ Friend Module Functions
         Return out
     End Function
     ' convert EEOV to a byte array
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function ToEEOVb(c As EEOVc) As Byte()
         Dim invl = c.inv.Sum(Function(e) e.Length + 2)
         Dim a = If(c.ps4 = 2, 2, 0)
@@ -318,7 +319,7 @@ Friend Module Functions
         Return out
     End Function
     ' convert Trigger to a byte array
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function ToTriggerB(c As Trigger) As Byte()
         Dim b As New List(Of Byte)
         b.AddRange(c.EMTR.ToEMTRb())
@@ -329,7 +330,7 @@ Friend Module Functions
 #Region "Byte array search"
     ' Code for finding location of given byte array within another
     Private ReadOnly Empty(-1) As Integer
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function Locate(ByVal self() As Byte, ByVal candidate() As Byte) As Integer()
         If IsEmptyLocate(self, candidate) Then
             Return Empty
@@ -362,7 +363,7 @@ Friend Module Functions
     End Function
 #End Region
     ' Finds all locations of a given header, reads size, copies that section into byte array, puts array in list.
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function GetRegions(f As String, hs As String) As List(Of Byte())
         Dim hl As New List(Of Byte())
         Dim file = IO.File.ReadAllBytes(f)
@@ -377,7 +378,7 @@ Friend Module Functions
         Return hl
     End Function
     ' Finds all triggers for .map files, and the subsequent trigger info chunk
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Function GetTriggers(f As String) As List(Of Trigger)
         Dim hl As New List(Of Trigger)
         Dim file = IO.File.ReadAllBytes(f)
@@ -392,7 +393,7 @@ Friend Module Functions
         Return hl
     End Function
     ' Writes from "newBytes" into "b", starting at the given index
-    <System.Runtime.CompilerServices.Extension>
+    <Extension>
     Public Sub OverwriteBytes(ByRef b As Byte(), startIndex As Integer, newBytes As Byte())
         For i = startIndex To startIndex + newBytes.Length - 1
             b(i) = newBytes(i - startIndex)

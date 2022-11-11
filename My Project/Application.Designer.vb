@@ -11,6 +11,8 @@
 Option Strict On
 Option Explicit On
 
+Imports Microsoft.VisualBasic.ApplicationServices
+
 Namespace My
 
     'NOTE: This file is auto-generated; do not modify it directly.  To make changes,
@@ -20,16 +22,16 @@ Namespace My
     '
     Partial Friend Class MyApplication
 
-        <Global.System.Diagnostics.DebuggerStepThroughAttribute()>
+        <DebuggerStepThrough()>
         Public Sub New()
-            MyBase.New(Global.Microsoft.VisualBasic.ApplicationServices.AuthenticationMode.Windows)
+            MyBase.New(AuthenticationMode.Windows)
             Me.IsSingleInstance = False
             Me.EnableVisualStyles = True
             Me.SaveMySettingsOnExit = True
-            Me.ShutDownStyle = Global.Microsoft.VisualBasic.ApplicationServices.ShutdownMode.AfterMainFormCloses
+            Me.ShutdownStyle = ShutdownMode.AfterMainFormCloses
         End Sub
 
-        <Global.System.Diagnostics.DebuggerStepThroughAttribute()>
+        <DebuggerStepThrough()>
         Protected Overrides Sub OnCreateMainForm()
             Me.MainForm = UI
         End Sub

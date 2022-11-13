@@ -96,6 +96,9 @@ Public Class UI
             EME2cb.SelectedIndex = 0
             lEME2i = -1
             EME2ToUI()
+            For Each c As Control In EME2gb.Controls
+                c.Enabled = True
+            Next
         Else
             For Each c As Control In EME2gb.Controls
                 c.Enabled = False
@@ -110,6 +113,9 @@ Public Class UI
             EMEPcb.SelectedIndex = 0
             lEMEPi = -1
             EMEPToUI()
+            For Each c As Control In EMEPgb.Controls
+                c.Enabled = True
+            Next
         Else
             For Each c As Control In EMEPgb.Controls
                 c.Enabled = False
@@ -126,6 +132,9 @@ Public Class UI
             Triggercb.SelectedIndex = 0
             lTriggeri = -1 : lTriggerpi = -1
             TriggerToUI()
+            For Each c As Control In Triggergb.Controls
+                c.Enabled = True
+            Next
         Else
             For Each c As Control In Triggergb.Controls
                 c.Enabled = False
@@ -139,6 +148,9 @@ Public Class UI
             EPTHcb.SelectedIndex = 0
             lEPTHi = -1 : lEPTHpi = -1
             EPTHToUI()
+            For Each c As Control In EPTHGB.Controls
+                c.Enabled = True
+            Next
         Else
             For Each c As Control In EPTHGB.Controls
                 c.Enabled = False
@@ -152,6 +164,9 @@ Public Class UI
             EMSDcb.SelectedIndex = 0
             lEMSDi = -1
             EMSDToUI()
+            For Each c As Control In EMSDgb.Controls
+                c.Enabled = True
+            Next
         Else
             For Each c As Control In EMSDgb.Controls
                 c.Enabled = False
@@ -165,6 +180,9 @@ Public Class UI
             EMEFcb.SelectedIndex = 0
             lEMEFi = -1
             EMEFToUI()
+            For Each c As Control In EMEFgb.Controls
+                c.Enabled = True
+            Next
         Else
             For Each c As Control In EMEFgb.Controls
                 c.Enabled = False

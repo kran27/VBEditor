@@ -617,4 +617,25 @@ Public Class UI
         lEMSDi = -1
         lEMEFi = -1
     End Sub
+#Region ".stf Stuff"
+    Private Sub DarkButton3_Click_1(sender As Object, e As EventArgs) Handles DarkButton3.Click
+        Dim ofd As New OpenFileDialog With {.Filter = "Van Buren String Table File|*.stf", .Multiselect = False}
+        If ofd.ShowDialog() = DialogResult.OK Then
+            Dim sfd As New SaveFileDialog With {.Filter = "Text File|*.txt"}
+            If sfd.ShowDialog() = DialogResult.OK Then
+                File.WriteAllLines(sfd.FileName, STFToTXT(File.ReadAllBytes(ofd.FileName)))
+            End If
+        End If
+    End Sub
+
+    Private Sub DarkButton4_Click(sender As Object, e As EventArgs) Handles DarkButton4.Click
+        Dim ofd As New OpenFileDialog With {.Filter = "Text File|*.txt", .Multiselect = False}
+        If ofd.ShowDialog() = DialogResult.OK Then
+            Dim sfd As New SaveFileDialog With {.Filter = "Van Buren String Table File|*.stf"}
+            If sfd.ShowDialog() = DialogResult.OK Then
+                File.WriteAllBytes(sfd.FileName, TXTToSTF(IO.File.ReadAllLines(ofd.FileName)))
+            End If
+        End If
+    End Sub
+#End Region
 End Class

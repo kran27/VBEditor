@@ -327,6 +327,35 @@ Friend Module Functions
         Return b.ToArray()
     End Function
 #End Region
+#Region ".stf Stuff"
+    Public Function STFToTXT(b As Byte()) As String()
+        Dim s As New List(Of String)
+        Dim oi = 12
+        Dim li = 16
+        For i = 0 To BitConverter.ToInt32(b, 8) - 1
+            s.Add(Encoding.ASCII.GetString(b, BitConverter.ToInt32(b, oi), BitConverter.ToInt32(b, li)))
+            oi += 16
+            li += 16
+        Next
+        Return s.ToArray()
+    End Function
+    Public Function TXTToSTF(s As String()) As Byte()
+        Dim b As New List(Of Byte)
+        b.AddRange(New Byte() {3, 0, 0, 0, 1, 0, 0, 0})
+        b.AddRange(BitConverter.GetBytes(s.Length))
+        Dim o = s.Length * 16 + 12
+        For i = 0 To s.Length - 1
+            b.AddRange(BitConverter.GetBytes(o))
+            b.AddRange(BitConverter.GetBytes(s(i).Length))
+            b.AddRange(New Byte() {&H7E, &HE3, &H3, &H0, &H0, &H0, &H0, &H0})
+            o += s(i).Length
+        Next
+        For Each stri In s
+            b.AddRange(Encoding.ASCII.GetBytes(stri))
+        Next
+        Return b.ToArray()
+    End Function
+#End Region
 #Region "Byte array search"
     ' Code for finding location of given byte array within another
     Private ReadOnly Empty(-1) As Integer

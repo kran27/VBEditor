@@ -2,14 +2,20 @@
 ' Classes containing the headers used by that file type, in the order they should be put back into a new file.
 Public Class Map
     Property EMAP As EMAPc
-    Property EME2 As List (Of EME2c)
-    Property EMEP As List (Of EMEPc)
+    Property EME2 As List(Of EME2c)
+    Property EMEP As List(Of EMEPc)
     Property ECAM As ECAMc
     Property Triggers As List(Of Trigger)
     Property EPTH As List(Of EPTHc)
     Property EMSD As List(Of EMSDc)
     Property EMNP As Byte() ' EMNP never changes, doesn't need unique class.
     Property EMEF As List(Of EMEFc)
+End Class
+Public Class CRT
+    Property EEN2 As EEN2c
+    Property GENT As GENTc
+    Property GCRE As GCREc
+    Property GCHR As GCHRc
 End Class
 #End Region
 #Region "Header Classes"
@@ -128,6 +134,23 @@ Public Class ExTRc ' Called ExTR instead of E(T/S/B)TR for easier handling withi
         index = 0
     End Sub
 End Class
+
+Public Class EEN2c
+
+End Class
+Public Class GENTc
+
+End Class
+Public Class GCREc
+    Property Special As Special
+    Property GWAM As List(Of GWAMc)
+End Class
+Public Class GWAMc
+
+End Class
+Public Class GCHRc
+    Property name As String
+End Class
 #End Region
 Public Class Point3
     Property x As Single
@@ -149,5 +172,23 @@ Public Class Point4
         Me.z = z
         Me.y = y
         Me.r = r
+    End Sub
+End Class
+Public Class Special
+    Property S As Integer
+    Property P As Integer
+    Property E As Integer
+    Property C As Integer
+    Property I As Integer
+    Property A As Integer
+    Property L As Integer
+    Sub New(S As Integer, P As Integer, E As Integer, C As Integer, I As Integer, A As Integer, L As Integer)
+        Me.S = S
+        Me.P = P
+        Me.E = E
+        Me.C = C
+        Me.I = I
+        Me.A = A
+        Me.L = L
     End Sub
 End Class

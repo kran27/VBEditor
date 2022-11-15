@@ -48,7 +48,7 @@ Public Class UI
                     m.EMAP = f.GetRegions("EMAP")(0).ToEMAPc
                     m.EME2 = (From x In f.GetRegions("EME2") Select x.ToEME2c).ToList
                     m.EMEP = (From x In f.GetRegions("EMEP") Select x.ToEMEPc).ToList
-                    m.ECAM = f.GetRegions("ECAM")(0).ToECAMc
+                    Try : m.ECAM = f.GetRegions("ECAM")(0).ToECAMc : Catch : End Try
                     m.Triggers = f.GetTriggers
                     m.EPTH = (From x In f.GetRegions("EPTH") Select x.ToEPTHc).ToList
                     m.EMSD = (From x In f.GetRegions("EMSD") Select x.ToEMSDc).ToList

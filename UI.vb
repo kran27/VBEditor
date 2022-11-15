@@ -24,7 +24,7 @@ Public Class UI
         Dim ofd As New OpenFileDialog With {.Filter = "Van Buren Data File|*.AMO;*.ARM;*.CON;*.CRT;*.DOR;*.INT;*.ITM;*.MAP;*.USE;*.VEG;*.WEA", .Multiselect = False, .ValidateNames = True}
         If ofd.ShowDialog = DialogResult.OK Then
             f = ofd.FileName
-            ext = f.Substring(f.LastIndexOf("."), 4)
+            ext = f.Substring(f.LastIndexOf("."), 4).ToLower()
             Select Case ext
                 Case ".amo"
                     MsgBox("Not yet implemented")
@@ -71,12 +71,12 @@ Public Class UI
             For Each c2 As DarkGroupBox In From con In c.Controls Where TypeOf con Is DarkGroupBox
                 For Each c3 In c2.Controls
                     If TypeOf c3 Is DarkTextBox Then
-                        c3.text = ""
+                        c3.Text = ""
                     ElseIf TypeOf c3 Is DarkNumericUpDown Then
-                        c3.value = 0
+                        c3.Value = 0
                     ElseIf TypeOf c3 Is DarkComboBox AndAlso Not c3.name = "Triggertcb" Then
-                        c3.items.clear
-                        c3.refresh() ' Refresh control so the text region is not transparent
+                        c3.Items.Clear
+                        c3.Refresh() ' Refresh control so the text region is not transparent
                     ElseIf TypeOf c3 Is DataGridView Then
                         c3.DataSource = Nothing
                     End If
@@ -561,8 +561,8 @@ Public Class UI
 
     Private Sub DarkButton2_Click_1(sender As Object, e As EventArgs) Handles DarkButton2.Click
         Dim type = InputBox("Which file type would you like to create?", "Van Buren Editor", "")
-        ext = type
-        Select Case type
+        ext = type.ToLower()
+        Select Case ext
             Case ".amo"
                 MsgBox("Not yet implemented")
             Case ".arm"
@@ -592,8 +592,7 @@ Public Class UI
                     .Triggers = New List(Of Trigger),
                     .ECAM = Nothing,
                     .EMNP = New Byte() {&H45, &H4D, &H4E, &H50, &H0, &H0, &H0, &H0, &H10, &H0, &H0, &H0, &H0, &H0, &H0, &H0} ' EMNP Never changes, but not having it in addition to missing EMEP causes the map not to render, so I'm adding it here.
-                    }
-
+                }
                 MapSetupUI()
 #End Region
             Case ".use"

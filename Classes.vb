@@ -139,19 +139,22 @@ Public Class EEN2c
 
 End Class
 Public Class GENTc
-
+    Property RaceSR As Integer
+    Property Health As Integer
 End Class
 Public Class GCREc
     Property Special As Special
+    Property Skills As List(Of Skill)
     Property GWAM As List(Of GWAMc)
 End Class
 Public Class GWAMc
-
+    Property sr As Integer
 End Class
 Public Class GCHRc
     Property name As String
 End Class
 #End Region
+#Region "Other Classes"
 Public Class Point3
     Property x As Single
     Property z As Single
@@ -192,3 +195,12 @@ Public Class Special
         Me.L = L
     End Sub
 End Class
+Public Class Skill
+    Property Value As Integer
+    Property Index As Integer
+    Sub New(Value As Integer, Index As Integer)
+        Me.Value = Value
+        Me.Index = Index
+    End Sub
+End Class
+#End Region

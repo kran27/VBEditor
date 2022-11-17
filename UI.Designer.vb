@@ -5,7 +5,7 @@ Imports Microsoft.VisualBasic.CompilerServices
 
 <DesignerGenerated()>
 Partial Class UI
-    Inherits DarkForm
+    Inherits AltUI.Forms.DarkForm
 
     'Form overrides dispose to clean up the component list.
     <DebuggerNonUserCode()>
@@ -28,7 +28,6 @@ Partial Class UI
     <DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Me.DarkButton1 = New AltUI.Controls.DarkButton()
         Me.EMAPs3l = New AltUI.Controls.DarkLabel()
         Me.EMAPs2l = New AltUI.Controls.DarkLabel()
         Me.EMAPs1l = New AltUI.Controls.DarkLabel()
@@ -37,25 +36,26 @@ Partial Class UI
         Me.EMAPs3 = New AltUI.Controls.DarkTextBox()
         Me.EMAPs2 = New AltUI.Controls.DarkTextBox()
         Me.EMAPs1 = New AltUI.Controls.DarkTextBox()
-        Me.MapSave = New AltUI.Controls.DarkButton()
         Me.Mapgb = New AltUI.Controls.DarkGroupBox()
         Me.Triggergb = New AltUI.Controls.DarkGroupBox()
+        Me.Triggerpm = New AltUI.Controls.DarkButton()
+        Me.Triggernud = New AltUI.Controls.DarkNumericUpDown()
         Me.Triggerm = New AltUI.Controls.DarkButton()
         Me.Triggertcb = New AltUI.Controls.DarkComboBox()
         Me.Triggerp = New AltUI.Controls.DarkButton()
         Me.Triggern = New AltUI.Controls.DarkTextBox()
-        Me.Triggerpcb = New AltUI.Controls.DarkComboBox()
         Me.Triggercb = New AltUI.Controls.DarkComboBox()
         Me.Triggerx = New AltUI.Controls.DarkTextBox()
         Me.Triggerxl = New AltUI.Controls.DarkLabel()
         Me.Triggery = New AltUI.Controls.DarkTextBox()
         Me.Triggerz = New AltUI.Controls.DarkTextBox()
         Me.EPTHGB = New AltUI.Controls.DarkGroupBox()
+        Me.EPTHpm = New AltUI.Controls.DarkButton()
         Me.EPTHm = New AltUI.Controls.DarkButton()
+        Me.EPTHnud = New AltUI.Controls.DarkNumericUpDown()
         Me.EPTHr = New AltUI.Controls.DarkTextBox()
         Me.EPTHp = New AltUI.Controls.DarkButton()
         Me.EPTHn = New AltUI.Controls.DarkTextBox()
-        Me.EPTHpcb = New AltUI.Controls.DarkComboBox()
         Me.EPTHcb = New AltUI.Controls.DarkComboBox()
         Me.EPTHx = New AltUI.Controls.DarkTextBox()
         Me.EPTHxl = New AltUI.Controls.DarkLabel()
@@ -123,12 +123,33 @@ Partial Class UI
         Me.EMEPnud = New AltUI.Controls.DarkNumericUpDown()
         Me.EMEPx = New AltUI.Controls.DarkTextBox()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.DarkButton2 = New AltUI.Controls.DarkButton()
-        Me.DarkButton3 = New AltUI.Controls.DarkButton()
-        Me.DarkButton4 = New AltUI.Controls.DarkButton()
+        Me.DarkMenuStrip1 = New AltUI.Controls.DarkMenuStrip()
+        Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.NewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AmoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ArmToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ConToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CrtToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.IntToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ItmToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.UseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.VegToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.WeaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.OpenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.StfToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TxtTostfToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SetEnglishstfLocationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.Mapgb.SuspendLayout()
         Me.Triggergb.SuspendLayout()
+        CType(Me.Triggernud, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.EPTHGB.SuspendLayout()
+        CType(Me.EPTHnud, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.EMSDgb.SuspendLayout()
         Me.EME2gb.SuspendLayout()
         CType(Me.EME2dgv, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -137,20 +158,8 @@ Partial Class UI
         Me.EMAPgb.SuspendLayout()
         Me.EMEPgb.SuspendLayout()
         CType(Me.EMEPnud, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.DarkMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'DarkButton1
-        '
-        Me.DarkButton1.BorderColour = System.Drawing.Color.Empty
-        Me.DarkButton1.CustomColour = False
-        Me.DarkButton1.FlatBottom = False
-        Me.DarkButton1.FlatTop = False
-        Me.DarkButton1.Location = New System.Drawing.Point(12, 12)
-        Me.DarkButton1.Name = "DarkButton1"
-        Me.DarkButton1.Padding = New System.Windows.Forms.Padding(5)
-        Me.DarkButton1.Size = New System.Drawing.Size(75, 23)
-        Me.DarkButton1.TabIndex = 0
-        Me.DarkButton1.Text = "Load File"
         '
         'EMAPs3l
         '
@@ -232,19 +241,6 @@ Partial Class UI
         Me.EMAPs1.Size = New System.Drawing.Size(266, 23)
         Me.EMAPs1.TabIndex = 0
         '
-        'MapSave
-        '
-        Me.MapSave.BorderColour = System.Drawing.Color.Empty
-        Me.MapSave.CustomColour = False
-        Me.MapSave.FlatBottom = False
-        Me.MapSave.FlatTop = False
-        Me.MapSave.Location = New System.Drawing.Point(174, 12)
-        Me.MapSave.Name = "MapSave"
-        Me.MapSave.Padding = New System.Windows.Forms.Padding(5)
-        Me.MapSave.Size = New System.Drawing.Size(75, 23)
-        Me.MapSave.TabIndex = 10
-        Me.MapSave.Text = "Save"
-        '
         'Mapgb
         '
         Me.Mapgb.Controls.Add(Me.Triggergb)
@@ -255,7 +251,7 @@ Partial Class UI
         Me.Mapgb.Controls.Add(Me.ECAMgb)
         Me.Mapgb.Controls.Add(Me.EMAPgb)
         Me.Mapgb.Controls.Add(Me.EMEPgb)
-        Me.Mapgb.Location = New System.Drawing.Point(12, 41)
+        Me.Mapgb.Location = New System.Drawing.Point(12, 27)
         Me.Mapgb.Name = "Mapgb"
         Me.Mapgb.Size = New System.Drawing.Size(924, 456)
         Me.Mapgb.TabIndex = 2
@@ -264,11 +260,12 @@ Partial Class UI
         '
         'Triggergb
         '
+        Me.Triggergb.Controls.Add(Me.Triggerpm)
+        Me.Triggergb.Controls.Add(Me.Triggernud)
         Me.Triggergb.Controls.Add(Me.Triggerm)
         Me.Triggergb.Controls.Add(Me.Triggertcb)
         Me.Triggergb.Controls.Add(Me.Triggerp)
         Me.Triggergb.Controls.Add(Me.Triggern)
-        Me.Triggergb.Controls.Add(Me.Triggerpcb)
         Me.Triggergb.Controls.Add(Me.Triggercb)
         Me.Triggergb.Controls.Add(Me.Triggerx)
         Me.Triggergb.Controls.Add(Me.Triggerxl)
@@ -280,6 +277,27 @@ Partial Class UI
         Me.Triggergb.TabIndex = 14
         Me.Triggergb.TabStop = False
         Me.Triggergb.Text = "Trigger"
+        '
+        'Triggerpm
+        '
+        Me.Triggerpm.BorderColour = System.Drawing.Color.Empty
+        Me.Triggerpm.CustomColour = False
+        Me.Triggerpm.FlatBottom = False
+        Me.Triggerpm.FlatTop = False
+        Me.Triggerpm.Location = New System.Drawing.Point(38, 59)
+        Me.Triggerpm.Name = "Triggerpm"
+        Me.Triggerpm.Padding = New System.Windows.Forms.Padding(5)
+        Me.Triggerpm.Size = New System.Drawing.Size(15, 23)
+        Me.Triggerpm.TabIndex = 47
+        Me.Triggerpm.Text = "-"
+        '
+        'Triggernud
+        '
+        Me.Triggernud.Location = New System.Drawing.Point(6, 59)
+        Me.Triggernud.Maximum = New Decimal(New Integer() {99, 0, 0, 0})
+        Me.Triggernud.Name = "Triggernud"
+        Me.Triggernud.Size = New System.Drawing.Size(32, 23)
+        Me.Triggernud.TabIndex = 31
         '
         'Triggerm
         '
@@ -327,15 +345,6 @@ Partial Class UI
         Me.Triggern.Size = New System.Drawing.Size(229, 23)
         Me.Triggern.TabIndex = 36
         '
-        'Triggerpcb
-        '
-        Me.Triggerpcb.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
-        Me.Triggerpcb.FormattingEnabled = True
-        Me.Triggerpcb.Location = New System.Drawing.Point(6, 58)
-        Me.Triggerpcb.Name = "Triggerpcb"
-        Me.Triggerpcb.Size = New System.Drawing.Size(37, 24)
-        Me.Triggerpcb.TabIndex = 35
-        '
         'Triggercb
         '
         Me.Triggercb.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
@@ -350,15 +359,15 @@ Partial Class UI
         Me.Triggerx.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
         Me.Triggerx.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Triggerx.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
-        Me.Triggerx.Location = New System.Drawing.Point(81, 59)
+        Me.Triggerx.Location = New System.Drawing.Point(93, 59)
         Me.Triggerx.Name = "Triggerx"
-        Me.Triggerx.Size = New System.Drawing.Size(67, 23)
+        Me.Triggerx.Size = New System.Drawing.Size(63, 23)
         Me.Triggerx.TabIndex = 29
         '
         'Triggerxl
         '
         Me.Triggerxl.AutoSize = True
-        Me.Triggerxl.Location = New System.Drawing.Point(49, 63)
+        Me.Triggerxl.Location = New System.Drawing.Point(59, 63)
         Me.Triggerxl.Name = "Triggerxl"
         Me.Triggerxl.Size = New System.Drawing.Size(28, 15)
         Me.Triggerxl.TabIndex = 32
@@ -369,9 +378,9 @@ Partial Class UI
         Me.Triggery.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
         Me.Triggery.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Triggery.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
-        Me.Triggery.Location = New System.Drawing.Point(154, 59)
+        Me.Triggery.Location = New System.Drawing.Point(162, 59)
         Me.Triggery.Name = "Triggery"
-        Me.Triggery.Size = New System.Drawing.Size(67, 23)
+        Me.Triggery.Size = New System.Drawing.Size(63, 23)
         Me.Triggery.TabIndex = 30
         '
         'Triggerz
@@ -379,18 +388,19 @@ Partial Class UI
         Me.Triggerz.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
         Me.Triggerz.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Triggerz.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
-        Me.Triggerz.Location = New System.Drawing.Point(227, 59)
+        Me.Triggerz.Location = New System.Drawing.Point(231, 59)
         Me.Triggerz.Name = "Triggerz"
-        Me.Triggerz.Size = New System.Drawing.Size(67, 23)
+        Me.Triggerz.Size = New System.Drawing.Size(63, 23)
         Me.Triggerz.TabIndex = 31
         '
         'EPTHGB
         '
+        Me.EPTHGB.Controls.Add(Me.EPTHpm)
         Me.EPTHGB.Controls.Add(Me.EPTHm)
+        Me.EPTHGB.Controls.Add(Me.EPTHnud)
         Me.EPTHGB.Controls.Add(Me.EPTHr)
         Me.EPTHGB.Controls.Add(Me.EPTHp)
         Me.EPTHGB.Controls.Add(Me.EPTHn)
-        Me.EPTHGB.Controls.Add(Me.EPTHpcb)
         Me.EPTHGB.Controls.Add(Me.EPTHcb)
         Me.EPTHGB.Controls.Add(Me.EPTHx)
         Me.EPTHGB.Controls.Add(Me.EPTHxl)
@@ -402,6 +412,19 @@ Partial Class UI
         Me.EPTHGB.TabIndex = 39
         Me.EPTHGB.TabStop = False
         Me.EPTHGB.Text = "EPTH"
+        '
+        'EPTHpm
+        '
+        Me.EPTHpm.BorderColour = System.Drawing.Color.Empty
+        Me.EPTHpm.CustomColour = False
+        Me.EPTHpm.FlatBottom = False
+        Me.EPTHpm.FlatTop = False
+        Me.EPTHpm.Location = New System.Drawing.Point(38, 59)
+        Me.EPTHpm.Name = "EPTHpm"
+        Me.EPTHpm.Padding = New System.Windows.Forms.Padding(5)
+        Me.EPTHpm.Size = New System.Drawing.Size(15, 23)
+        Me.EPTHpm.TabIndex = 49
+        Me.EPTHpm.Text = "-"
         '
         'EPTHm
         '
@@ -416,14 +439,21 @@ Partial Class UI
         Me.EPTHm.TabIndex = 44
         Me.EPTHm.Text = "-"
         '
+        'EPTHnud
+        '
+        Me.EPTHnud.Location = New System.Drawing.Point(6, 59)
+        Me.EPTHnud.Name = "EPTHnud"
+        Me.EPTHnud.Size = New System.Drawing.Size(32, 23)
+        Me.EPTHnud.TabIndex = 48
+        '
         'EPTHr
         '
         Me.EPTHr.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
         Me.EPTHr.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EPTHr.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
-        Me.EPTHr.Location = New System.Drawing.Point(247, 59)
+        Me.EPTHr.Location = New System.Drawing.Point(248, 59)
         Me.EPTHr.Name = "EPTHr"
-        Me.EPTHr.Size = New System.Drawing.Size(47, 23)
+        Me.EPTHr.Size = New System.Drawing.Size(46, 23)
         Me.EPTHr.TabIndex = 37
         '
         'EPTHp
@@ -449,15 +479,6 @@ Partial Class UI
         Me.EPTHn.Size = New System.Drawing.Size(288, 23)
         Me.EPTHn.TabIndex = 36
         '
-        'EPTHpcb
-        '
-        Me.EPTHpcb.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
-        Me.EPTHpcb.FormattingEnabled = True
-        Me.EPTHpcb.Location = New System.Drawing.Point(6, 58)
-        Me.EPTHpcb.Name = "EPTHpcb"
-        Me.EPTHpcb.Size = New System.Drawing.Size(37, 24)
-        Me.EPTHpcb.TabIndex = 35
-        '
         'EPTHcb
         '
         Me.EPTHcb.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
@@ -472,15 +493,15 @@ Partial Class UI
         Me.EPTHx.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
         Me.EPTHx.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EPTHx.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
-        Me.EPTHx.Location = New System.Drawing.Point(88, 59)
+        Me.EPTHx.Location = New System.Drawing.Point(92, 59)
         Me.EPTHx.Name = "EPTHx"
-        Me.EPTHx.Size = New System.Drawing.Size(47, 23)
+        Me.EPTHx.Size = New System.Drawing.Size(46, 23)
         Me.EPTHx.TabIndex = 29
         '
         'EPTHxl
         '
         Me.EPTHxl.AutoSize = True
-        Me.EPTHxl.Location = New System.Drawing.Point(49, 63)
+        Me.EPTHxl.Location = New System.Drawing.Point(56, 63)
         Me.EPTHxl.Name = "EPTHxl"
         Me.EPTHxl.Size = New System.Drawing.Size(35, 15)
         Me.EPTHxl.TabIndex = 32
@@ -491,9 +512,9 @@ Partial Class UI
         Me.EPTHy.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
         Me.EPTHy.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EPTHy.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
-        Me.EPTHy.Location = New System.Drawing.Point(141, 59)
+        Me.EPTHy.Location = New System.Drawing.Point(144, 59)
         Me.EPTHy.Name = "EPTHy"
-        Me.EPTHy.Size = New System.Drawing.Size(47, 23)
+        Me.EPTHy.Size = New System.Drawing.Size(46, 23)
         Me.EPTHy.TabIndex = 30
         '
         'EPTHz
@@ -501,9 +522,9 @@ Partial Class UI
         Me.EPTHz.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
         Me.EPTHz.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EPTHz.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
-        Me.EPTHz.Location = New System.Drawing.Point(194, 59)
+        Me.EPTHz.Location = New System.Drawing.Point(196, 59)
         Me.EPTHz.Name = "EPTHz"
-        Me.EPTHz.Size = New System.Drawing.Size(47, 23)
+        Me.EPTHz.Size = New System.Drawing.Size(46, 23)
         Me.EPTHz.TabIndex = 31
         '
         'EMSDgb
@@ -1189,57 +1210,193 @@ Partial Class UI
         '
         Me.Timer1.Interval = 5
         '
-        'DarkButton2
+        'DarkMenuStrip1
         '
-        Me.DarkButton2.BorderColour = System.Drawing.Color.Empty
-        Me.DarkButton2.CustomColour = False
-        Me.DarkButton2.FlatBottom = False
-        Me.DarkButton2.FlatTop = False
-        Me.DarkButton2.Location = New System.Drawing.Point(93, 12)
-        Me.DarkButton2.Name = "DarkButton2"
-        Me.DarkButton2.Padding = New System.Windows.Forms.Padding(5)
-        Me.DarkButton2.Size = New System.Drawing.Size(75, 23)
-        Me.DarkButton2.TabIndex = 11
-        Me.DarkButton2.Text = "New File"
+        Me.DarkMenuStrip1.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.DarkMenuStrip1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.DarkMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.OptionsToolStripMenuItem, Me.ToolsToolStripMenuItem})
+        Me.DarkMenuStrip1.Location = New System.Drawing.Point(0, 0)
+        Me.DarkMenuStrip1.Name = "DarkMenuStrip1"
+        Me.DarkMenuStrip1.Padding = New System.Windows.Forms.Padding(3, 2, 0, 2)
+        Me.DarkMenuStrip1.Size = New System.Drawing.Size(948, 24)
+        Me.DarkMenuStrip1.TabIndex = 14
+        Me.DarkMenuStrip1.Text = "DarkMenuStrip1"
         '
-        'DarkButton3
+        'FileToolStripMenuItem
         '
-        Me.DarkButton3.BorderColour = System.Drawing.Color.Empty
-        Me.DarkButton3.CustomColour = False
-        Me.DarkButton3.FlatBottom = False
-        Me.DarkButton3.FlatTop = False
-        Me.DarkButton3.Location = New System.Drawing.Point(780, 12)
-        Me.DarkButton3.Name = "DarkButton3"
-        Me.DarkButton3.Padding = New System.Windows.Forms.Padding(5)
-        Me.DarkButton3.Size = New System.Drawing.Size(75, 23)
-        Me.DarkButton3.TabIndex = 12
-        Me.DarkButton3.Text = ".stf to .txt"
+        Me.FileToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.OpenToolStripMenuItem, Me.SaveToolStripMenuItem})
+        Me.FileToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
+        Me.FileToolStripMenuItem.Text = "File"
         '
-        'DarkButton4
+        'NewToolStripMenuItem
         '
-        Me.DarkButton4.BorderColour = System.Drawing.Color.Empty
-        Me.DarkButton4.CustomColour = False
-        Me.DarkButton4.FlatBottom = False
-        Me.DarkButton4.FlatTop = False
-        Me.DarkButton4.Location = New System.Drawing.Point(861, 12)
-        Me.DarkButton4.Name = "DarkButton4"
-        Me.DarkButton4.Padding = New System.Windows.Forms.Padding(5)
-        Me.DarkButton4.Size = New System.Drawing.Size(75, 23)
-        Me.DarkButton4.TabIndex = 13
-        Me.DarkButton4.Text = ".txt to .stf"
+        Me.NewToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.NewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AmoToolStripMenuItem, Me.ArmToolStripMenuItem, Me.ConToolStripMenuItem, Me.CrtToolStripMenuItem, Me.DorToolStripMenuItem, Me.IntToolStripMenuItem, Me.ItmToolStripMenuItem, Me.MapToolStripMenuItem, Me.UseToolStripMenuItem, Me.VegToolStripMenuItem, Me.WeaToolStripMenuItem})
+        Me.NewToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.NewToolStripMenuItem.Name = "NewToolStripMenuItem"
+        Me.NewToolStripMenuItem.Size = New System.Drawing.Size(150, 22)
+        Me.NewToolStripMenuItem.Text = "New"
+        '
+        'AmoToolStripMenuItem
+        '
+        Me.AmoToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.AmoToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.AmoToolStripMenuItem.Name = "AmoToolStripMenuItem"
+        Me.AmoToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
+        Me.AmoToolStripMenuItem.Text = ".amo"
+        '
+        'ArmToolStripMenuItem
+        '
+        Me.ArmToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.ArmToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.ArmToolStripMenuItem.Name = "ArmToolStripMenuItem"
+        Me.ArmToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
+        Me.ArmToolStripMenuItem.Text = ".arm"
+        '
+        'ConToolStripMenuItem
+        '
+        Me.ConToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.ConToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.ConToolStripMenuItem.Name = "ConToolStripMenuItem"
+        Me.ConToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
+        Me.ConToolStripMenuItem.Text = ".con"
+        '
+        'CrtToolStripMenuItem
+        '
+        Me.CrtToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.CrtToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.CrtToolStripMenuItem.Name = "CrtToolStripMenuItem"
+        Me.CrtToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
+        Me.CrtToolStripMenuItem.Text = ".crt"
+        '
+        'DorToolStripMenuItem
+        '
+        Me.DorToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.DorToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.DorToolStripMenuItem.Name = "DorToolStripMenuItem"
+        Me.DorToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
+        Me.DorToolStripMenuItem.Text = ".dor"
+        '
+        'IntToolStripMenuItem
+        '
+        Me.IntToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.IntToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.IntToolStripMenuItem.Name = "IntToolStripMenuItem"
+        Me.IntToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
+        Me.IntToolStripMenuItem.Text = ".int"
+        '
+        'ItmToolStripMenuItem
+        '
+        Me.ItmToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.ItmToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.ItmToolStripMenuItem.Name = "ItmToolStripMenuItem"
+        Me.ItmToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
+        Me.ItmToolStripMenuItem.Text = ".itm"
+        '
+        'MapToolStripMenuItem
+        '
+        Me.MapToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.MapToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.MapToolStripMenuItem.Name = "MapToolStripMenuItem"
+        Me.MapToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
+        Me.MapToolStripMenuItem.Text = ".map"
+        '
+        'UseToolStripMenuItem
+        '
+        Me.UseToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.UseToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.UseToolStripMenuItem.Name = "UseToolStripMenuItem"
+        Me.UseToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
+        Me.UseToolStripMenuItem.Text = ".use"
+        '
+        'VegToolStripMenuItem
+        '
+        Me.VegToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.VegToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.VegToolStripMenuItem.Name = "VegToolStripMenuItem"
+        Me.VegToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
+        Me.VegToolStripMenuItem.Text = ".veg"
+        '
+        'WeaToolStripMenuItem
+        '
+        Me.WeaToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.WeaToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.WeaToolStripMenuItem.Name = "WeaToolStripMenuItem"
+        Me.WeaToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
+        Me.WeaToolStripMenuItem.Text = ".wea"
+        '
+        'OpenToolStripMenuItem
+        '
+        Me.OpenToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.OpenToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem"
+        Me.OpenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
+        Me.OpenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.OpenToolStripMenuItem.Text = "Open"
+        '
+        'SaveToolStripMenuItem
+        '
+        Me.SaveToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.SaveToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
+        Me.SaveToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
+        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SaveToolStripMenuItem.Text = "Save"
+        '
+        'OptionsToolStripMenuItem
+        '
+        Me.OptionsToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SetEnglishstfLocationToolStripMenuItem})
+        Me.OptionsToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
+        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(61, 20)
+        Me.OptionsToolStripMenuItem.Text = "Options"
+        '
+        'ToolsToolStripMenuItem
+        '
+        Me.ToolsToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.ToolsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.StfToolStripMenuItem, Me.TxtTostfToolStripMenuItem})
+        Me.ToolsToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.ToolsToolStripMenuItem.Name = "ToolsToolStripMenuItem"
+        Me.ToolsToolStripMenuItem.Size = New System.Drawing.Size(46, 20)
+        Me.ToolsToolStripMenuItem.Text = "Tools"
+        '
+        'StfToolStripMenuItem
+        '
+        Me.StfToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.StfToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.StfToolStripMenuItem.Name = "StfToolStripMenuItem"
+        Me.StfToolStripMenuItem.Size = New System.Drawing.Size(124, 22)
+        Me.StfToolStripMenuItem.Text = ".stf to .txt"
+        '
+        'TxtTostfToolStripMenuItem
+        '
+        Me.TxtTostfToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.TxtTostfToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.TxtTostfToolStripMenuItem.Name = "TxtTostfToolStripMenuItem"
+        Me.TxtTostfToolStripMenuItem.Size = New System.Drawing.Size(124, 22)
+        Me.TxtTostfToolStripMenuItem.Text = ".txt to .stf"
+        '
+        'SetEnglishstfLocationToolStripMenuItem
+        '
+        Me.SetEnglishstfLocationToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.SetEnglishstfLocationToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.SetEnglishstfLocationToolStripMenuItem.Name = "SetEnglishstfLocationToolStripMenuItem"
+        Me.SetEnglishstfLocationToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
+        Me.SetEnglishstfLocationToolStripMenuItem.Text = "Set English.stf Location"
         '
         'UI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(948, 509)
-        Me.Controls.Add(Me.DarkButton4)
-        Me.Controls.Add(Me.DarkButton3)
-        Me.Controls.Add(Me.DarkButton2)
+        Me.ClientSize = New System.Drawing.Size(948, 495)
         Me.Controls.Add(Me.Mapgb)
-        Me.Controls.Add(Me.DarkButton1)
-        Me.Controls.Add(Me.MapSave)
+        Me.Controls.Add(Me.DarkMenuStrip1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.MainMenuStrip = Me.DarkMenuStrip1
         Me.MaximizeBox = False
         Me.Name = "UI"
         Me.Text = "Van Buren Editor"
@@ -1247,8 +1404,10 @@ Partial Class UI
         Me.Mapgb.ResumeLayout(False)
         Me.Triggergb.ResumeLayout(False)
         Me.Triggergb.PerformLayout()
+        CType(Me.Triggernud, System.ComponentModel.ISupportInitialize).EndInit()
         Me.EPTHGB.ResumeLayout(False)
         Me.EPTHGB.PerformLayout()
+        CType(Me.EPTHnud, System.ComponentModel.ISupportInitialize).EndInit()
         Me.EMSDgb.ResumeLayout(False)
         Me.EMSDgb.PerformLayout()
         Me.EME2gb.ResumeLayout(False)
@@ -1263,16 +1422,16 @@ Partial Class UI
         Me.EMEPgb.ResumeLayout(False)
         Me.EMEPgb.PerformLayout()
         CType(Me.EMEPnud, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ResumeLayout(false)
+        Me.DarkMenuStrip1.ResumeLayout(False)
+        Me.DarkMenuStrip1.PerformLayout()
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
 
-End Sub
-
-    Friend WithEvents DarkButton1 As DarkButton
+    End Sub
     Friend WithEvents EMAPs3 As DarkTextBox
     Friend WithEvents EMAPs2 As DarkTextBox
     Friend WithEvents EMAPs1 As DarkTextBox
     Friend WithEvents EMAPslb As DarkButton
-    Friend WithEvents MapSave As DarkButton
     Friend WithEvents EMAPilcb As DarkCheckBox
     Friend WithEvents Mapgb As DarkGroupBox
     Friend WithEvents EMEPgb As DarkGroupBox
@@ -1312,7 +1471,6 @@ End Sub
     Friend WithEvents EPTHGB As DarkGroupBox
     Friend WithEvents EPTHr As DarkTextBox
     Friend WithEvents EPTHn As DarkTextBox
-    Friend WithEvents EPTHpcb As DarkComboBox
     Friend WithEvents EPTHcb As DarkComboBox
     Friend WithEvents EPTHx As DarkTextBox
     Friend WithEvents EPTHxl As DarkLabel
@@ -1340,7 +1498,6 @@ End Sub
     Friend WithEvents Triggergb As DarkGroupBox
     Friend WithEvents Triggertcb As DarkComboBox
     Friend WithEvents Triggern As DarkTextBox
-    Friend WithEvents Triggerpcb As DarkComboBox
     Friend WithEvents Triggercb As DarkComboBox
     Friend WithEvents Triggerx As DarkTextBox
     Friend WithEvents Triggerxl As DarkLabel
@@ -1362,7 +1519,30 @@ End Sub
     Friend WithEvents Triggerp As DarkButton
     Friend WithEvents EPTHm As DarkButton
     Friend WithEvents EPTHp As DarkButton
-    Friend WithEvents DarkButton2 As DarkButton
-    Friend WithEvents DarkButton3 As DarkButton
-    Friend WithEvents DarkButton4 As DarkButton
+    Friend WithEvents Triggerpm As DarkButton
+    Friend WithEvents Triggernud As DarkNumericUpDown
+    Friend WithEvents EPTHpm As DarkButton
+    Friend WithEvents EPTHnud As DarkNumericUpDown
+    Friend WithEvents DarkMenuStrip1 As DarkMenuStrip
+    Friend WithEvents FileToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents NewToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents OpenToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SaveToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents StfToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents TxtTostfToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents AmoToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ArmToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ConToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents CrtToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents DorToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents IntToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ItmToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents MapToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents UseToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents VegToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents WeaToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents OptionsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SetEnglishstfLocationToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolTip1 As ToolTip
 End Class

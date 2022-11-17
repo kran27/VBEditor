@@ -126,12 +126,10 @@ End Class
 
 Public Class ExTRc ' Called ExTR instead of E(T/S/B)TR for easier handling within triggers
     Property type As String ' So we know which file is being created, T, S, or B. (or M, but it's ignored if that happens)
-    Property s As String ' used for types T and S
-    Property index As Integer ' used for type B
+    Property s As String
     Sub New()
         type = "T"
         s = ""
-        index = 0
     End Sub
 End Class
 
@@ -139,7 +137,10 @@ Public Class EEN2c
 
 End Class
 Public Class GENTc
-    Property RaceSR As Integer
+    Property HoverSR As Integer ' String used when moused over
+    Property LookSR As Integer ' String used when "Look" option is used
+    Property NameSR As Integer ' String of the entities' name
+    Property Look2SR As Integer ' String seemingly also
     Property Health As Integer
 End Class
 Public Class GCREc

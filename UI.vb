@@ -1,27 +1,15 @@
 ﻿Imports System.IO
-Imports System.Reflection
-Imports System.Text.RegularExpressions
-Imports AltUI
 Imports AltUI.Config
 Imports AltUI.Controls
-Imports AltUI.Docking
 
 Public Class UI
     Private f As String
     Private ext As String
     Private m As New Map
-    Private lEME2i As Integer = -1
-    Private lEMEPi As Integer = -1
-    Private lTriggeri As Integer = -1
-    Private lTriggerpi As Integer = -1
-    Private lEPTHi As Integer = -1
-    Private lEPTHpi As Integer = -1
-    Private lEMSDi As Integer = -1
-    Private lEMEFi As Integer = -1
 
-    Private Sub LoadFile() Handles DarkButton1.Click
+    Private Sub OpenFile() Handles OpenToolStripMenuItem.Click
         ' Loads all regions of a given file into their respective classes, and from there into the UI
-        Dim ofd As New OpenFileDialog With {.Filter = "Van Buren Data File|*.AMO;*.ARM;*.CON;*.CRT;*.DOR;*.INT;*.ITM;*.MAP;*.USE;*.VEG;*.WEA", .Multiselect = False, .ValidateNames = True}
+        Dim ofd As New OpenFileDialog With {.Filter = "Van Buren Data File|*.amo;*.arm;*.con;*.crt;*.dor;*.int;*.itm;*.map;*.use;*.veg;*.wea", .Multiselect = False, .ValidateNames = True}
         If ofd.ShowDialog = DialogResult.OK Then
             f = ofd.FileName
             ext = f.Substring(f.LastIndexOf("."), 4).ToLower()
@@ -42,8 +30,6 @@ Public Class UI
                     MsgBox("Not yet implemented")
 #Region ".map"
                 Case ".map"
-                    SetMaplin1()
-
                     m = New Map
                     m.EMAP = f.GetRegions("EMAP")(0).ToEMAPc
                     m.EME2 = (From x In f.GetRegions("EME2") Select x.ToEME2c).ToList
@@ -67,19 +53,23 @@ Public Class UI
         End If
     End Sub
     Private Sub ResetUI()
+        Dim en As Boolean
         For Each c As DarkGroupBox In From con In Controls Where TypeOf con Is DarkGroupBox
             For Each c2 As DarkGroupBox In From con In c.Controls Where TypeOf con Is DarkGroupBox
                 For Each c3 In c2.Controls
+                    en = c3.Enabled
+                    c3.enabled = False
                     If TypeOf c3 Is DarkTextBox Then
                         c3.Text = ""
                     ElseIf TypeOf c3 Is DarkNumericUpDown Then
-                        c3.Value = 0
+                        Try : c3.Value = c3.Minimum : Catch : End Try
                     ElseIf TypeOf c3 Is DarkComboBox AndAlso Not c3.name = "Triggertcb" Then
                         c3.Items.Clear
                         c3.Refresh() ' Refresh control so the text region is not transparent
                     ElseIf TypeOf c3 Is DataGridView Then
                         c3.DataSource = Nothing
                     End If
+                    c3.enabled = en
                 Next
             Next
         Next
@@ -87,18 +77,16 @@ Public Class UI
     Private Sub MapSetupUI()
         Mapgb.Show()
         ResetUI()
-        SetMaplin1()
         EMAPToUI()
         For Each EME2 In m.EME2
             EME2cb.Items.Add(EME2.name)
         Next
         If m.EME2.Any() Then
             EME2cb.SelectedIndex = 0
-            lEME2i = -1
-            EME2ToUI()
             For Each c As Control In EME2gb.Controls
                 c.Enabled = True
             Next
+            EME2ToUI()
         Else
             For Each c As Control In EME2gb.Controls
                 c.Enabled = False
@@ -111,11 +99,10 @@ Public Class UI
                 EMEPcb.Items.Add(i)
             Next
             EMEPcb.SelectedIndex = 0
-            lEMEPi = -1
-            EMEPToUI()
             For Each c As Control In EMEPgb.Controls
                 c.Enabled = True
             Next
+            EMEPToUI()
         Else
             For Each c As Control In EMEPgb.Controls
                 c.Enabled = False
@@ -130,11 +117,10 @@ Public Class UI
                 a = ""
             Next
             Triggercb.SelectedIndex = 0
-            lTriggeri = -1 : lTriggerpi = -1
-            TriggerToUI()
             For Each c As Control In Triggergb.Controls
                 c.Enabled = True
             Next
+            TriggerToUI()
         Else
             For Each c As Control In Triggergb.Controls
                 c.Enabled = False
@@ -146,11 +132,10 @@ Public Class UI
                 EPTHcb.Items.Add($"{i} ({m.EPTH(i - 1).name})")
             Next
             EPTHcb.SelectedIndex = 0
-            lEPTHi = -1 : lEPTHpi = -1
-            EPTHToUI()
             For Each c As Control In EPTHGB.Controls
                 c.Enabled = True
             Next
+            EPTHToUI()
         Else
             For Each c As Control In EPTHGB.Controls
                 c.Enabled = False
@@ -162,11 +147,10 @@ Public Class UI
                 EMSDcb.Items.Add($"{i} ({m.EMSD(i - 1).s2.Replace(".psf", "")})")
             Next
             EMSDcb.SelectedIndex = 0
-            lEMSDi = -1
-            EMSDToUI()
             For Each c As Control In EMSDgb.Controls
                 c.Enabled = True
             Next
+            EMSDToUI()
         Else
             For Each c As Control In EMSDgb.Controls
                 c.Enabled = False
@@ -178,11 +162,10 @@ Public Class UI
                 EMEFcb.Items.Add($"{i} ({m.EMEF(i - 1).s2.Replace(".veg", "")})")
             Next
             EMEFcb.SelectedIndex = 0
-            lEMEFi = -1
-            EMEFToUI()
             For Each c As Control In EMEFgb.Controls
                 c.Enabled = True
             Next
+            EMEFToUI()
         Else
             For Each c As Control In EMEFgb.Controls
                 c.Enabled = False
@@ -199,7 +182,6 @@ Public Class UI
         EMAPilcb.Checked = m.EMAP.il
     End Sub
     Private Sub EME2ToUI() Handles EME2cb.SelectedIndexChanged
-        If lEME2i <> -1 AndAlso lEME2i <= EME2cb.Items.Count - 1 Then UIToEME2(lEME2i)
         EME2n.Text = m.EME2(EME2cb.SelectedIndex).name
         EME2s1.Text = m.EME2(EME2cb.SelectedIndex).EEOV.s1
         EME2s2.Text = m.EME2(EME2cb.SelectedIndex).EEOV.s2
@@ -220,16 +202,13 @@ Public Class UI
             col.MinimumWidth = EME2dgv.Width - 18
             col.Width = EME2dgv.Width - 18
         Next
-        lEME2i = EME2cb.SelectedIndex
     End Sub
     Private Sub EMEPToUI() Handles EMEPcb.SelectedIndexChanged
-        If lEMEPi <> -1 AndAlso lEMEPi <= EMEPcb.Items.Count - 1 Then UIToEMEP(lEMEPi)
         EMEPnud.Value = m.EMEP(EMEPcb.SelectedIndex).index
         EMEPx.Text = m.EMEP(EMEPcb.SelectedIndex).p.x
         EMEPy.Text = m.EMEP(EMEPcb.SelectedIndex).p.y
         EMEPz.Text = m.EMEP(EMEPcb.SelectedIndex).p.z
         EMEPr.Text = m.EMEP(EMEPcb.SelectedIndex).p.r
-        lEMEPi = EMEPcb.SelectedIndex
     End Sub
     Private Sub ECAMToUI()
         ECAMx.Text = m.ECAM.p.x
@@ -238,120 +217,232 @@ Public Class UI
         ECAMr.Text = m.ECAM.p.r
     End Sub
     Private Sub TriggerToUI() Handles Triggercb.SelectedIndexChanged
-        If lTriggeri <> -1 AndAlso lEPTHi <= Triggercb.Items.Count - 1 Then
-            UIToTrigger(lTriggeri, lTriggerpi)
-        End If
-        Triggerpcb.Items.Clear()
-        For i = 1 To m.Triggers(Triggercb.SelectedIndex).EMTR.r.Count
-            Triggerpcb.Items.Add(i)
-        Next
-        Triggerpcb.SelectedIndex = 0
+        Triggernud.Value = 1
         Triggertcb.SelectedItem = m.Triggers(Triggercb.SelectedIndex).ExTR.type
-        Select Case m.Triggers(Triggercb.SelectedIndex).ExTR.type
-            Case "S", "T"
-                Triggern.Enabled = True
-                Triggern.Text = m.Triggers(Triggercb.SelectedIndex).ExTR.s
-            Case "B"
-                Triggern.Enabled = True
-                Triggern.Text = m.Triggers(Triggercb.SelectedIndex).ExTR.index
-        End Select
-        lTriggeri = Triggercb.SelectedIndex
+        Triggern.Enabled = True
+        Triggern.Text = m.Triggers(Triggercb.SelectedIndex).ExTR.s
+        Triggernud_ValueChanged()
     End Sub
-    Private Sub Triggerpcb_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Triggerpcb.SelectedIndexChanged
-        Triggerx.Text = m.Triggers(Triggercb.SelectedIndex).EMTR.r(Triggerpcb.SelectedIndex).x
-        Triggery.Text = m.Triggers(Triggercb.SelectedIndex).EMTR.r(Triggerpcb.SelectedIndex).y
-        Triggerz.Text = m.Triggers(Triggercb.SelectedIndex).EMTR.r(Triggerpcb.SelectedIndex).z
-        lTriggerpi = Triggerpcb.SelectedIndex
+    Private Sub Triggernud_ValueChanged() Handles Triggernud.ValueChanged
+        If Triggernud.Enabled Then
+            If Triggernud.Value > m.Triggers(Triggercb.SelectedIndex).EMTR.r.Count Then
+                m.Triggers(Triggercb.SelectedIndex).EMTR.r.Add(New Point3(0, 0, 0))
+            End If
+            Triggerx.Text = m.Triggers(Triggercb.SelectedIndex).EMTR.r(Triggernud.Value - 1).x
+            Triggery.Text = m.Triggers(Triggercb.SelectedIndex).EMTR.r(Triggernud.Value - 1).y
+            Triggerz.Text = m.Triggers(Triggercb.SelectedIndex).EMTR.r(Triggernud.Value - 1).z
+        End If
     End Sub
     Private Sub EPTHToUI() Handles EPTHcb.SelectedIndexChanged
-        If lEPTHi <> -1 AndAlso lEPTHi <= EPTHcb.Items.Count - 1 Then
-            UIToEPTH(lEPTHi, lEPTHpi)
-        End If
-        EPTHpcb.Items.Clear()
-        For i = 1 To m.EPTH(EPTHcb.SelectedIndex).p.Count
-            EPTHpcb.Items.Add(i)
-        Next
-        EPTHpcb.SelectedIndex = 0
+        EPTHnud.Value = 1
         EPTHn.Text = m.EPTH(EPTHcb.SelectedIndex).name
-        lEPTHi = EPTHcb.SelectedIndex
+        EPTHnud_ValueChanged()
     End Sub
-
-    Private Sub EPTHpcb_SelectedIndexChanged(sender As Object, e As EventArgs) Handles EPTHpcb.SelectedIndexChanged
-        EPTHx.Text = m.EPTH(EPTHcb.SelectedIndex).p(EPTHpcb.SelectedIndex).x
-        EPTHy.Text = m.EPTH(EPTHcb.SelectedIndex).p(EPTHpcb.SelectedIndex).y
-        EPTHz.Text = m.EPTH(EPTHcb.SelectedIndex).p(EPTHpcb.SelectedIndex).z
-        EPTHr.Text = m.EPTH(EPTHcb.SelectedIndex).p(EPTHpcb.SelectedIndex).r
-        lEPTHpi = EPTHpcb.SelectedIndex
+    Private Sub EPTHnud_ValueChanged() Handles EPTHnud.ValueChanged
+        If EPTHnud.Enabled Then
+            If EPTHnud.Value > m.EPTH(EPTHcb.SelectedIndex).p.Count Then
+                m.EPTH(EPTHcb.SelectedIndex).p.Add(New Point4(0, 0, 0, 0))
+            End If
+            EPTHx.Text = m.EPTH(EPTHcb.SelectedIndex).p(EPTHnud.Value - 1).x
+            EPTHy.Text = m.EPTH(EPTHcb.SelectedIndex).p(EPTHnud.Value - 1).y
+            EPTHz.Text = m.EPTH(EPTHcb.SelectedIndex).p(EPTHnud.Value - 1).z
+            EPTHr.Text = m.EPTH(EPTHcb.SelectedIndex).p(EPTHnud.Value - 1).r
+        End If
+    End Sub
+    Private Sub Triggerpm_Click() Handles Triggerpm.Click
+        Dim i = Triggernud.Value - 1
+        If m.Triggers(Triggercb.SelectedIndex).EMTR.r.Count <> 1 Then
+            m.Triggers(Triggercb.SelectedIndex).EMTR.r.RemoveAt(i)
+            Triggernud.Value = i
+        End If
+    End Sub
+    Private Sub EPTHpm_Click() Handles EPTHpm.Click
+        Dim i = EPTHnud.Value - 1
+        If m.EPTH(EPTHcb.SelectedIndex).p.Count <> 1 Then
+            m.EPTH(EPTHcb.SelectedIndex).p.RemoveAt(i)
+            EPTHnud.Value = i
+        End If
     End Sub
     Private Sub EMSDToUI() Handles EMSDcb.SelectedIndexChanged
-        If lEMSDi <> -1 AndAlso lEMSDi <= EPTHcb.Items.Count - 1 Then UIToEMSD(lEMSDi)
         EMSDs1.Text = m.EMSD(EMSDcb.SelectedIndex).s1
         EMSDs2.Text = m.EMSD(EMSDcb.SelectedIndex).s2.Replace(".psf", "")
         EMSDx.Text = m.EMSD(EMSDcb.SelectedIndex).l.x
         EMSDy.Text = m.EMSD(EMSDcb.SelectedIndex).l.y
         EMSDz.Text = m.EMSD(EMSDcb.SelectedIndex).l.z
-        lEMSDi = EMSDcb.SelectedIndex
     End Sub
     Private Sub EMEFToUI() Handles EMEFcb.SelectedIndexChanged
-        If lEMEFi <> -1 AndAlso lEMEFi <= EPTHcb.Items.Count - 1 Then UIToEMEF(lEMEFi)
         EMEFs1.Text = m.EMEF(EMEFcb.SelectedIndex).s1
         EMEFs2.Text = m.EMEF(EMEFcb.SelectedIndex).s2.Replace(".veg", "")
         EMEFx.Text = m.EMEF(EMEFcb.SelectedIndex).l.x
         EMEFy.Text = m.EMEF(EMEFcb.SelectedIndex).l.y
         EMEFz.Text = m.EMEF(EMEFcb.SelectedIndex).l.z
         EMEFr.Text = m.EMEF(EMEFcb.SelectedIndex).l.r
-        lEMEFi = EMEFcb.SelectedIndex
     End Sub
 #End Region
 #Region "Load UI into classes"
-    Private Sub UIToEMAP()
-        m.EMAP.col = EMAPslb.BorderColour
-        m.EMAP.s1 = EMAPs1.Text & If(EMAPs1.Text.Length > 0, ".8", "")
-        m.EMAP.s2 = EMAPs2.Text & If(EMAPs2.Text.Length > 0, ".rle", "")
-        m.EMAP.s3 = EMAPs3.Text & If(EMAPs3.Text.Length > 0, ".dds", "")
-        m.EMAP.il = EMAPilcb.Checked
+    Private Sub PickLightingColour(sender As Object, e As EventArgs) Handles EMAPslb.Click
+        Dim cd As New ColorDialog With {.Color = m.EMAP.col, .FullOpen = True}
+        If cd.ShowDialog() = DialogResult.OK Then
+            EMAPslb.BorderColour = cd.Color
+            m.EMAP.col = cd.Color
+        End If
     End Sub
-    Private Sub UIToECAM()
-        If m.ECAM Is Nothing Then m.ECAM = New ECAMc
-        m.ECAM.p = New Point4(ECAMx.Text, ECAMz.Text, ECAMy.Text, ECAMr.Text)
+    Private Sub EMAPilcb_CheckedChanged(sender As Object, e As EventArgs) Handles EMAPilcb.CheckedChanged
+        If sender.Enabled Then m.EMAP.il = EMAPilcb.Checked
     End Sub
-    Private Sub UIToEMEF(i As Integer)
-        m.EMEF(i).s1 = EMEFs1.Text
-        m.EMEF(i).s2 = EMEFs2.Text & If(EMEFs2.Text.Length > 0, ".veg", "")
-        m.EMEF(i).l = New Point4(EMEFx.Text, EMEFz.Text, EMEFy.Text, EMEFr.Text)
+    Private Sub EMAPs1_TextChanged(sender As Object, e As EventArgs) Handles EMAPs1.TextChanged
+        If sender.Enabled Then m.EMAP.s1 = EMAPs1.Text & If(String.IsNullOrWhiteSpace(EMAPs1.Text), "", ".8")
     End Sub
-    Private Sub UIToEMSD(i As Integer)
-        m.EMSD(i).s1 = EMSDs1.Text
-        m.EMSD(i).s2 = EMSDs2.Text & If(EMSDs2.Text.Length > 0, ".psf", "")
-        m.EMSD(i).l = New Point3(EMSDx.Text, EMSDz.Text, EMSDy.Text)
+    Private Sub EMAPs2_TextChanged(sender As Object, e As EventArgs) Handles EMAPs2.TextChanged
+        If sender.Enabled Then m.EMAP.s2 = EMAPs2.Text & If(String.IsNullOrWhiteSpace(EMAPs2.Text), "", ".rle")
     End Sub
-    Private Sub UIToEPTH(i As Integer, pi As Integer)
-        m.EPTH(i).name = EPTHn.Text
-        m.EPTH(i).p(pi).x = EPTHx.Text
-        m.EPTH(i).p(pi).y = EPTHy.Text
-        m.EPTH(i).p(pi).z = EPTHz.Text
-        m.EPTH(i).p(pi).r = EPTHr.Text
+    Private Sub EMAPs3_TextChanged(sender As Object, e As EventArgs) Handles EMAPs3.TextChanged
+        If sender.Enabled Then m.EMAP.s3 = EMAPs3.Text & If(String.IsNullOrWhiteSpace(EMAPs3.Text), "", ".dds")
     End Sub
-    Private Sub UIToTrigger(i As Integer, pi As Integer)
-        m.Triggers(i).ExTR.s = Triggern.Text
-        m.Triggers(i).EMTR.r(pi) = New Point3(Triggerx.Text, Triggerz.Text, Triggery.Text)
+    Private Sub ECAMx_TextChanged(sender As Object, e As EventArgs) Handles ECAMx.TextChanged
+        If m.ECAM Is Nothing Then m.ECAM = New ECAMc()
+        If sender.Enabled Then m.ECAM.p.x = (0 & ECAMx.Text).Replace("0-", "-0")
     End Sub
-    Private Sub UIToEMEP(i As Integer)
-        m.EMEP(i).index = EMEPnud.Value
-        m.EMEP(i).p = New Point4(EMEPx.Text, EMEPz.Text, EMEPy.Text, EMEPr.Text)
+    Private Sub ECAMy_TextChanged(sender As Object, e As EventArgs) Handles ECAMy.TextChanged
+        If m.ECAM Is Nothing Then m.ECAM = New ECAMc()
+        If sender.Enabled Then m.ECAM.p.y = (0 & ECAMy.Text).Replace("0-", "-0")
     End Sub
-    Private Sub UIToEME2(i As Integer)
-        m.EME2(i).name = EME2n.Text
-        m.EME2(i).EEOV.s1 = EME2s1.Text
-        m.EME2(i).EEOV.s2 = EME2s2.Text
-        m.EME2(i).EEOV.s3 = EME2s3.Text & If(EME2s3.Text.Length > 0, ".amx", "")
-        m.EME2(i).EEOV.s4 = EME2s4.Text & If(EME2s4.Text.Length > 0, ".dds", "")
-        m.EME2(i).EEOV.s5 = EME2s5.Text & If(EME2s5.Text.Length > 0, ".veg", "")
-        If EME2s5.Text.Length > 0 AndAlso Not m.EME2(EME2cb.SelectedIndex).EEOV.ps4 = 2 Then m.EME2(EME2cb.SelectedIndex).EEOV.ps4 = 1
-        m.EME2(i).l = New Point4(EME2x.Text, EME2z.Text, EME2y.Text, EME2r.Text)
-        Dim s = (From row As DataGridViewRow In EME2dgv.Rows Where TypeOf row.Cells.Item(0).Value Is String Select row.Cells.Item(0).Value).Cast(Of String)().ToList()
-        m.EME2(i).EEOV.inv = s.ToArray()
+    Private Sub ECAMz_TextChanged(sender As Object, e As EventArgs) Handles ECAMz.TextChanged
+        If m.ECAM Is Nothing Then m.ECAM = New ECAMc()
+        If sender.Enabled Then m.ECAM.p.z = (0 & ECAMz.Text).Replace("0-", "-0")
     End Sub
+    Private Sub ECAMr_TextChanged(sender As Object, e As EventArgs) Handles ECAMr.TextChanged
+        If m.ECAM Is Nothing Then m.ECAM = New ECAMc()
+        If sender.Enabled Then m.ECAM.p.r = (0 & ECAMr.Text).Replace("0-", "-0")
+    End Sub
+    Private Sub EMEFs1_TextChanged(sender As Object, e As EventArgs) Handles EMEFs1.TextChanged
+        If sender.Enabled Then m.EMEF(EMEFcb.SelectedIndex).s1 = EMEFs1.Text
+    End Sub
+    Private Sub EMEFs2_TextChanged(sender As Object, e As EventArgs) Handles EMEFs2.TextChanged
+        If sender.Enabled Then m.EMEF(EMEFcb.SelectedIndex).s2 = EMEFs2.Text & If(String.IsNullOrWhiteSpace(EMEFs2.Text), "", ".veg")
+    End Sub
+    Private Sub EMEFx_TextChanged(sender As Object, e As EventArgs) Handles EMEFx.TextChanged
+        If sender.Enabled Then m.EMEF(EMEFcb.SelectedIndex).l.x = (0 & EMEFx.Text).Replace("0-", "-0")
+    End Sub
+    Private Sub EMEFy_TextChanged(sender As Object, e As EventArgs) Handles EMEFy.TextChanged
+        If sender.Enabled Then m.EMEF(EMEFcb.SelectedIndex).l.y = (0 & EMEFy.Text).Replace("0-", "-0")
+    End Sub
+    Private Sub EMEFz_TextChanged(sender As Object, e As EventArgs) Handles EMEFz.TextChanged
+        If sender.Enabled Then m.EMEF(EMEFcb.SelectedIndex).l.z = (0 & EMEFz.Text).Replace("0-", "-0")
+    End Sub
+    Private Sub EMEFr_TextChanged(sender As Object, e As EventArgs) Handles EMEFr.TextChanged
+        If sender.Enabled Then m.EMEF(EMEFcb.SelectedIndex).l.r = (0 & EMEFr.Text).Replace("0-", "-0")
+    End Sub
+    Private Sub EMEPnud_ValueChanged(sender As Object, e As EventArgs) Handles EMEPnud.ValueChanged
+        If sender.Enabled Then m.EMEP(EMEPcb.SelectedIndex).index = EMEPnud.Value
+    End Sub
+    Private Sub EMEPx_TextChanged(sender As Object, e As EventArgs) Handles EMEPx.TextChanged
+        If sender.Enabled Then m.EMEP(EMEPcb.SelectedIndex).p.x = (0 & EMEPx.Text).Replace("0-", "-0")
+    End Sub
+    Private Sub EMEPy_TextChanged(sender As Object, e As EventArgs) Handles EMEPy.TextChanged
+        If sender.Enabled Then m.EMEP(EMEPcb.SelectedIndex).p.y = (0 & EMEPy.Text).Replace("0-", "-0")
+    End Sub
+    Private Sub EMEPz_TextChanged(sender As Object, e As EventArgs) Handles EMEPz.TextChanged
+        If sender.Enabled Then m.EMEP(EMEPcb.SelectedIndex).p.z = (0 & EMEPz.Text).Replace("0-", "-0")
+    End Sub
+    Private Sub EMEPr_TextChanged(sender As Object, e As EventArgs) Handles EMEPr.TextChanged
+        If sender.Enabled Then m.EMEP(EMEPcb.SelectedIndex).p.r = (0 & EMEPr.Text).Replace("0-", "-0")
+    End Sub
+    Private Sub EME2dgv_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles EME2dgv.CellEndEdit
+        If sender.Enabled Then m.EME2(EME2cb.SelectedIndex).EEOV.inv = (From row As DataGridViewRow In EME2dgv.Rows Where TypeOf row.Cells.Item(0).Value Is String Select row.Cells.Item(0).Value).Cast(Of String)().ToArray()
+    End Sub
+    Private Sub EME2n_TextChanged(sender As Object, e As EventArgs) Handles EME2n.TextChanged
+        If sender.Enabled Then m.EME2(EME2cb.SelectedIndex).name = EME2n.Text
+    End Sub
+    Private Sub EME2s1_TextChanged(sender As Object, e As EventArgs) Handles EME2s1.TextChanged
+        If sender.Enabled Then m.EME2(EME2cb.SelectedIndex).EEOV.s1 = EME2s1.Text
+    End Sub
+    Private Sub EME2s2_TextChanged(sender As Object, e As EventArgs) Handles EME2s2.TextChanged
+        If sender.Enabled Then m.EME2(EME2cb.SelectedIndex).EEOV.s2 = EME2s2.Text
+    End Sub
+    Private Sub EME2s3_TextChanged(sender As Object, e As EventArgs) Handles EME2s3.TextChanged
+        If sender.Enabled Then m.EME2(EME2cb.SelectedIndex).EEOV.s3 = EME2s3.Text & If(String.IsNullOrWhiteSpace(EME2s3.Text), "", ".amx")
+    End Sub
+    Private Sub EME2s4_TextChanged(sender As Object, e As EventArgs) Handles EME2s4.TextChanged
+        If sender.Enabled Then m.EME2(EME2cb.SelectedIndex).EEOV.s4 = EME2s4.Text & If(String.IsNullOrWhiteSpace(EME2s4.Text), "", ".dds")
+    End Sub
+    Private Sub EME2s5_TextChanged(sender As Object, e As EventArgs) Handles EME2s5.TextChanged
+        If sender.Enabled Then m.EME2(EME2cb.SelectedIndex).EEOV.s5 = EME2s5.Text & If(String.IsNullOrWhiteSpace(EME2s5.Text), "", ".veg")
+    End Sub
+    Private Sub EME2x_TextChanged(sender As Object, e As EventArgs) Handles EME2x.TextChanged
+        If sender.Enabled Then m.EME2(EME2cb.SelectedIndex).l.x = (0 & EME2x.Text).Replace("0-", "-0")
+    End Sub
+    Private Sub EME2y_TextChanged(sender As Object, e As EventArgs) Handles EME2y.TextChanged
+        If sender.Enabled Then m.EME2(EME2cb.SelectedIndex).l.y = (0 & EME2y.Text).Replace("0-", "-0")
+    End Sub
+    Private Sub EME2z_TextChanged(sender As Object, e As EventArgs) Handles EME2z.TextChanged
+        If sender.Enabled Then m.EME2(EME2cb.SelectedIndex).l.z = (0 & EME2z.Text).Replace("0-", "-0")
+    End Sub
+    Private Sub EME2r_TextChanged(sender As Object, e As EventArgs) Handles EME2r.TextChanged
+        If sender.Enabled Then m.EME2(EME2cb.SelectedIndex).l.r = (0 & EME2r.Text).Replace("0-", "-0")
+    End Sub
+    Private Sub EMSDs1_TextChanged(sender As Object, e As EventArgs) Handles EMSDs1.TextChanged
+        If sender.Enabled Then m.EMSD(EMSDcb.SelectedIndex).s1 = EMSDs1.Text
+    End Sub
+    Private Sub EMSDs2_TextChanged(sender As Object, e As EventArgs) Handles EMSDs2.TextChanged
+        If sender.Enabled Then m.EMSD(EMSDcb.SelectedIndex).s2 = EMSDs2.Text & If(String.IsNullOrWhiteSpace(EMSDs2.Text), "", ".psf")
+    End Sub
+    Private Sub EMSDx_TextChanged(sender As Object, e As EventArgs) Handles EMSDx.TextChanged
+        If sender.Enabled Then m.EMSD(EMSDcb.SelectedIndex).l.x = (0 & EMSDx.Text).Replace("0-", "-0")
+    End Sub
+    Private Sub EMSDy_TextChanged(sender As Object, e As EventArgs) Handles EMSDy.TextChanged
+        If sender.Enabled Then m.EMSD(EMSDcb.SelectedIndex).l.y = (0 & EMSDy.Text).Replace("0-", "-0")
+    End Sub
+    Private Sub EMSDz_TextChanged(sender As Object, e As EventArgs) Handles EMSDz.TextChanged
+        If sender.Enabled Then m.EMSD(EMSDcb.SelectedIndex).l.z = (0 & EMSDz.Text).Replace("0-", "-0")
+    End Sub
+    Private Sub EPTHn_TextChanged(sender As Object, e As EventArgs) Handles EPTHn.TextChanged
+        If sender.Enabled Then m.EPTH(EPTHcb.SelectedIndex).name = EPTHn.Text
+    End Sub
+    Private Sub EPTHx_TextChanged(sender As Object, e As EventArgs) Handles EPTHx.TextChanged
+        If sender.Enabled Then m.EPTH(EPTHcb.SelectedIndex).p(EPTHnud.Value - 1).x = (0 & EPTHx.Text).Replace("0-", "-0")
+    End Sub
+    Private Sub EPTHy_TextChanged(sender As Object, e As EventArgs) Handles EPTHy.TextChanged
+        If sender.Enabled Then m.EPTH(EPTHcb.SelectedIndex).p(EPTHnud.Value - 1).y = (0 & EPTHy.Text).Replace("0-", "-0")
+    End Sub
+    Private Sub EPTHz_TextChanged(sender As Object, e As EventArgs) Handles EPTHz.TextChanged
+        If sender.Enabled Then m.EPTH(EPTHcb.SelectedIndex).p(EPTHnud.Value - 1).z = (0 & EPTHz.Text).Replace("0-", "-0")
+    End Sub
+    Private Sub EPTHr_TextChanged(sender As Object, e As EventArgs) Handles EPTHr.TextChanged
+        If sender.Enabled Then m.EPTH(EPTHcb.SelectedIndex).p(EPTHnud.Value - 1).r = (0 & EPTHr.Text).Replace("0-", "-0")
+    End Sub
+    Private Sub Triggern_TextChanged(sender As Object, e As EventArgs) Handles Triggern.TextChanged
+        If sender.Enabled Then m.Triggers(Triggercb.SelectedIndex).ExTR.s = Triggern.Text
+    End Sub
+    Private Sub Triggertcb_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Triggertcb.SelectedIndexChanged
+        If sender.Enabled Then m.Triggers(Triggercb.SelectedIndex).ExTR.type = Triggertcb.SelectedText
+    End Sub
+    Private Sub Triggerx_TextChanged(sender As Object, e As EventArgs) Handles Triggerx.TextChanged
+        If sender.Enabled Then m.Triggers(Triggercb.SelectedIndex).EMTR.r(Triggernud.Value - 1).x = (0 & Triggerx.Text).Replace("0-", "-0")
+    End Sub
+    Private Sub Triggery_TextChanged(sender As Object, e As EventArgs) Handles Triggery.TextChanged
+        If sender.Enabled Then m.Triggers(Triggercb.SelectedIndex).EMTR.r(Triggernud.Value - 1).y = (0 & Triggery.Text).Replace("0-", "-0")
+    End Sub
+    Private Sub Triggerz_TextChanged(sender As Object, e As EventArgs) Handles Triggerz.TextChanged
+        If sender.Enabled Then m.Triggers(Triggercb.SelectedIndex).EMTR.r(Triggernud.Value - 1).z = (0 & Triggerz.Text).Replace("0-", "-0")
+    End Sub
+    ' Prevent invalid floats from being entered into text boxes (Add any numeric textboxes to the "Handles" section)
+    Private Sub NumbersOnly(sender As TextBox, e As KeyPressEventArgs) _
+        Handles ECAMx.KeyPress, ECAMy.KeyPress, ECAMz.KeyPress, ECAMr.KeyPress, EMEPx.KeyPress, EMEPy.KeyPress,
+                EMEPz.KeyPress, EMEPr.KeyPress, EMEFx.KeyPress, EMEFy.KeyPress, EMEFz.KeyPress, EMEFr.KeyPress,
+                EMSDx.KeyPress, EMSDy.KeyPress, EMSDz.KeyPress, EME2x.KeyPress, EME2y.KeyPress, EME2z.KeyPress,
+                EME2r.KeyPress, EPTHx.KeyPress, EPTHy.KeyPress, EPTHz.KeyPress, EPTHr.KeyPress, Triggerx.KeyPress,
+                Triggery.KeyPress, Triggerz.KeyPress
+        ' This code inserts the pressed character into the existing text (unless it's a backspace), and adds a 0 either at the start, or after "-", if present.
+        ' By doing this, it allows any number to be typed, but only if it's valid, while still allowing you to start with a "-" sign
+        ' It's done this way so everything here happens before the text is updated, and if it's not a valid number, the text is never written.
+        If Not Char.IsControl(e.KeyChar) Then
+            If Not Single.TryParse((0 & sender.Text.Insert(sender.SelectionStart, e.KeyChar)).Replace("0-", "-0"), 0F) Then
+                e.Handled = True
+            End If
+        End If
+    End Sub
+
 #End Region
     Private Sub DataGridView1_ScrollChanged() Handles EME2dgv.Scroll
         EME2dsb.ScrollTo(EME2dgv.FirstDisplayedScrollingRowIndex / (EME2dgv.Rows.Count - EME2dgv.DisplayedRowCount(False)) * EME2dsb.Maximum)
@@ -365,48 +456,50 @@ Public Class UI
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         EME2dgv.FirstDisplayedScrollingRowIndex = EME2dsb.Value / EME2dsb.Maximum * (EME2dgv.Rows.Count - EME2dgv.DisplayedRowCount(False))
     End Sub
-
-    Private Sub DarkButton2_Click(sender As Object, e As EventArgs) Handles EMAPslb.Click
-        Dim cd As New ColorDialog With {.Color = m.EMAP.col, .FullOpen = True}
-        If cd.ShowDialog() = DialogResult.OK Then
-            EMAPslb.BorderColour = cd.Color
-            m.EMAP.col = cd.Color
-        End If
-    End Sub
-
-    Private Sub DarkButton3_Click(sender As Object, e As EventArgs) Handles MapSave.Click
+    Private Sub SaveFile() Handles SaveToolStripMenuItem.Click
         Dim sfd As New SaveFileDialog With {.Filter = $"Van Buren Data File|*{ext}", .ValidateNames = True, .DefaultExt = ext}
         If sfd.ShowDialog = DialogResult.OK Then
-            UIToEMAP()
-            Dim b As New List(Of Byte) : Dim ECAMb = True
-            b.AddRange(m.EMAP.ToEMAPb)
-            If m.EME2.Any() Then UIToEME2(EME2cb.SelectedIndex)
-            b.AddRange(m.EME2.SelectMany(Function(x) x.ToEME2b()))
-            If m.EMEP.Any() Then UIToEMEP(EMEPcb.SelectedIndex)
-            b.AddRange(m.EMEP.SelectMany(Function(x) x.ToEMEPb()))
-            Try : UIToECAM() : Catch : ECAMb = False : End Try
-            If ECAMb Then b.AddRange(m.ECAM.ToECAMb())
-            If m.Triggers.Any() Then UIToTrigger(Triggercb.SelectedIndex, Triggerpcb.SelectedIndex)
-            b.AddRange(m.Triggers.SelectMany(Function(x) x.ToTriggerB()))
-            If m.EPTH.Any() Then UIToEPTH(EPTHcb.SelectedIndex, EPTHpcb.SelectedIndex)
-            b.AddRange(m.EPTH.SelectMany(Function(x) x.ToEPTHb()))
-            If m.EMSD.Any() Then UIToEMSD(EMSDcb.SelectedIndex)
-            b.AddRange(m.EMSD.SelectMany(Function(x) x.ToEMSDb()))
-            b.AddRange(m.EMNP)
-            If m.EMEF.Any() Then UIToEMEF(EMEFcb.SelectedIndex)
-            b.AddRange(m.EMEF.SelectMany(Function(x) x.ToEMEFb()))
+            Dim b As New List(Of Byte)
+            Select Case ext
+                Case ".amo"
+                Case ".arm"
+                Case ".con"
+                Case ".crt"
+                Case ".dor"
+                Case ".int"
+                Case ".itm"
+                Case ".map"
+                    b.AddRange(m.EMAP.ToEMAPb)
+                    b.AddRange(m.EME2.SelectMany(Function(x) x.ToEME2b()))
+                    b.AddRange(m.EMEP.SelectMany(Function(x) x.ToEMEPb()))
+                    If m.ECAM IsNot Nothing Then b.AddRange(m.ECAM.ToECAMb())
+                    b.AddRange(m.Triggers.SelectMany(Function(x) x.ToTriggerB()))
+                    b.AddRange(m.EPTH.SelectMany(Function(x) x.ToEPTHb()))
+                    b.AddRange(m.EMSD.SelectMany(Function(x) x.ToEMSDb()))
+                    b.AddRange(m.EMNP)
+                    b.AddRange(m.EMEF.SelectMany(Function(x) x.ToEMEFb()))
+                Case ".use"
+                Case ".veg"
+                Case ".wea"
+            End Select
             File.WriteAllBytes(sfd.FileName, b.ToArray)
         End If
     End Sub
-
     Private Sub MyBase_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Mapgb.Hide()
+        EPTHnud.Enabled = False
+        Triggernud.Enabled = False
+        EPTHnud.Minimum = 1
+        Triggernud.Minimum = 1
         EMAPslb.CustomColour = True
         EME2dgv.GridColor = ThemeProvider.Theme.Colors.GreySelection
         EME2dgv.BackgroundColor = ThemeProvider.BackgroundColour
         EME2dgv.DefaultCellStyle = New DataGridViewCellStyle With {.BackColor = ThemeProvider.BackgroundColour, .ForeColor = ThemeProvider.Theme.Colors.LightText, .SelectionBackColor = ThemeProvider.Theme.Colors.BlueSelection, .SelectionForeColor = ThemeProvider.Theme.Colors.LightText}
     End Sub
 
+
+
+#Region "Remove/Add Chunks"
     Private Sub EMEPp_Click(sender As Object, e As EventArgs) Handles EMEPp.Click
         For Each c As Control In EMEPgb.Controls
             c.Enabled = True
@@ -415,7 +508,6 @@ Public Class UI
         EMEPcb.Items.Add(EMEPcb.Items.Count + 1)
         EMEPcb.SelectedIndex = EMEPcb.Items.Count - 1
     End Sub
-
     Private Sub EMEPm_Click(sender As Object, e As EventArgs) Handles EMEPm.Click
         Dim i = EMEPcb.SelectedIndex
         If m.EMEP.Count = 1 Then
@@ -493,7 +585,6 @@ Public Class UI
         Else
             m.EMSD.RemoveAt(i)
             EMSDcb.Items.RemoveAt(i)
-            lEMSDi = -1
             EMSDcb.SelectedIndex = If(i = 0, 0, i - 1)
         End If
     End Sub
@@ -519,7 +610,6 @@ Public Class UI
         Else
             m.EPTH.RemoveAt(i)
             EPTHcb.Items.RemoveAt(i)
-            lEPTHi = -1
             EPTHcb.SelectedIndex = If(i = 0, 0, i - 1)
         End If
     End Sub
@@ -545,7 +635,6 @@ Public Class UI
         Else
             m.Triggers.RemoveAt(i)
             Triggercb.Items.RemoveAt(i)
-            lTriggeri = -1
             Triggercb.SelectedIndex = If(i = 0, 0, i - 1)
         End If
     End Sub
@@ -558,30 +647,25 @@ Public Class UI
         Triggercb.Items.Add(Triggercb.Items.Count + 1)
         Triggercb.SelectedIndex = Triggercb.Items.Count - 1
     End Sub
-
-    Private Sub DarkButton2_Click_1(sender As Object, e As EventArgs) Handles DarkButton2.Click
-        Dim type = InputBox("Which file type would you like to create?", "Van Buren Editor", "")
-        ext = type.ToLower()
-        Select Case ext
-            Case ".amo"
-                MsgBox("Not yet implemented")
-            Case ".arm"
-                MsgBox("Not yet implemented")
-            Case ".con"
-                MsgBox("Not yet implemented")
-            Case ".crt"
-                MsgBox("Not yet implemented")
-            Case ".dor"
-                MsgBox("Not yet implemented")
-            Case ".int"
-                MsgBox("Not yet implemented")
-            Case ".itm"
-                MsgBox("Not yet implemented")
-#Region ".map"
-            Case ".map"
-                SetMaplin1()
-
-                m = New Map With ' Initialize file with necessary Chunks
+#End Region
+#Region "New Files"
+    Private Sub NewAmo() Handles AmoToolStripMenuItem.Click
+    End Sub
+    Private Sub NewArm() Handles ArmToolStripMenuItem.Click
+    End Sub
+    Private Sub NewCon() Handles ConToolStripMenuItem.Click
+    End Sub
+    Private Sub NewCrt() Handles CrtToolStripMenuItem.Click
+    End Sub
+    Private Sub NewDor() Handles DorToolStripMenuItem.Click
+    End Sub
+    Private Sub NewInt() Handles IntToolStripMenuItem.Click
+    End Sub
+    Private Sub NewItm() Handles ItmToolStripMenuItem.Click
+    End Sub
+    Private Sub NewMap() Handles MapToolStripMenuItem.Click
+        ext = ".map"
+        m = New Map With ' Initialize file with necessary Chunks
                 {
                     .EMAP = New EMAPc(),
                     .EMEP = New List(Of EMEPc),
@@ -593,32 +677,18 @@ Public Class UI
                     .ECAM = Nothing,
                     .EMNP = New Byte() {&H45, &H4D, &H4E, &H50, &H0, &H0, &H0, &H0, &H10, &H0, &H0, &H0, &H0, &H0, &H0, &H0} ' EMNP Never changes, but not having it in addition to missing EMEP causes the map not to render, so I'm adding it here.
                 }
-                MapSetupUI()
+        MapSetupUI()
+    End Sub
+    Private Sub NewUse() Handles UseToolStripMenuItem.Click
+    End Sub
+    Private Sub NewVeg() Handles VegToolStripMenuItem.Click
+    End Sub
+    Private Sub NewWea() Handles WeaToolStripMenuItem.Click
+    End Sub
 #End Region
-            Case ".use"
-                MsgBox("Not yet implemented")
-            Case ".veg"
-                MsgBox("Not yet implemented")
-            Case ".wea"
-                MsgBox("Not yet implemented")
-            Case Else
-                MsgBox("Invalid file type")
-        End Select
-    End Sub
-
-    Private Sub SetMaplin1()
-        lEME2i = -1
-        lEMEPi = -1
-        lTriggeri = -1
-        lTriggerpi = -1
-        lEPTHi = -1
-        lEPTHpi = -1
-        lEMSDi = -1
-        lEMEFi = -1
-    End Sub
 #Region ".stf Stuff"
-    Private Sub DarkButton3_Click_1(sender As Object, e As EventArgs) Handles DarkButton3.Click
-        Dim ofd As New OpenFileDialog With {.Filter = "Van Buren String Table File|*.stf", .Multiselect = False}
+    Private Sub FullSTFToText() Handles StfToolStripMenuItem.Click
+        Dim ofd As New OpenFileDialog With {.Filter = "String Table File|*.stf", .Multiselect = False}
         If ofd.ShowDialog() = DialogResult.OK Then
             Dim sfd As New SaveFileDialog With {.Filter = "Text File|*.txt"}
             If sfd.ShowDialog() = DialogResult.OK Then
@@ -626,15 +696,20 @@ Public Class UI
             End If
         End If
     End Sub
-
-    Private Sub DarkButton4_Click(sender As Object, e As EventArgs) Handles DarkButton4.Click
+    Private Sub FullTextToSTF() Handles TxtTostfToolStripMenuItem.Click
         Dim ofd As New OpenFileDialog With {.Filter = "Text File|*.txt", .Multiselect = False}
         If ofd.ShowDialog() = DialogResult.OK Then
-            Dim sfd As New SaveFileDialog With {.Filter = "Van Buren String Table File|*.stf"}
+            Dim sfd As New SaveFileDialog With {.Filter = "String Table File|*.stf"}
             If sfd.ShowDialog() = DialogResult.OK Then
                 File.WriteAllBytes(sfd.FileName, TXTToSTF(IO.File.ReadAllLines(ofd.FileName)))
             End If
         End If
     End Sub
 #End Region
+    Private Sub SetEnglishstfLocationToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SetEnglishstfLocationToolStripMenuItem.Click
+        Dim ofd As New OpenFileDialog With {.Multiselect = False, .CheckFileExists = True, .Filter = "English.stf|*.stf"}
+        If ofd.ShowDialog() = DialogResult.OK Then
+            My.Settings.STFDir = ofd.FileName
+        End If
+    End Sub
 End Class

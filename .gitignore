@@ -5,3 +5,4 @@ My Project/PublishProfiles
 *.dll
 *.pdb
 *.user
+publish/VBEditor.dll.config

@@ -31,11 +31,11 @@ Friend Module Functions
     End Function
     <Extension>
     Public Function ToExTRc(b As Byte()) As ExTRc
+        Dim type = Encoding.ASCII.GetString(b.Skip(1).Take(1).ToArray())
         Return New ExTRc With {
-            .type = Encoding.ASCII.GetString(b.Skip(1).Take(1).ToArray()),
-            .s = Encoding.ASCII.GetString(b.Skip(14).Take(b(12)).ToArray()),
-            .index = b(12)
-        }
+            .type = type,
+            .s = If(type = "B", b(12), Encoding.ASCII.GetString(b.Skip(14).Take(b(12)).ToArray()))
+            }
     End Function
     <Extension>
     Public Function ToECAMc(b As Byte()) As ECAMc
@@ -215,7 +215,7 @@ Friend Module Functions
                 Dim out = New Byte(18) {}
                 out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EBTR"))
                 out.OverwriteBytes(8, New Byte() {19})
-                out.OverwriteBytes(12, New Byte() {c.index})
+                out.OverwriteBytes(12, New Byte() {c.s})
                 out.OverwriteBytes(16, Encoding.ASCII.GetBytes("FFF"))
                 Return out
             Case "S"
@@ -295,7 +295,7 @@ Friend Module Functions
         Dim a = If(c.ps4 = 2, 2, 0)
         Dim out = New Byte(46 + c.s1.Length + c.s2.Length + c.s3.Length + c.s4.Length + c.s5.Length + invl + a) {}
         out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EEOV"))
-        If c.inv.Length > 0 Then out.OverwriteBytes(4, New Byte() {2})
+        If c.inv.Any() Then out.OverwriteBytes(4, New Byte() {2})
         out.OverwriteBytes(8, BitConverter.GetBytes(47 + c.s1.Length + c.s2.Length + c.s3.Length + c.s4.Length + c.s5.Length + invl + a))
         out.OverwriteBytes(12, New Byte() {c.s1.Length})
         out.OverwriteBytes(14, Encoding.ASCII.GetBytes(c.s1))

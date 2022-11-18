@@ -1,4 +1,5 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text
 
 Friend Module Functions
@@ -329,6 +330,7 @@ Friend Module Functions
 #End Region
 #Region ".stf Stuff"
     Public Function STFToTXT(b As Byte()) As String()
+        b.PreParse()
         Dim s As New List(Of String)
         Dim oi = 12
         Dim li = 16
@@ -350,11 +352,43 @@ Friend Module Functions
             b.AddRange(New Byte() {&H7E, &HE3, &H3, &H0, &H0, &H0, &H0, &H0})
             o += s(i).Length
         Next
-        For Each stri In s
-            b.AddRange(Encoding.ASCII.GetBytes(stri))
-        Next
+        b.AddRange(s.ToFixedBytes())
         Return b.ToArray()
     End Function
+
+
+    ' Replace CrLf with "|~" and replace "–" with "-"
+    <Extension>
+    Public Sub PreParse(ByRef b As Byte())
+        Dim strStart = BitConverter.ToInt32(b, 12)
+        Dim l = b.Locate(New Byte() {&HD, &HA})
+        For Each m In l
+            If m >= strStart Then
+                b.OverwriteBytes(m, New Byte() {&H7C, &H7E})
+            End If
+        Next
+        l = b.Locate(New Byte() {&H96})
+        For Each m In l
+            If m >= strStart Then
+                b.OverwriteBytes(m, New Byte() {&H2D})
+            End If
+        Next
+    End Sub
+    ' Turn the string array into the chunk of bytes, replacing "|~" with CrLf
+    <Extension>
+    Public Function ToFixedBytes(ByRef s As String()) As Byte()
+        Dim bl = New List(Of Byte)
+        For Each stri In s
+            bl.AddRange(Encoding.ASCII.GetBytes(stri))
+        Next
+        Dim b = bl.ToArray()
+        Dim l = b.Locate(New Byte() {&H7C, &H7E})
+        For Each m In l
+            b.OverwriteBytes(m, New Byte() {&HD, &HA})
+        Next
+        Return b
+    End Function
+
 #End Region
 #Region "Byte array search"
     ' Code for finding location of given byte array within another

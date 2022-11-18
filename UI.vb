@@ -415,7 +415,7 @@ Public Class UI
         If sender.Enabled Then m.Triggers(Triggercb.SelectedIndex).ExTR.s = Triggern.Text
     End Sub
     Private Sub Triggertcb_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Triggertcb.SelectedIndexChanged
-        If sender.Enabled Then m.Triggers(Triggercb.SelectedIndex).ExTR.type = Triggertcb.SelectedText
+        If sender.Enabled Then m.Triggers(Triggercb.SelectedIndex).ExTR.type = Triggertcb.SelectedItem
     End Sub
     Private Sub Triggerx_TextChanged(sender As Object, e As EventArgs) Handles Triggerx.TextChanged
         If sender.Enabled Then m.Triggers(Triggercb.SelectedIndex).EMTR.r(Triggernud.Value - 1).x = (0 & Triggerx.Text).Replace("0-", "-0")

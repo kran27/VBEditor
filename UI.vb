@@ -9,7 +9,7 @@ Public Class UI
 
     Private Sub OpenFile() Handles OpenToolStripMenuItem.Click
         ' Loads all regions of a given file into their respective classes, and from there into the UI
-        Dim ofd As New OpenFileDialog With {.Filter = "Van Buren Data File|*.amo;*.arm;*.con;*.crt;*.dor;*.int;*.itm;*.map;*.use;*.veg;*.wea", .Multiselect = False, .ValidateNames = True}
+        Dim ofd As New OpenFileDialog With {.Filter = "Van Buren Data File|*.amo;*.arm;*.con;*.crt;*.dor;*.int;*.itm;*.map;*.use;*.wea", .Multiselect = False, .ValidateNames = True}
         If ofd.ShowDialog = DialogResult.OK Then
             f = ofd.FileName
             ext = f.Substring(f.LastIndexOf("."), 4).ToLower()
@@ -44,8 +44,6 @@ Public Class UI
                     MapSetupUI()
 #End Region
                 Case ".use"
-                    MsgBox("Not yet implemented")
-                Case ".veg"
                     MsgBox("Not yet implemented")
                 Case ".wea"
                     MsgBox("Not yet implemented")
@@ -479,7 +477,6 @@ Public Class UI
                     b.AddRange(m.EMNP)
                     b.AddRange(m.EMEF.SelectMany(Function(x) x.ToEMEFb()))
                 Case ".use"
-                Case ".veg"
                 Case ".wea"
             End Select
             File.WriteAllBytes(sfd.FileName, b.ToArray)
@@ -680,8 +677,6 @@ Public Class UI
         MapSetupUI()
     End Sub
     Private Sub NewUse() Handles UseToolStripMenuItem.Click
-    End Sub
-    Private Sub NewVeg() Handles VegToolStripMenuItem.Click
     End Sub
     Private Sub NewWea() Handles WeaToolStripMenuItem.Click
     End Sub

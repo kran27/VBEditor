@@ -135,15 +135,14 @@ Partial Class UI
         Me.ItmToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MapToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.UseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.VegToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.WeaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OpenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SetEnglishstfLocationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StfToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TxtTostfToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SetEnglishstfLocationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.Mapgb.SuspendLayout()
         Me.Triggergb.SuspendLayout()
@@ -1234,10 +1233,10 @@ Partial Class UI
         'NewToolStripMenuItem
         '
         Me.NewToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.NewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AmoToolStripMenuItem, Me.ArmToolStripMenuItem, Me.ConToolStripMenuItem, Me.CrtToolStripMenuItem, Me.DorToolStripMenuItem, Me.IntToolStripMenuItem, Me.ItmToolStripMenuItem, Me.MapToolStripMenuItem, Me.UseToolStripMenuItem, Me.VegToolStripMenuItem, Me.WeaToolStripMenuItem})
+        Me.NewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AmoToolStripMenuItem, Me.ArmToolStripMenuItem, Me.ConToolStripMenuItem, Me.CrtToolStripMenuItem, Me.DorToolStripMenuItem, Me.IntToolStripMenuItem, Me.ItmToolStripMenuItem, Me.MapToolStripMenuItem, Me.UseToolStripMenuItem, Me.WeaToolStripMenuItem})
         Me.NewToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.NewToolStripMenuItem.Name = "NewToolStripMenuItem"
-        Me.NewToolStripMenuItem.Size = New System.Drawing.Size(150, 22)
+        Me.NewToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.NewToolStripMenuItem.Text = "New"
         '
         'AmoToolStripMenuItem
@@ -1245,7 +1244,7 @@ Partial Class UI
         Me.AmoToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.AmoToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.AmoToolStripMenuItem.Name = "AmoToolStripMenuItem"
-        Me.AmoToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
+        Me.AmoToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.AmoToolStripMenuItem.Text = ".amo"
         '
         'ArmToolStripMenuItem
@@ -1253,7 +1252,7 @@ Partial Class UI
         Me.ArmToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.ArmToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.ArmToolStripMenuItem.Name = "ArmToolStripMenuItem"
-        Me.ArmToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
+        Me.ArmToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ArmToolStripMenuItem.Text = ".arm"
         '
         'ConToolStripMenuItem
@@ -1261,7 +1260,7 @@ Partial Class UI
         Me.ConToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.ConToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.ConToolStripMenuItem.Name = "ConToolStripMenuItem"
-        Me.ConToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
+        Me.ConToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ConToolStripMenuItem.Text = ".con"
         '
         'CrtToolStripMenuItem
@@ -1269,7 +1268,7 @@ Partial Class UI
         Me.CrtToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.CrtToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.CrtToolStripMenuItem.Name = "CrtToolStripMenuItem"
-        Me.CrtToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
+        Me.CrtToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.CrtToolStripMenuItem.Text = ".crt"
         '
         'DorToolStripMenuItem
@@ -1277,7 +1276,7 @@ Partial Class UI
         Me.DorToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.DorToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.DorToolStripMenuItem.Name = "DorToolStripMenuItem"
-        Me.DorToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
+        Me.DorToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.DorToolStripMenuItem.Text = ".dor"
         '
         'IntToolStripMenuItem
@@ -1285,7 +1284,7 @@ Partial Class UI
         Me.IntToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.IntToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.IntToolStripMenuItem.Name = "IntToolStripMenuItem"
-        Me.IntToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
+        Me.IntToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.IntToolStripMenuItem.Text = ".int"
         '
         'ItmToolStripMenuItem
@@ -1293,7 +1292,7 @@ Partial Class UI
         Me.ItmToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.ItmToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.ItmToolStripMenuItem.Name = "ItmToolStripMenuItem"
-        Me.ItmToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
+        Me.ItmToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ItmToolStripMenuItem.Text = ".itm"
         '
         'MapToolStripMenuItem
@@ -1301,7 +1300,7 @@ Partial Class UI
         Me.MapToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.MapToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.MapToolStripMenuItem.Name = "MapToolStripMenuItem"
-        Me.MapToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
+        Me.MapToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.MapToolStripMenuItem.Text = ".map"
         '
         'UseToolStripMenuItem
@@ -1309,23 +1308,15 @@ Partial Class UI
         Me.UseToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.UseToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.UseToolStripMenuItem.Name = "UseToolStripMenuItem"
-        Me.UseToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
+        Me.UseToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.UseToolStripMenuItem.Text = ".use"
-        '
-        'VegToolStripMenuItem
-        '
-        Me.VegToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.VegToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
-        Me.VegToolStripMenuItem.Name = "VegToolStripMenuItem"
-        Me.VegToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
-        Me.VegToolStripMenuItem.Text = ".veg"
         '
         'WeaToolStripMenuItem
         '
         Me.WeaToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.WeaToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.WeaToolStripMenuItem.Name = "WeaToolStripMenuItem"
-        Me.WeaToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
+        Me.WeaToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.WeaToolStripMenuItem.Text = ".wea"
         '
         'OpenToolStripMenuItem
@@ -1355,6 +1346,14 @@ Partial Class UI
         Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(61, 20)
         Me.OptionsToolStripMenuItem.Text = "Options"
         '
+        'SetEnglishstfLocationToolStripMenuItem
+        '
+        Me.SetEnglishstfLocationToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.SetEnglishstfLocationToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.SetEnglishstfLocationToolStripMenuItem.Name = "SetEnglishstfLocationToolStripMenuItem"
+        Me.SetEnglishstfLocationToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
+        Me.SetEnglishstfLocationToolStripMenuItem.Text = "Set English.stf Location"
+        '
         'ToolsToolStripMenuItem
         '
         Me.ToolsToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
@@ -1379,14 +1378,6 @@ Partial Class UI
         Me.TxtTostfToolStripMenuItem.Name = "TxtTostfToolStripMenuItem"
         Me.TxtTostfToolStripMenuItem.Size = New System.Drawing.Size(124, 22)
         Me.TxtTostfToolStripMenuItem.Text = ".txt to .stf"
-        '
-        'SetEnglishstfLocationToolStripMenuItem
-        '
-        Me.SetEnglishstfLocationToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.SetEnglishstfLocationToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
-        Me.SetEnglishstfLocationToolStripMenuItem.Name = "SetEnglishstfLocationToolStripMenuItem"
-        Me.SetEnglishstfLocationToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
-        Me.SetEnglishstfLocationToolStripMenuItem.Text = "Set English.stf Location"
         '
         'UI
         '
@@ -1540,7 +1531,6 @@ Partial Class UI
     Friend WithEvents ItmToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MapToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents UseToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents VegToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents WeaToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents OptionsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SetEnglishstfLocationToolStripMenuItem As ToolStripMenuItem

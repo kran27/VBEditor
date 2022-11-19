@@ -134,22 +134,55 @@ Public Class ExTRc ' Called ExTR instead of E(T/S/B)TR for easier handling withi
 End Class
 
 Public Class EEN2c
-
+    Property skl As String
+    Property tex As String
+    Property invtex As String
+    Property sel As Boolean
+    Property EEOV As EEOVc
 End Class
 Public Class GENTc
     Property HoverSR As Integer ' String used when moused over
     Property LookSR As Integer ' String used when "Look" option is used
     Property NameSR As Integer ' String of the entities' name
-    Property Look2SR As Integer ' String seemingly also
-    Property Health As Integer
+    Property Look2SR As Integer ' String seemingly also used on mouseover
+    Property MaxHealth As Integer
+    Property StartHealth As Integer
 End Class
 Public Class GCREc
     Property Special As Special
+    Property Age As Integer
     Property Skills As List(Of Skill)
+    Property Traits As Integer()
+    Property TagSkills As Integer()
+    Property PortStr As String
+    Property Hea As Socket
+    Property Hai As Socket
+    Property Pon As Socket
+    Property Mus As Socket
+    Property Bea As Socket
+    Property Eye As Socket
+    Property Bod As Socket
+    Property Han As Socket
+    Property Fee As Socket
+    Property Bac As Socket
+    Property Sho As Socket
+    Property Van As Socket
+    Property Inventory As String()
     Property GWAM As List(Of GWAMc)
 End Class
 Public Class GWAMc
-    Property sr As Integer
+    ' Offsets 0x18, 0x20, 0x38, and 0x39 have been observed to have values, none of them appear to affect the function.
+    Property Anim As Integer
+    Property DmgType As Integer
+    Property ShotsFired As Integer
+    ' Property u1 As Integer ' Offset 0x18
+    Property Range As Integer
+    Property MinDmg As Integer
+    Property MaxDmg As Integer
+    ' Property u2 As Integer ' Offset 0x38
+    Property AP As Integer
+    Property NameSR As Integer ' Name String Reference
+    Property VegName As String
 End Class
 Public Class GCHRc
     Property name As String
@@ -197,11 +230,19 @@ Public Class Special
     End Sub
 End Class
 Public Class Skill
-    Property Value As Integer
     Property Index As Integer
-    Sub New(Value As Integer, Index As Integer)
-        Me.Value = Value
+    Property Value As Integer
+    Sub New(Index As Integer, Value As Integer)
         Me.Index = Index
+        Me.Value = Value
+    End Sub
+End Class
+Public Class Socket
+    Property Model As String
+    Property Tex As String
+    Sub New(Model As Integer, Tex As Integer)
+        Me.Model = Model
+        Me.Tex = Tex
     End Sub
 End Class
 #End Region

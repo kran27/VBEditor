@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports System.Windows.Forms.VisualStyles.VisualStyleElement.Tab
 
 Friend Module Functions
 #Region "Byte array to Class"
@@ -11,9 +12,9 @@ Friend Module Functions
         Dim s2o = s1o + s1l + 2 : Dim s2l = b(s2o - 2)
         Dim s3o = s2o + s2l + 2 : Dim s3l = b(s3o - 2)
         Return New EMAPc With {
-            .s1 = Encoding.ASCII.GetString(b.Skip(s1o).Take(s1l).ToArray()),
-            .s2 = Encoding.ASCII.GetString(b.Skip(s2o).Take(s2l).ToArray()),
-            .s3 = Encoding.ASCII.GetString(b.Skip(s3o).Take(s3l).ToArray()),
+            .s1 = Encoding.ASCII.GetString(b, s1o, s1l),
+            .s2 = Encoding.ASCII.GetString(b, s2o, s2l),
+            .s3 = Encoding.ASCII.GetString(b, s3o, s3l),
             .col = Color.FromArgb(b(s3o + s3l + 2), b(s3o + s3l + 3), b(s3o + s3l + 4)),
             .il = b(4) = 0,
             .le = b(s3o + s3l)
@@ -82,9 +83,9 @@ Friend Module Functions
     Public Function ToEME2c(b As Byte()) As EME2c
         Dim cl = b.Locate(Encoding.ASCII.GetBytes("EEOV"))(0)
         Return New EME2c With {
-            .name = Encoding.ASCII.GetString(b.Skip(14).Take(b(12)).ToArray()),
+            .name = Encoding.ASCII.GetString(b, 14, b(12)),
             .l = New Point4(BitConverter.ToSingle(b, 14 + b(12)), BitConverter.ToSingle(b, 18 + b(12)), BitConverter.ToSingle(b, 22 + b(12)), BitConverter.ToSingle(b, 26 + b(12))),
-            .EEOV = b.Skip(cl).Take(b(cl + 8)).ToArray().ToEEOVc
+            .EEOV = b.Skip(cl).Take(BitConverter.ToInt32(b, cl + 8)).ToArray().ToEEOVc
         }
     End Function
     <Extension>
@@ -119,9 +120,143 @@ Friend Module Functions
             .s3 = Encoding.ASCII.GetString(b.Skip(s3o).Take(s3l).ToArray()),
             .s4 = Encoding.ASCII.GetString(b.Skip(s4o).Take(s4l).ToArray()),
             .s5 = If(ps4 > 0, Encoding.ASCII.GetString(b.Skip(s5o).Take(s5l).ToArray()), ""),
-                   .ps4 = ps4,
+            .ps4 = ps4,
             .inv = inv.ToArray()
         }
+    End Function
+    <Extension>
+    Public Function ToEEN2c(b As Byte()) As EEN2c
+        Dim cl = b.Locate(Encoding.ASCII.GetBytes("EEOV"))(0)
+        Dim s1o = 14 : Dim s1l = b(s1o - 2)
+        Dim s2o = s1o + s1l + 2 : Dim s2l = b(s2o - 2)
+        Dim s3o = s2o + s2l + 2 : Dim s3l = b(s3o - 2)
+        Return New EEN2c() With {
+            .skl = Encoding.ASCII.GetString(b, s1o, s1l),
+            .invtex = Encoding.ASCII.GetString(b, s2o, s2l),
+            .acttex = Encoding.ASCII.GetString(b, s3o, s3l),
+            .sel = b(s3o + s3l + 1),
+            .EEOV = b.Skip(cl).Take(BitConverter.ToInt32(b, cl + 8)).ToArray().ToEEOVc
+            }
+    End Function
+    <Extension>
+    Public Function ToGENTc(b As Byte()) As GENTc
+        Return New GENTc() With {
+            .HoverSR = BitConverter.ToInt32(b, 12),
+                        .LookSR = BitConverter.ToInt32(b, 16),
+        .NameSR = BitConverter.ToInt32(b, 20),
+        .UnkwnSR = BitConverter.ToInt32(b, 24),
+        .MaxHealth = BitConverter.ToInt32(b, 36),
+        .StartHealth = BitConverter.ToInt32(b, 40)
+            }
+    End Function
+    <Extension>
+    Public Function ToGCHRc(b As Byte()) As GCHRc
+        Return New GCHRc() With {
+            .name = Encoding.ASCII.GetString(b, 14, b(12))
+            }
+    End Function
+    <Extension>
+    Public Function ToGWAMc(b As Byte()) As GWAMc
+        Return New GWAMc() With {
+            .Anim = BitConverter.ToInt32(b, 12),
+            .DmgType = BitConverter.ToInt32(b, 16),
+            .ShotsFired = BitConverter.ToInt32(b, 20),
+            .Range = BitConverter.ToInt32(b, 36),
+            .MinDmg = BitConverter.ToInt32(b, 48),
+            .MaxDmg = BitConverter.ToInt32(b, 52),
+            .AP = BitConverter.ToInt32(b, 62),
+            .NameSR = BitConverter.ToInt32(b, 72),
+            .VegName = Encoding.ASCII.GetString(b, 78, b(76))
+        }
+    End Function
+    <Extension>
+    Public Function ToGCREc(b As Byte()) As GCREc
+#Region "Offsets, Lengths"
+        Dim sl = b(72) * 8 ' Skills added length
+        Dim cl = b(76 + sl) * 8 ' Characters added length
+        Dim tl = b(80 + sl + cl) * 4 ' Traits added length
+        Dim tsl = b(84 + sl + cl + tl) * 4 ' Tag Skills added length
+        Dim po = 94 + sl + cl + tl + tsl ' Portrait String offset
+        Dim pl = b(92 + sl + cl + tl + tsl) ' Portrait String Length
+        Dim Heamo = 131 + sl + cl + tl + tsl + pl
+        Dim Heato = Heamo + 2 + b(Heamo - 2)
+        Dim Haimo = Heato + 2 + b(Heato - 2)
+        Dim Haito = Haimo + 2 + b(Haimo - 2)
+        Dim Ponmo = Haito + 2 + b(Haito - 2)
+        Dim Ponto = Ponmo + 2 + b(Ponmo - 2)
+        Dim Musmo = Ponto + 2 + b(Ponto - 2)
+        Dim Musto = Musmo + 2 + b(Musmo - 2)
+        Dim Beamo = Musto + 2 + b(Musto - 2)
+        Dim Beato = Beamo + 2 + b(Beamo - 2)
+        Dim Eyemo = Beato + 2 + b(Beato - 2)
+        Dim Eyeto = Eyemo + 2 + b(Eyemo - 2)
+        Dim Bodmo = Eyeto + 2 + b(Eyeto - 2)
+        Dim Bodto = Bodmo + 2 + b(Bodmo - 2)
+        Dim Hanmo = Bodto + 2 + b(Bodto - 2)
+        Dim Hanto = Hanmo + 2 + b(Hanmo - 2)
+        Dim Feemo = Hanto + 2 + b(Hanto - 2)
+        Dim Feeto = Feemo + 2 + b(Feemo - 2)
+        Dim Bacmo = Feeto + 2 + b(Feeto - 2)
+        Dim Bacto = Bacmo + 2 + b(Bacmo - 2)
+        Dim Shomo = Bacto + 2 + b(Bacto - 2)
+        Dim Shoto = Shomo + 2 + b(Shomo - 2)
+        Dim Vanmo = Shoto + 2 + b(Shoto - 2)
+        Dim Vanto = Vanmo + 2 + b(Vanmo - 2)
+        Dim psl = sl + cl + tl + tsl + pl + b(Heamo - 2) + b(Heato - 2) + b(Haimo - 2) + b(Haito - 2) + b(Ponmo - 2) + b(Ponto - 2) + b(Musmo - 2) + b(Musto - 2) + b(Beamo - 2) + b(Beato - 2) + b(Eyemo - 2) + b(Eyeto - 2) + b(Bodmo - 2) + b(Bodto - 2) + b(Hanmo - 2) + b(Hanto - 2) + b(Feemo - 2) + b(Feeto - 2) + b(Bacmo - 2) + b(Bacto - 2) + b(Shomo - 2) + b(Shoto - 2) + b(Vanmo - 2) + b(Vanto - 2)
+#End Region
+#Region "Build Sections"
+        Dim gl = b.Locate(Encoding.ASCII.GetBytes("GWAM"))
+        Dim tr = New List(Of Integer)
+        Dim io = 84 + cl + sl
+        For i = 0 To b(80 + cl + sl) - 1
+            tr.Add(b(io))
+            io += 4
+        Next
+        Dim ts = New List(Of Integer)
+        io = 84 + sl + cl + tl
+        For i = 1 To b(84 + sl + cl + tl)
+            ts.Add(b(io))
+            io += 4
+        Next
+        Dim skills = New List(Of Skill)
+        io = 76
+        For i = 0 To b(72) - 1
+            skills.Add(New Skill(b(io), b(io + 4)))
+            io += 8
+        Next
+
+        Dim inv = New List(Of String)
+        io = 279 + psl
+        Dim itemN = ""
+        For i = 0 To b(io - 6) - 1
+            Try : itemN = Encoding.ASCII.GetString(b.Skip(io).Take(b(io - 2)).ToArray()) : Catch : Exit For : End Try
+            If Not itemN.Length = 0 Then inv.Add(itemN)
+            io += b(io - 2) + 2
+        Next
+#End Region
+        Dim il = inv.Sum(Function(x) x.Length + 2)
+        Return New GCREc() With {
+            .Special = New Integer() {b(12), b(16), b(20), b(24), b(28), b(32), b(36)},
+            .Age = b(56),
+            .Skills = skills,
+            .Traits = tr,
+            .TagSkills = ts,
+            .PortStr = Encoding.ASCII.GetString(b, po, pl),
+            .Hea = New Socket(Encoding.ASCII.GetString(b, Heamo, b(Heamo - 2)), Encoding.ASCII.GetString(b, Heato, b(Heato - 2))),
+            .Hai = New Socket(Encoding.ASCII.GetString(b, Haimo, b(Haimo - 2)), Encoding.ASCII.GetString(b, Haito, b(Haito - 2))),
+            .Pon = New Socket(Encoding.ASCII.GetString(b, Ponmo, b(Ponmo - 2)), Encoding.ASCII.GetString(b, Ponto, b(Ponto - 2))),
+            .Mus = New Socket(Encoding.ASCII.GetString(b, Musmo, b(Musmo - 2)), Encoding.ASCII.GetString(b, Musto, b(Musto - 2))),
+            .Bea = New Socket(Encoding.ASCII.GetString(b, Beamo, b(Beamo - 2)), Encoding.ASCII.GetString(b, Beato, b(Beato - 2))),
+            .Eye = New Socket(Encoding.ASCII.GetString(b, Eyemo, b(Eyemo - 2)), Encoding.ASCII.GetString(b, Eyeto, b(Eyeto - 2))),
+            .Bod = New Socket(Encoding.ASCII.GetString(b, Bodmo, b(Bodmo - 2)), Encoding.ASCII.GetString(b, Bodto, b(Bodto - 2))),
+            .Han = New Socket(Encoding.ASCII.GetString(b, Hanmo, b(Hanmo - 2)), Encoding.ASCII.GetString(b, Hanto, b(Hanto - 2))),
+            .Fee = New Socket(Encoding.ASCII.GetString(b, Feemo, b(Feemo - 2)), Encoding.ASCII.GetString(b, Feeto, b(Feeto - 2))),
+            .Bac = New Socket(Encoding.ASCII.GetString(b, Bacmo, b(Bacmo - 2)), Encoding.ASCII.GetString(b, Bacto, b(Bacto - 2))),
+            .Sho = New Socket(Encoding.ASCII.GetString(b, Shomo, b(Shomo - 2)), Encoding.ASCII.GetString(b, Shoto, b(Shoto - 2))),
+            .Van = New Socket(Encoding.ASCII.GetString(b, Vanmo, b(Vanmo - 2)), Encoding.ASCII.GetString(b, Vanto, b(Vanto - 2))),
+            .Inventory = inv.ToArray(),
+            .GWAM = (From i In gl Select b.Skip(i).Take(BitConverter.ToInt32(b, i + 8)).ToArray().ToGWAMc()).ToList()
+            }
     End Function
 
 #End Region
@@ -327,9 +462,133 @@ Friend Module Functions
         b.AddRange(c.ExTR.ToExTRb())
         Return b.ToArray()
     End Function
+    ' Convert GCHR to a byte array
+    <Extension>
+    Public Function ToGCHRb(c As GCHRc) As Byte()
+        Dim out = New Byte(13 + c.name.Length) {}
+        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("GCHR"))
+        out.OverwriteBytes(8, BitConverter.GetBytes(14 + c.name.Length))
+        out.OverwriteBytes(12, New Byte() {c.name.Length})
+        out.OverwriteBytes(14, Encoding.ASCII.GetBytes(c.name))
+        Return out
+    End Function
+    ' Convert EEN2 to a byte array
+    <Extension>
+    Public Function ToEEN2b(c As EEN2c) As Byte()
+        Dim EEOV = c.EEOV.ToEEOVb
+        Dim out = New Byte(22 + EEOV.Length + c.skl.Length + c.invtex.Length + c.acttex.Length) {}
+        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EEN2"))
+        out.OverwriteBytes(8, BitConverter.GetBytes(23 + EEOV.Length + c.skl.Length + c.invtex.Length + c.acttex.Length))
+        out.OverwriteBytes(12, New Byte() {c.skl.Length})
+        out.OverwriteBytes(14, Encoding.ASCII.GetBytes(c.skl))
+        out.OverwriteBytes(14 + c.skl.Length, New Byte() {c.invtex.Length})
+        out.OverwriteBytes(16 + c.skl.Length, Encoding.ASCII.GetBytes(c.invtex))
+        out.OverwriteBytes(16 + c.skl.Length + c.invtex.Length, New Byte() {c.acttex.Length})
+        out.OverwriteBytes(18 + c.skl.Length + c.invtex.Length, Encoding.ASCII.GetBytes(c.acttex))
+        out.OverwriteBytes(19 + c.skl.Length + c.invtex.Length + c.acttex.Length, BitConverter.GetBytes(c.sel))
+        out.OverwriteBytes(23 + c.skl.Length + c.invtex.Length + c.acttex.Length, EEOV)
+        Return out
+    End Function
+    ' Convert GENT to a byte array
+    <Extension>
+    Public Function ToGENTb(c As GENTc) As Byte()
+        Dim out = New Byte(43) {}
+        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("GENT"))
+        out.OverwriteBytes(4, New Byte() {1})
+        out.OverwriteBytes(8, BitConverter.GetBytes(44))
+        out.OverwriteBytes(12, BitConverter.GetBytes(c.HoverSR))
+        out.OverwriteBytes(16, BitConverter.GetBytes(c.LookSR))
+        out.OverwriteBytes(20, BitConverter.GetBytes(c.NameSR))
+        out.OverwriteBytes(24, BitConverter.GetBytes(c.UnkwnSR))
+        out.OverwriteBytes(36, BitConverter.GetBytes(c.MaxHealth))
+        out.OverwriteBytes(40, BitConverter.GetBytes(c.StartHealth))
+        Return out
+    End Function
+    ' Convert GWAM to a byte array
+    <Extension>
+    Public Function ToGWAMb(c As GWAMc) As Byte()
+        Dim out = New Byte(79 + c.VegName.Length) {}
+        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("GWAM"))
+        out.OverwriteBytes(4, New Byte() {5})
+        out.OverwriteBytes(8, BitConverter.GetBytes(80 + c.VegName.Length))
+        out.OverwriteBytes(12, BitConverter.GetBytes(c.Anim))
+        out.OverwriteBytes(16, BitConverter.GetBytes(c.DmgType))
+        out.OverwriteBytes(20, BitConverter.GetBytes(c.ShotsFired))
+        out.OverwriteBytes(36, BitConverter.GetBytes(c.Range))
+        out.OverwriteBytes(48, BitConverter.GetBytes(c.MinDmg))
+        out.OverwriteBytes(52, BitConverter.GetBytes(c.MaxDmg))
+        out.OverwriteBytes(62, BitConverter.GetBytes(c.AP))
+        out.OverwriteBytes(72, BitConverter.GetBytes(c.NameSR))
+        out.OverwriteBytes(78, Encoding.ASCII.GetBytes(c.VegName))
+        out.OverwriteBytes(out.Length - 2, New Byte() {1})
+        Return out
+    End Function
+    ' Convert GCRE to a byte array
+    <Extension>
+    Public Function ToGCREb(c As GCREc) As Byte()
+        Dim GWAM = New List(Of Byte)
+        For Each g In c.GWAM
+            GWAM.AddRange(g.ToGWAMb)
+        Next
+        Dim socs = New Socket() {c.Hea, c.Hai, c.Pon, c.Mus, c.Bea, c.Eye, c.Bod, c.Han, c.Fee, c.Bac, c.Sho, c.Van}
+        Dim sock = New List(Of Byte)
+        For Each s In socs
+            sock.AddRange(New Byte() {s.Model.Length, 0})
+            sock.AddRange(Encoding.ASCII.GetBytes(s.Model))
+            sock.AddRange(New Byte() {s.Tex.Length, 0})
+            sock.AddRange(Encoding.ASCII.GetBytes(s.Tex))
+        Next
+        Dim inv = New List(Of Byte)
+        For Each i In c.Inventory
+            inv.AddRange(New Byte() {i.Length, 0})
+            inv.AddRange(Encoding.ASCII.GetBytes(i))
+        Next
+#Region "Dynamic Lengths"
+        Dim sl = c.Skills.Count * 8 ' Skills length
+        Dim tl = c.Traits.Count * 4 ' Traits length
+        Dim tsl = c.TagSkills.Count * 4 ' Tag Skills length
+        Dim il = c.Inventory.Sum(Function(i) i.Length + 2) ' Inventory Length
+        Dim socl = c.Hea.Model.Length + c.Hea.Tex.Length + c.Hai.Tex.Length + c.Hai.Model.Length + c.Pon.Tex.Length + c.Pon.Model.Length + c.Mus.Tex.Length + c.Mus.Model.Length + c.Bea.Tex.Length + c.Bea.Model.Length + c.Eye.Tex.Length + c.Eye.Model.Length + c.Bod.Tex.Length + c.Bod.Model.Length + c.Han.Tex.Length + c.Han.Model.Length + c.Fee.Tex.Length + c.Fee.Model.Length + c.Bac.Tex.Length + c.Bac.Model.Length + c.Sho.Tex.Length + c.Sho.Model.Length + c.Van.Tex.Length + c.Van.Model.Length
+        ' TDL = Total Dynamic Length
+        Dim TDL = sl + tl + tsl + il + GWAM.Count + c.PortStr.Length + socl
+#End Region
+        Dim out = New Byte(276 + TDL) {}
+        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("GCRE"))
+        out.OverwriteBytes(4, New Byte() {4})
+        out.OverwriteBytes(8, BitConverter.GetBytes(277 + TDL))
+        out.OverwriteBytes(12, BitConverter.GetBytes(c.Special(0)))
+        out.OverwriteBytes(16, BitConverter.GetBytes(c.Special(1)))
+        out.OverwriteBytes(20, BitConverter.GetBytes(c.Special(2)))
+        out.OverwriteBytes(24, BitConverter.GetBytes(c.Special(3)))
+        out.OverwriteBytes(28, BitConverter.GetBytes(c.Special(4)))
+        out.OverwriteBytes(32, BitConverter.GetBytes(c.Special(5)))
+        out.OverwriteBytes(36, BitConverter.GetBytes(c.Special(6)))
+        out.OverwriteBytes(56, BitConverter.GetBytes(c.Age))
+        out.OverwriteBytes(72, BitConverter.GetBytes(c.Skills.Count))
+        For i = 0 To c.Skills.Count - 1
+            out.OverwriteBytes(76 + (i * 8), BitConverter.GetBytes(c.Skills(i).Index))
+            out.OverwriteBytes(80 + (i * 8), BitConverter.GetBytes(c.Skills(i).Value))
+        Next
+        out.OverwriteBytes(80 + sl, BitConverter.GetBytes(c.Traits.Count))
+        For i = 0 To c.Traits.Count - 1
+            out.OverwriteBytes(84 + sl + (i * 4), BitConverter.GetBytes(c.Traits(i)))
+        Next
+        out.OverwriteBytes(84 + sl + tl, BitConverter.GetBytes(c.TagSkills.Count))
+        For i = 0 To c.TagSkills.Count - 1
+            out.OverwriteBytes(88 + sl + tl + (i * 4), BitConverter.GetBytes(c.TagSkills(i)))
+        Next
+        out.OverwriteBytes(92 + sl + tl + tsl, BitConverter.GetBytes(c.PortStr.Length))
+        out.OverwriteBytes(94 + sl + tl + tsl, Encoding.ASCII.GetBytes(c.PortStr))
+        out.OverwriteBytes(129 + sl + tl + tsl + c.PortStr.Length, sock.ToArray())
+        out.OverwriteBytes(189 + sl + tl + tsl + c.PortStr.Length + socl, New Byte() {c.GWAM.Count})
+        out.OverwriteBytes(273 + sl + tl + tsl + c.PortStr.Length + socl, BitConverter.GetBytes(c.Inventory.Length))
+        out.OverwriteBytes(277 + sl + tl + tsl + c.PortStr.Length + socl, inv.ToArray())
+        out.OverwriteBytes(277 + sl + tl + tsl + c.PortStr.Length + socl + il, GWAM.ToArray())
+        Return out
+    End Function
 #End Region
 #Region ".stf Stuff"
-    Public Function STFToTXT(b As Byte()) As String()
+    Public Function STFToTXT(b As Byte()) As List(Of String)
         b.PreParse()
         Dim s As New List(Of String)
         Dim oi = 12
@@ -339,7 +598,7 @@ Friend Module Functions
             oi += 16
             li += 16
         Next
-        Return s.ToArray()
+        Return s
     End Function
     Public Function TXTToSTF(s As String()) As Byte()
         Dim b As New List(Of Byte)
@@ -462,4 +721,9 @@ Friend Module Functions
             b(i) = newBytes(i - startIndex)
         Next
     End Sub
+    ' Convert DataGridView Rows to string array using LINQ
+    <Extension>
+    Public Function ToStringArray(r As DataGridViewRowCollection) As String()
+        Return (From row As DataGridViewRow In r Where TypeOf row.Cells.Item(0).Value Is String Select row.Cells.Item(0).Value).Cast(Of String)().ToArray()
+    End Function
 End Module

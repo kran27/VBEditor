@@ -122,8 +122,8 @@ Partial Class UI
         Me.EMEPy = New AltUI.Controls.DarkTextBox()
         Me.EMEPnud = New AltUI.Controls.DarkNumericUpDown()
         Me.EMEPx = New AltUI.Controls.DarkTextBox()
-        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.DarkMenuStrip1 = New AltUI.Controls.DarkMenuStrip()
+        Me.EME2tmr = New System.Windows.Forms.Timer(Me.components)
+        Me.MainMenuStrip = New AltUI.Controls.DarkMenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AmoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -140,10 +140,101 @@ Partial Class UI
         Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SetEnglishstfLocationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.EnableSTFEdit = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StfToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TxtTostfToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
+        Me.GWAMsf = New AltUI.Controls.DarkNumericUpDown()
+        Me.EEN2dgv = New System.Windows.Forms.DataGridView()
+        Me.CRTgb = New AltUI.Controls.DarkGroupBox()
+        Me.GCHRgb = New AltUI.Controls.DarkGroupBox()
+        Me.GCHRn = New AltUI.Controls.DarkTextBox()
+        Me.GCREgb = New AltUI.Controls.DarkGroupBox()
+        Me.GCREdsb = New AltUI.Controls.DarkScrollBar()
+        Me.GCREtlp = New System.Windows.Forms.TableLayoutPanel()
+        Me.GCREdgv = New System.Windows.Forms.DataGridView()
+        Me.GCREskv = New AltUI.Controls.DarkNumericUpDown()
+        Me.GCREspv = New AltUI.Controls.DarkNumericUpDown()
+        Me.GCREspl = New AltUI.Controls.DarkLabel()
+        Me.GCREspcb = New AltUI.Controls.DarkComboBox()
+        Me.GCREskl = New AltUI.Controls.DarkLabel()
+        Me.GCREtrl = New AltUI.Controls.DarkLabel()
+        Me.GCREskcb = New AltUI.Controls.DarkComboBox()
+        Me.GCREtrcb = New AltUI.Controls.DarkComboBox()
+        Me.GCREtsl = New AltUI.Controls.DarkLabel()
+        Me.GCREtscb = New AltUI.Controls.DarkComboBox()
+        Me.GCREtrv = New AltUI.Controls.DarkCheckBox()
+        Me.GCREtsv = New AltUI.Controls.DarkCheckBox()
+        Me.GCREpl = New AltUI.Controls.DarkLabel()
+        Me.GCREp = New AltUI.Controls.DarkTextBox()
+        Me.GCREsocl = New AltUI.Controls.DarkLabel()
+        Me.GCREsocm = New AltUI.Controls.DarkTextBox()
+        Me.GCREsoct = New AltUI.Controls.DarkTextBox()
+        Me.GCREsocml = New AltUI.Controls.DarkLabel()
+        Me.GCREsoctl = New AltUI.Controls.DarkLabel()
+        Me.GCREsoccb = New AltUI.Controls.DarkComboBox()
+        Me.GCREeil = New AltUI.Controls.DarkLabel()
+        Me.GCREsoctel = New AltUI.Controls.DarkLabel()
+        Me.GCREpel = New AltUI.Controls.DarkLabel()
+        Me.GCREage = New AltUI.Controls.DarkNumericUpDown()
+        Me.GCREagel = New AltUI.Controls.DarkLabel()
+        Me.GWAMgb = New AltUI.Controls.DarkGroupBox()
+        Me.GWAMm = New AltUI.Controls.DarkButton()
+        Me.GWAMcb = New AltUI.Controls.DarkComboBox()
+        Me.GWAMp = New AltUI.Controls.DarkButton()
+        Me.GWAMtlp = New System.Windows.Forms.TableLayoutPanel()
+        Me.GWAManil = New AltUI.Controls.DarkLabel()
+        Me.GWAMani = New AltUI.Controls.DarkNumericUpDown()
+        Me.GWAMdtl = New AltUI.Controls.DarkLabel()
+        Me.GWAMdt = New AltUI.Controls.DarkComboBox()
+        Me.GWAMapl = New AltUI.Controls.DarkLabel()
+        Me.GWAMap = New AltUI.Controls.DarkNumericUpDown()
+        Me.GWAMsfl = New AltUI.Controls.DarkLabel()
+        Me.GWAMrl = New AltUI.Controls.DarkLabel()
+        Me.GWAMr = New AltUI.Controls.DarkNumericUpDown()
+        Me.GWAMminl = New AltUI.Controls.DarkLabel()
+        Me.GWAMmin = New AltUI.Controls.DarkNumericUpDown()
+        Me.GWAMmaxl = New AltUI.Controls.DarkLabel()
+        Me.GWAMmax = New AltUI.Controls.DarkNumericUpDown()
+        Me.GWAManl = New AltUI.Controls.DarkLabel()
+        Me.GWAManSR = New AltUI.Controls.DarkNumericUpDown()
+        Me.GWAMef = New AltUI.Controls.DarkTextBox()
+        Me.GWAMefl = New AltUI.Controls.DarkLabel()
+        Me.GWAMan = New AltUI.Controls.DarkTextBox()
+        Me.GWAMefel = New AltUI.Controls.DarkLabel()
+        Me.GENTgb = New AltUI.Controls.DarkGroupBox()
+        Me.GENTu = New AltUI.Controls.DarkTextBox()
+        Me.GENTn = New AltUI.Controls.DarkTextBox()
+        Me.GENTl = New AltUI.Controls.DarkTextBox()
+        Me.GENTh = New AltUI.Controls.DarkTextBox()
+        Me.GENTihpl = New AltUI.Controls.DarkLabel()
+        Me.GENTmhpl = New AltUI.Controls.DarkLabel()
+        Me.GENTihp = New AltUI.Controls.DarkNumericUpDown()
+        Me.GENTmhp = New AltUI.Controls.DarkNumericUpDown()
+        Me.GENTuSR = New AltUI.Controls.DarkNumericUpDown()
+        Me.GENTnSR = New AltUI.Controls.DarkNumericUpDown()
+        Me.GENTlSR = New AltUI.Controls.DarkNumericUpDown()
+        Me.GENThSR = New AltUI.Controls.DarkNumericUpDown()
+        Me.EEN2gb = New AltUI.Controls.DarkGroupBox()
+        Me.EEN2dsb = New AltUI.Controls.DarkScrollBar()
+        Me.EEN2skll = New AltUI.Controls.DarkLabel()
+        Me.EEN2acttl = New AltUI.Controls.DarkLabel()
+        Me.EEN2invtl = New AltUI.Controls.DarkLabel()
+        Me.EEN2s5l = New AltUI.Controls.DarkLabel()
+        Me.EEN2s4l = New AltUI.Controls.DarkLabel()
+        Me.EEN2s3l = New AltUI.Controls.DarkLabel()
+        Me.EEN2s5 = New AltUI.Controls.DarkTextBox()
+        Me.EEN2s4 = New AltUI.Controls.DarkTextBox()
+        Me.EEN2s3 = New AltUI.Controls.DarkTextBox()
+        Me.EEN2s2 = New AltUI.Controls.DarkTextBox()
+        Me.EEN2s1 = New AltUI.Controls.DarkTextBox()
+        Me.EEN2sel = New AltUI.Controls.DarkCheckBox()
+        Me.EEN2actt = New AltUI.Controls.DarkTextBox()
+        Me.EEN2invt = New AltUI.Controls.DarkTextBox()
+        Me.EEN2skl = New AltUI.Controls.DarkTextBox()
+        Me.GCREtmr = New System.Windows.Forms.Timer(Me.components)
+        Me.EEN2tmr = New System.Windows.Forms.Timer(Me.components)
         Me.Mapgb.SuspendLayout()
         Me.Triggergb.SuspendLayout()
         CType(Me.Triggernud, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -157,7 +248,33 @@ Partial Class UI
         Me.EMAPgb.SuspendLayout()
         Me.EMEPgb.SuspendLayout()
         CType(Me.EMEPnud, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.DarkMenuStrip1.SuspendLayout()
+        Me.MainMenuStrip.SuspendLayout()
+        CType(Me.GWAMsf, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.EEN2dgv, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.CRTgb.SuspendLayout()
+        Me.GCHRgb.SuspendLayout()
+        Me.GCREgb.SuspendLayout()
+        Me.GCREtlp.SuspendLayout()
+        CType(Me.GCREdgv, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GCREskv, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GCREspv, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GCREage, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GWAMgb.SuspendLayout()
+        Me.GWAMtlp.SuspendLayout()
+        CType(Me.GWAMani, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GWAMap, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GWAMr, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GWAMmin, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GWAMmax, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GWAManSR, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GENTgb.SuspendLayout()
+        CType(Me.GENTihp, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GENTmhp, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GENTuSR, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GENTnSR, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GENTlSR, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GENThSR, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.EEN2gb.SuspendLayout()
         Me.SuspendLayout()
         '
         'EMAPs3l
@@ -212,7 +329,7 @@ Partial Class UI
         '
         'EMAPs3
         '
-        Me.EMAPs3.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EMAPs3.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EMAPs3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EMAPs3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EMAPs3.Location = New System.Drawing.Point(6, 110)
@@ -222,7 +339,7 @@ Partial Class UI
         '
         'EMAPs2
         '
-        Me.EMAPs2.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EMAPs2.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EMAPs2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EMAPs2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EMAPs2.Location = New System.Drawing.Point(6, 81)
@@ -232,7 +349,7 @@ Partial Class UI
         '
         'EMAPs1
         '
-        Me.EMAPs1.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EMAPs1.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EMAPs1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EMAPs1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EMAPs1.Location = New System.Drawing.Point(6, 52)
@@ -250,12 +367,12 @@ Partial Class UI
         Me.Mapgb.Controls.Add(Me.ECAMgb)
         Me.Mapgb.Controls.Add(Me.EMAPgb)
         Me.Mapgb.Controls.Add(Me.EMEPgb)
-        Me.Mapgb.Location = New System.Drawing.Point(12, 27)
+        Me.Mapgb.Location = New System.Drawing.Point(942, 27)
         Me.Mapgb.Name = "Mapgb"
         Me.Mapgb.Size = New System.Drawing.Size(924, 456)
         Me.Mapgb.TabIndex = 2
         Me.Mapgb.TabStop = False
-        Me.Mapgb.Text = ".map Editor"
+        Me.Mapgb.Text = ".MAP Editor"
         '
         'Triggergb
         '
@@ -336,7 +453,7 @@ Partial Class UI
         '
         'Triggern
         '
-        Me.Triggern.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.Triggern.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.Triggern.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Triggern.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.Triggern.Location = New System.Drawing.Point(6, 29)
@@ -355,7 +472,7 @@ Partial Class UI
         '
         'Triggerx
         '
-        Me.Triggerx.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.Triggerx.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.Triggerx.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Triggerx.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.Triggerx.Location = New System.Drawing.Point(93, 59)
@@ -374,7 +491,7 @@ Partial Class UI
         '
         'Triggery
         '
-        Me.Triggery.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.Triggery.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.Triggery.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Triggery.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.Triggery.Location = New System.Drawing.Point(162, 59)
@@ -384,7 +501,7 @@ Partial Class UI
         '
         'Triggerz
         '
-        Me.Triggerz.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.Triggerz.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.Triggerz.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Triggerz.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.Triggerz.Location = New System.Drawing.Point(231, 59)
@@ -447,7 +564,7 @@ Partial Class UI
         '
         'EPTHr
         '
-        Me.EPTHr.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EPTHr.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EPTHr.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EPTHr.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EPTHr.Location = New System.Drawing.Point(248, 59)
@@ -470,7 +587,7 @@ Partial Class UI
         '
         'EPTHn
         '
-        Me.EPTHn.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EPTHn.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EPTHn.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EPTHn.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EPTHn.Location = New System.Drawing.Point(6, 30)
@@ -489,7 +606,7 @@ Partial Class UI
         '
         'EPTHx
         '
-        Me.EPTHx.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EPTHx.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EPTHx.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EPTHx.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EPTHx.Location = New System.Drawing.Point(92, 59)
@@ -508,7 +625,7 @@ Partial Class UI
         '
         'EPTHy
         '
-        Me.EPTHy.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EPTHy.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EPTHy.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EPTHy.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EPTHy.Location = New System.Drawing.Point(144, 59)
@@ -518,7 +635,7 @@ Partial Class UI
         '
         'EPTHz
         '
-        Me.EPTHz.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EPTHz.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EPTHz.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EPTHz.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EPTHz.Location = New System.Drawing.Point(196, 59)
@@ -591,7 +708,7 @@ Partial Class UI
         '
         'EMSDs1
         '
-        Me.EMSDs1.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EMSDs1.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EMSDs1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EMSDs1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EMSDs1.Location = New System.Drawing.Point(6, 30)
@@ -601,7 +718,7 @@ Partial Class UI
         '
         'EMSDs2
         '
-        Me.EMSDs2.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EMSDs2.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EMSDs2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EMSDs2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EMSDs2.Location = New System.Drawing.Point(6, 59)
@@ -620,7 +737,7 @@ Partial Class UI
         '
         'EMSDz
         '
-        Me.EMSDz.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EMSDz.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EMSDz.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EMSDz.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EMSDz.Location = New System.Drawing.Point(213, 88)
@@ -630,7 +747,7 @@ Partial Class UI
         '
         'EMSDy
         '
-        Me.EMSDy.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EMSDy.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EMSDy.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EMSDy.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EMSDy.Location = New System.Drawing.Point(126, 88)
@@ -640,7 +757,7 @@ Partial Class UI
         '
         'EMSDx
         '
-        Me.EMSDx.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EMSDx.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EMSDx.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EMSDx.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EMSDx.Location = New System.Drawing.Point(39, 88)
@@ -704,7 +821,7 @@ Partial Class UI
         '
         'EME2r
         '
-        Me.EME2r.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EME2r.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EME2r.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EME2r.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EME2r.Location = New System.Drawing.Point(241, 254)
@@ -728,7 +845,7 @@ Partial Class UI
         Me.EME2dsb.Name = "EME2dsb"
         Me.EME2dsb.Size = New System.Drawing.Size(18, 247)
         Me.EME2dsb.TabIndex = 14
-        Me.EME2dsb.Text = "DarkScrollBar1"
+        Me.EME2dsb.Text = "EME2dsb"
         '
         'EME2s5l
         '
@@ -759,7 +876,7 @@ Partial Class UI
         '
         'EME2z
         '
-        Me.EME2z.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EME2z.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EME2z.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EME2z.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EME2z.Location = New System.Drawing.Point(176, 254)
@@ -769,7 +886,7 @@ Partial Class UI
         '
         'EME2y
         '
-        Me.EME2y.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EME2y.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EME2y.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EME2y.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EME2y.Location = New System.Drawing.Point(111, 254)
@@ -779,7 +896,7 @@ Partial Class UI
         '
         'EME2s5
         '
-        Me.EME2s5.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EME2s5.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EME2s5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EME2s5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EME2s5.Location = New System.Drawing.Point(6, 200)
@@ -789,7 +906,7 @@ Partial Class UI
         '
         'EME2s4
         '
-        Me.EME2s4.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EME2s4.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EME2s4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EME2s4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EME2s4.Location = New System.Drawing.Point(6, 171)
@@ -799,7 +916,7 @@ Partial Class UI
         '
         'EME2x
         '
-        Me.EME2x.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EME2x.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EME2x.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EME2x.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EME2x.Location = New System.Drawing.Point(46, 254)
@@ -811,6 +928,7 @@ Partial Class UI
         '
         Me.EME2dgv.AllowUserToResizeColumns = False
         Me.EME2dgv.AllowUserToResizeRows = False
+        Me.EME2dgv.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(16, Byte), Integer), CType(CType(16, Byte), Integer))
         Me.EME2dgv.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.EME2dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.EME2dgv.ColumnHeadersVisible = False
@@ -835,7 +953,7 @@ Partial Class UI
         '
         'EME2s3
         '
-        Me.EME2s3.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EME2s3.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EME2s3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EME2s3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EME2s3.Location = New System.Drawing.Point(6, 142)
@@ -845,7 +963,7 @@ Partial Class UI
         '
         'EME2s2
         '
-        Me.EME2s2.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EME2s2.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EME2s2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EME2s2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EME2s2.Location = New System.Drawing.Point(6, 88)
@@ -855,7 +973,7 @@ Partial Class UI
         '
         'EME2s1
         '
-        Me.EME2s1.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EME2s1.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EME2s1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EME2s1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EME2s1.Location = New System.Drawing.Point(6, 59)
@@ -865,7 +983,7 @@ Partial Class UI
         '
         'EME2n
         '
-        Me.EME2n.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EME2n.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EME2n.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EME2n.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EME2n.Location = New System.Drawing.Point(6, 30)
@@ -908,7 +1026,7 @@ Partial Class UI
         '
         'EMEFr
         '
-        Me.EMEFr.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EMEFr.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EMEFr.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EMEFr.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EMEFr.Location = New System.Drawing.Point(237, 88)
@@ -949,7 +1067,7 @@ Partial Class UI
         '
         'EMEFs1
         '
-        Me.EMEFs1.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EMEFs1.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EMEFs1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EMEFs1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EMEFs1.Location = New System.Drawing.Point(6, 30)
@@ -959,7 +1077,7 @@ Partial Class UI
         '
         'EMEFs2
         '
-        Me.EMEFs2.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EMEFs2.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EMEFs2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EMEFs2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EMEFs2.Location = New System.Drawing.Point(6, 59)
@@ -978,7 +1096,7 @@ Partial Class UI
         '
         'EMEFz
         '
-        Me.EMEFz.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EMEFz.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EMEFz.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EMEFz.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EMEFz.Location = New System.Drawing.Point(174, 88)
@@ -988,7 +1106,7 @@ Partial Class UI
         '
         'EMEFy
         '
-        Me.EMEFy.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EMEFy.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EMEFy.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EMEFy.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EMEFy.Location = New System.Drawing.Point(111, 88)
@@ -998,7 +1116,7 @@ Partial Class UI
         '
         'EMEFx
         '
-        Me.EMEFx.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EMEFx.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EMEFx.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EMEFx.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EMEFx.Location = New System.Drawing.Point(48, 88)
@@ -1022,7 +1140,7 @@ Partial Class UI
         '
         'ECAMr
         '
-        Me.ECAMr.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.ECAMr.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.ECAMr.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.ECAMr.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.ECAMr.Location = New System.Drawing.Point(236, 17)
@@ -1041,7 +1159,7 @@ Partial Class UI
         '
         'ECAMz
         '
-        Me.ECAMz.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.ECAMz.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.ECAMz.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.ECAMz.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.ECAMz.Location = New System.Drawing.Point(173, 17)
@@ -1051,7 +1169,7 @@ Partial Class UI
         '
         'ECAMy
         '
-        Me.ECAMy.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.ECAMy.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.ECAMy.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.ECAMy.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.ECAMy.Location = New System.Drawing.Point(110, 17)
@@ -1061,7 +1179,7 @@ Partial Class UI
         '
         'ECAMx
         '
-        Me.ECAMx.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.ECAMx.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.ECAMx.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.ECAMx.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.ECAMx.Location = New System.Drawing.Point(47, 17)
@@ -1142,7 +1260,7 @@ Partial Class UI
         '
         'EMEPr
         '
-        Me.EMEPr.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EMEPr.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EMEPr.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EMEPr.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EMEPr.Location = New System.Drawing.Point(237, 57)
@@ -1170,7 +1288,7 @@ Partial Class UI
         '
         'EMEPz
         '
-        Me.EMEPz.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EMEPz.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EMEPz.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EMEPz.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EMEPz.Location = New System.Drawing.Point(174, 57)
@@ -1180,7 +1298,7 @@ Partial Class UI
         '
         'EMEPy
         '
-        Me.EMEPy.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EMEPy.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EMEPy.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EMEPy.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EMEPy.Location = New System.Drawing.Point(111, 57)
@@ -1197,7 +1315,7 @@ Partial Class UI
         '
         'EMEPx
         '
-        Me.EMEPx.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(29, Byte), Integer))
+        Me.EMEPx.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.EMEPx.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.EMEPx.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.EMEPx.Location = New System.Drawing.Point(49, 57)
@@ -1205,25 +1323,25 @@ Partial Class UI
         Me.EMEPx.Size = New System.Drawing.Size(57, 23)
         Me.EMEPx.TabIndex = 0
         '
-        'Timer1
+        'EME2tmr
         '
-        Me.Timer1.Interval = 5
+        Me.EME2tmr.Interval = 7
         '
-        'DarkMenuStrip1
+        'MainMenuStrip
         '
-        Me.DarkMenuStrip1.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.DarkMenuStrip1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
-        Me.DarkMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.OptionsToolStripMenuItem, Me.ToolsToolStripMenuItem})
-        Me.DarkMenuStrip1.Location = New System.Drawing.Point(0, 0)
-        Me.DarkMenuStrip1.Name = "DarkMenuStrip1"
-        Me.DarkMenuStrip1.Padding = New System.Windows.Forms.Padding(3, 2, 0, 2)
-        Me.DarkMenuStrip1.Size = New System.Drawing.Size(948, 24)
-        Me.DarkMenuStrip1.TabIndex = 14
-        Me.DarkMenuStrip1.Text = "DarkMenuStrip1"
+        Me.MainMenuStrip.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.MainMenuStrip.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.MainMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.OptionsToolStripMenuItem, Me.ToolsToolStripMenuItem})
+        Me.MainMenuStrip.Location = New System.Drawing.Point(0, 0)
+        Me.MainMenuStrip.Name = "MainMenuStrip"
+        Me.MainMenuStrip.Padding = New System.Windows.Forms.Padding(3, 2, 0, 2)
+        Me.MainMenuStrip.Size = New System.Drawing.Size(1874, 24)
+        Me.MainMenuStrip.TabIndex = 14
+        Me.MainMenuStrip.Text = "DarkMenuStrip1"
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.FileToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(16, Byte), Integer), CType(CType(17, Byte), Integer))
         Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.OpenToolStripMenuItem, Me.SaveToolStripMenuItem})
         Me.FileToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
@@ -1236,7 +1354,7 @@ Partial Class UI
         Me.NewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AmoToolStripMenuItem, Me.ArmToolStripMenuItem, Me.ConToolStripMenuItem, Me.CrtToolStripMenuItem, Me.DorToolStripMenuItem, Me.IntToolStripMenuItem, Me.ItmToolStripMenuItem, Me.MapToolStripMenuItem, Me.UseToolStripMenuItem, Me.WeaToolStripMenuItem})
         Me.NewToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.NewToolStripMenuItem.Name = "NewToolStripMenuItem"
-        Me.NewToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.NewToolStripMenuItem.Size = New System.Drawing.Size(146, 22)
         Me.NewToolStripMenuItem.Text = "New"
         '
         'AmoToolStripMenuItem
@@ -1244,7 +1362,7 @@ Partial Class UI
         Me.AmoToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.AmoToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.AmoToolStripMenuItem.Name = "AmoToolStripMenuItem"
-        Me.AmoToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.AmoToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
         Me.AmoToolStripMenuItem.Text = ".amo"
         '
         'ArmToolStripMenuItem
@@ -1252,7 +1370,7 @@ Partial Class UI
         Me.ArmToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.ArmToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.ArmToolStripMenuItem.Name = "ArmToolStripMenuItem"
-        Me.ArmToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ArmToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
         Me.ArmToolStripMenuItem.Text = ".arm"
         '
         'ConToolStripMenuItem
@@ -1260,7 +1378,7 @@ Partial Class UI
         Me.ConToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.ConToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.ConToolStripMenuItem.Name = "ConToolStripMenuItem"
-        Me.ConToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ConToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
         Me.ConToolStripMenuItem.Text = ".con"
         '
         'CrtToolStripMenuItem
@@ -1268,7 +1386,7 @@ Partial Class UI
         Me.CrtToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.CrtToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.CrtToolStripMenuItem.Name = "CrtToolStripMenuItem"
-        Me.CrtToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.CrtToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
         Me.CrtToolStripMenuItem.Text = ".crt"
         '
         'DorToolStripMenuItem
@@ -1276,7 +1394,7 @@ Partial Class UI
         Me.DorToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.DorToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.DorToolStripMenuItem.Name = "DorToolStripMenuItem"
-        Me.DorToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.DorToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
         Me.DorToolStripMenuItem.Text = ".dor"
         '
         'IntToolStripMenuItem
@@ -1284,7 +1402,7 @@ Partial Class UI
         Me.IntToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.IntToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.IntToolStripMenuItem.Name = "IntToolStripMenuItem"
-        Me.IntToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.IntToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
         Me.IntToolStripMenuItem.Text = ".int"
         '
         'ItmToolStripMenuItem
@@ -1292,7 +1410,7 @@ Partial Class UI
         Me.ItmToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.ItmToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.ItmToolStripMenuItem.Name = "ItmToolStripMenuItem"
-        Me.ItmToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ItmToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
         Me.ItmToolStripMenuItem.Text = ".itm"
         '
         'MapToolStripMenuItem
@@ -1300,7 +1418,7 @@ Partial Class UI
         Me.MapToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.MapToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.MapToolStripMenuItem.Name = "MapToolStripMenuItem"
-        Me.MapToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.MapToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
         Me.MapToolStripMenuItem.Text = ".map"
         '
         'UseToolStripMenuItem
@@ -1308,7 +1426,7 @@ Partial Class UI
         Me.UseToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.UseToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.UseToolStripMenuItem.Name = "UseToolStripMenuItem"
-        Me.UseToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.UseToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
         Me.UseToolStripMenuItem.Text = ".use"
         '
         'WeaToolStripMenuItem
@@ -1316,7 +1434,7 @@ Partial Class UI
         Me.WeaToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.WeaToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.WeaToolStripMenuItem.Name = "WeaToolStripMenuItem"
-        Me.WeaToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.WeaToolStripMenuItem.Size = New System.Drawing.Size(101, 22)
         Me.WeaToolStripMenuItem.Text = ".wea"
         '
         'OpenToolStripMenuItem
@@ -1325,7 +1443,7 @@ Partial Class UI
         Me.OpenToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem"
         Me.OpenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
-        Me.OpenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.OpenToolStripMenuItem.Size = New System.Drawing.Size(146, 22)
         Me.OpenToolStripMenuItem.Text = "Open"
         '
         'SaveToolStripMenuItem
@@ -1334,13 +1452,13 @@ Partial Class UI
         Me.SaveToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
         Me.SaveToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
-        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(146, 22)
         Me.SaveToolStripMenuItem.Text = "Save"
         '
         'OptionsToolStripMenuItem
         '
-        Me.OptionsToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
-        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SetEnglishstfLocationToolStripMenuItem})
+        Me.OptionsToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(16, Byte), Integer), CType(CType(17, Byte), Integer))
+        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SetEnglishstfLocationToolStripMenuItem, Me.EnableSTFEdit})
         Me.OptionsToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
         Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(61, 20)
@@ -1351,12 +1469,23 @@ Partial Class UI
         Me.SetEnglishstfLocationToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
         Me.SetEnglishstfLocationToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.SetEnglishstfLocationToolStripMenuItem.Name = "SetEnglishstfLocationToolStripMenuItem"
-        Me.SetEnglishstfLocationToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
+        Me.SetEnglishstfLocationToolStripMenuItem.Size = New System.Drawing.Size(206, 22)
         Me.SetEnglishstfLocationToolStripMenuItem.Text = "Set English.stf Location"
+        '
+        'EnableSTFEdit
+        '
+        Me.EnableSTFEdit.BackColor = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(16, Byte), Integer), CType(CType(17, Byte), Integer))
+        Me.EnableSTFEdit.CheckOnClick = True
+        Me.EnableSTFEdit.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.EnableSTFEdit.Name = "EnableSTFEdit"
+        Me.EnableSTFEdit.Size = New System.Drawing.Size(206, 22)
+        Me.EnableSTFEdit.Text = "Enable English.stf Editing"
+        Me.EnableSTFEdit.ToolTipText = "Determines whether individual" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "STF strings can be edited." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "With this disabled, yo" &
+    "u can still" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "change which string is referenced."
         '
         'ToolsToolStripMenuItem
         '
-        Me.ToolsToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(31, Byte), Integer), CType(CType(32, Byte), Integer))
+        Me.ToolsToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(16, Byte), Integer), CType(CType(17, Byte), Integer))
         Me.ToolsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.StfToolStripMenuItem, Me.TxtTostfToolStripMenuItem})
         Me.ToolsToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
         Me.ToolsToolStripMenuItem.Name = "ToolsToolStripMenuItem"
@@ -1379,15 +1508,1018 @@ Partial Class UI
         Me.TxtTostfToolStripMenuItem.Size = New System.Drawing.Size(124, 22)
         Me.TxtTostfToolStripMenuItem.Text = ".txt to .stf"
         '
+        'GWAMsf
+        '
+        Me.GWAMtlp.SetColumnSpan(Me.GWAMsf, 2)
+        Me.GWAMsf.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GWAMsf.Location = New System.Drawing.Point(198, 19)
+        Me.GWAMsf.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
+        Me.GWAMsf.Name = "GWAMsf"
+        Me.GWAMsf.Size = New System.Drawing.Size(94, 23)
+        Me.GWAMsf.TabIndex = 54
+        Me.ToolTip.SetToolTip(Me.GWAMsf, "You should set this to 0 for a .CRT")
+        '
+        'EEN2dgv
+        '
+        Me.EEN2dgv.AllowUserToResizeColumns = False
+        Me.EEN2dgv.AllowUserToResizeRows = False
+        Me.EEN2dgv.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(16, Byte), Integer), CType(CType(16, Byte), Integer))
+        Me.EEN2dgv.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.EEN2dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.EEN2dgv.ColumnHeadersVisible = False
+        Me.EEN2dgv.Location = New System.Drawing.Point(307, 48)
+        Me.EEN2dgv.MultiSelect = False
+        Me.EEN2dgv.Name = "EEN2dgv"
+        Me.EEN2dgv.RowHeadersVisible = False
+        Me.EEN2dgv.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
+        Me.EEN2dgv.RowTemplate.Height = 25
+        Me.EEN2dgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.EEN2dgv.Size = New System.Drawing.Size(293, 202)
+        Me.EEN2dgv.TabIndex = 36
+        '
+        'CRTgb
+        '
+        Me.CRTgb.Controls.Add(Me.GCHRgb)
+        Me.CRTgb.Controls.Add(Me.GCREgb)
+        Me.CRTgb.Controls.Add(Me.GWAMgb)
+        Me.CRTgb.Controls.Add(Me.GENTgb)
+        Me.CRTgb.Controls.Add(Me.EEN2gb)
+        Me.CRTgb.Location = New System.Drawing.Point(12, 27)
+        Me.CRTgb.Name = "CRTgb"
+        Me.CRTgb.Size = New System.Drawing.Size(924, 532)
+        Me.CRTgb.TabIndex = 15
+        Me.CRTgb.TabStop = False
+        Me.CRTgb.Text = ".CRT Editor"
+        '
+        'GCHRgb
+        '
+        Me.GCHRgb.Controls.Add(Me.GCHRn)
+        Me.GCHRgb.Location = New System.Drawing.Point(618, 475)
+        Me.GCHRgb.Name = "GCHRgb"
+        Me.GCHRgb.Size = New System.Drawing.Size(300, 51)
+        Me.GCHRgb.TabIndex = 5
+        Me.GCHRgb.TabStop = False
+        Me.GCHRgb.Text = "GCHR"
+        '
+        'GCHRn
+        '
+        Me.GCHRn.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.GCHRn.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.GCHRn.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.GCHRn.Location = New System.Drawing.Point(6, 22)
+        Me.GCHRn.Name = "GCHRn"
+        Me.GCHRn.Size = New System.Drawing.Size(288, 23)
+        Me.GCHRn.TabIndex = 0
+        '
+        'GCREgb
+        '
+        Me.GCREgb.Controls.Add(Me.GCREdsb)
+        Me.GCREgb.Controls.Add(Me.GCREtlp)
+        Me.GCREgb.Location = New System.Drawing.Point(6, 284)
+        Me.GCREgb.Name = "GCREgb"
+        Me.GCREgb.Padding = New System.Windows.Forms.Padding(2, 0, 2, 2)
+        Me.GCREgb.Size = New System.Drawing.Size(606, 242)
+        Me.GCREgb.TabIndex = 3
+        Me.GCREgb.TabStop = False
+        Me.GCREgb.Text = "GCRE"
+        '
+        'GCREdsb
+        '
+        Me.GCREdsb.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GCREdsb.Location = New System.Drawing.Point(584, 124)
+        Me.GCREdsb.Maximum = 500
+        Me.GCREdsb.Name = "GCREdsb"
+        Me.GCREdsb.Size = New System.Drawing.Size(18, 113)
+        Me.GCREdsb.TabIndex = 37
+        Me.GCREdsb.Text = "DarkScrollBar2"
+        '
+        'GCREtlp
+        '
+        Me.GCREtlp.ColumnCount = 6
+        Me.GCREtlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33444!))
+        Me.GCREtlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.GCREtlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.GCREtlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33445!))
+        Me.GCREtlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33111!))
+        Me.GCREtlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.GCREtlp.Controls.Add(Me.GCREdgv, 3, 5)
+        Me.GCREtlp.Controls.Add(Me.GCREskv, 1, 3)
+        Me.GCREtlp.Controls.Add(Me.GCREspv, 1, 1)
+        Me.GCREtlp.Controls.Add(Me.GCREspl, 0, 0)
+        Me.GCREtlp.Controls.Add(Me.GCREspcb, 0, 1)
+        Me.GCREtlp.Controls.Add(Me.GCREskl, 0, 2)
+        Me.GCREtlp.Controls.Add(Me.GCREtrl, 0, 4)
+        Me.GCREtlp.Controls.Add(Me.GCREskcb, 0, 3)
+        Me.GCREtlp.Controls.Add(Me.GCREtrcb, 0, 5)
+        Me.GCREtlp.Controls.Add(Me.GCREtsl, 0, 6)
+        Me.GCREtlp.Controls.Add(Me.GCREtscb, 0, 7)
+        Me.GCREtlp.Controls.Add(Me.GCREtrv, 1, 5)
+        Me.GCREtlp.Controls.Add(Me.GCREtsv, 1, 7)
+        Me.GCREtlp.Controls.Add(Me.GCREpl, 0, 8)
+        Me.GCREtlp.Controls.Add(Me.GCREp, 0, 9)
+        Me.GCREtlp.Controls.Add(Me.GCREsocl, 3, 0)
+        Me.GCREtlp.Controls.Add(Me.GCREsocm, 3, 3)
+        Me.GCREtlp.Controls.Add(Me.GCREsoct, 4, 3)
+        Me.GCREtlp.Controls.Add(Me.GCREsocml, 3, 2)
+        Me.GCREtlp.Controls.Add(Me.GCREsoctl, 4, 2)
+        Me.GCREtlp.Controls.Add(Me.GCREsoccb, 3, 1)
+        Me.GCREtlp.Controls.Add(Me.GCREeil, 3, 4)
+        Me.GCREtlp.Controls.Add(Me.GCREsoctel, 5, 3)
+        Me.GCREtlp.Controls.Add(Me.GCREpel, 2, 9)
+        Me.GCREtlp.Controls.Add(Me.GCREage, 4, 1)
+        Me.GCREtlp.Controls.Add(Me.GCREagel, 4, 0)
+        Me.GCREtlp.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GCREtlp.Location = New System.Drawing.Point(2, 16)
+        Me.GCREtlp.Name = "GCREtlp"
+        Me.GCREtlp.RowCount = 10
+        Me.GCREtlp.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.GCREtlp.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.GCREtlp.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.GCREtlp.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.GCREtlp.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.GCREtlp.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.GCREtlp.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.GCREtlp.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.GCREtlp.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.GCREtlp.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.GCREtlp.Size = New System.Drawing.Size(602, 224)
+        Me.GCREtlp.TabIndex = 0
+        '
+        'GCREdgv
+        '
+        Me.GCREdgv.AllowUserToResizeColumns = False
+        Me.GCREdgv.AllowUserToResizeRows = False
+        Me.GCREdgv.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(16, Byte), Integer), CType(CType(16, Byte), Integer))
+        Me.GCREdgv.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.GCREdgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.GCREdgv.ColumnHeadersVisible = False
+        Me.GCREtlp.SetColumnSpan(Me.GCREdgv, 3)
+        Me.GCREdgv.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GCREdgv.Location = New System.Drawing.Point(235, 108)
+        Me.GCREdgv.MultiSelect = False
+        Me.GCREdgv.Name = "GCREdgv"
+        Me.GCREdgv.RowHeadersVisible = False
+        Me.GCREdgv.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
+        Me.GCREtlp.SetRowSpan(Me.GCREdgv, 5)
+        Me.GCREdgv.RowTemplate.Height = 25
+        Me.GCREdgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.GCREdgv.Size = New System.Drawing.Size(364, 113)
+        Me.GCREdgv.TabIndex = 37
+        '
+        'GCREskv
+        '
+        Me.GCREtlp.SetColumnSpan(Me.GCREskv, 2)
+        Me.GCREskv.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GCREskv.Location = New System.Drawing.Point(170, 63)
+        Me.GCREskv.Maximum = New Decimal(New Integer() {255, 0, 0, 0})
+        Me.GCREskv.Name = "GCREskv"
+        Me.GCREskv.Size = New System.Drawing.Size(59, 23)
+        Me.GCREskv.TabIndex = 66
+        '
+        'GCREspv
+        '
+        Me.GCREtlp.SetColumnSpan(Me.GCREspv, 2)
+        Me.GCREspv.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GCREspv.Location = New System.Drawing.Point(170, 18)
+        Me.GCREspv.Maximum = New Decimal(New Integer() {255, 0, 0, 0})
+        Me.GCREspv.Name = "GCREspv"
+        Me.GCREspv.Size = New System.Drawing.Size(59, 23)
+        Me.GCREspv.TabIndex = 59
+        '
+        'GCREspl
+        '
+        Me.GCREspl.AutoSize = True
+        Me.GCREspl.Location = New System.Drawing.Point(3, 0)
+        Me.GCREspl.Name = "GCREspl"
+        Me.GCREspl.Size = New System.Drawing.Size(44, 15)
+        Me.GCREspl.TabIndex = 0
+        Me.GCREspl.Text = "Special"
+        '
+        'GCREspcb
+        '
+        Me.GCREspcb.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GCREspcb.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
+        Me.GCREspcb.FormattingEnabled = True
+        Me.GCREspcb.Items.AddRange(New Object() {"Strength", "Perception", "Endurance", "Charisma", "Intelligence", "Agility", "Luck"})
+        Me.GCREspcb.Location = New System.Drawing.Point(3, 18)
+        Me.GCREspcb.Name = "GCREspcb"
+        Me.GCREspcb.Size = New System.Drawing.Size(161, 24)
+        Me.GCREspcb.TabIndex = 1
+        '
+        'GCREskl
+        '
+        Me.GCREskl.AutoSize = True
+        Me.GCREskl.Location = New System.Drawing.Point(3, 45)
+        Me.GCREskl.Name = "GCREskl"
+        Me.GCREskl.Size = New System.Drawing.Size(33, 15)
+        Me.GCREskl.TabIndex = 60
+        Me.GCREskl.Text = "Skills"
+        '
+        'GCREtrl
+        '
+        Me.GCREtrl.AutoSize = True
+        Me.GCREtrl.Location = New System.Drawing.Point(3, 90)
+        Me.GCREtrl.Name = "GCREtrl"
+        Me.GCREtrl.Size = New System.Drawing.Size(34, 15)
+        Me.GCREtrl.TabIndex = 61
+        Me.GCREtrl.Text = "Traits"
+        '
+        'GCREskcb
+        '
+        Me.GCREskcb.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GCREskcb.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
+        Me.GCREskcb.FormattingEnabled = True
+        Me.GCREskcb.Items.AddRange(New Object() {"Firearms", "Melee", "Unarmed", "Barter", "Persuasion", "Deception", "Mechanics", "Medic", "Outdoorsman", "Science", "Security", "Sneak", "Steal"})
+        Me.GCREskcb.Location = New System.Drawing.Point(3, 63)
+        Me.GCREskcb.Name = "GCREskcb"
+        Me.GCREskcb.Size = New System.Drawing.Size(161, 24)
+        Me.GCREskcb.TabIndex = 62
+        '
+        'GCREtrcb
+        '
+        Me.GCREtrcb.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GCREtrcb.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
+        Me.GCREtrcb.FormattingEnabled = True
+        Me.GCREtrcb.Items.AddRange(New Object() {"Bruiser", "Chem Reliant", "Clean Living", "Fast Shot", "Feral Kid", "Finesse", "Gifted", "Good Natured", "Increased Metabolism", "Kamikaze", "Night Person", "One Hander", "One In a Million", "Red Scare", "Skilled", "Small Frame"})
+        Me.GCREtrcb.Location = New System.Drawing.Point(3, 108)
+        Me.GCREtrcb.Name = "GCREtrcb"
+        Me.GCREtrcb.Size = New System.Drawing.Size(161, 24)
+        Me.GCREtrcb.TabIndex = 63
+        '
+        'GCREtsl
+        '
+        Me.GCREtsl.AutoSize = True
+        Me.GCREtsl.Location = New System.Drawing.Point(3, 135)
+        Me.GCREtsl.Name = "GCREtsl"
+        Me.GCREtsl.Size = New System.Drawing.Size(54, 15)
+        Me.GCREtsl.TabIndex = 64
+        Me.GCREtsl.Text = "Tag Skills"
+        '
+        'GCREtscb
+        '
+        Me.GCREtscb.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GCREtscb.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
+        Me.GCREtscb.FormattingEnabled = True
+        Me.GCREtscb.Items.AddRange(New Object() {"Firearms", "Melee", "Unarmed", "Barter", "Persuasion", "Deception", "Mechanics", "Medic", "Outdoorsman", "Science", "Security", "Sneak", "Steal"})
+        Me.GCREtscb.Location = New System.Drawing.Point(3, 153)
+        Me.GCREtscb.Name = "GCREtscb"
+        Me.GCREtscb.Size = New System.Drawing.Size(161, 24)
+        Me.GCREtscb.TabIndex = 65
+        '
+        'GCREtrv
+        '
+        Me.GCREtrv.AutoSize = True
+        Me.GCREtlp.SetColumnSpan(Me.GCREtrv, 2)
+        Me.GCREtrv.Dock = System.Windows.Forms.DockStyle.Left
+        Me.GCREtrv.Location = New System.Drawing.Point(170, 108)
+        Me.GCREtrv.Name = "GCREtrv"
+        Me.GCREtrv.Offset = -2
+        Me.GCREtrv.Size = New System.Drawing.Size(59, 24)
+        Me.GCREtrv.TabIndex = 67
+        Me.GCREtrv.Text = "Active"
+        '
+        'GCREtsv
+        '
+        Me.GCREtsv.AutoSize = True
+        Me.GCREtlp.SetColumnSpan(Me.GCREtsv, 2)
+        Me.GCREtsv.Dock = System.Windows.Forms.DockStyle.Left
+        Me.GCREtsv.Location = New System.Drawing.Point(170, 153)
+        Me.GCREtsv.Name = "GCREtsv"
+        Me.GCREtsv.Offset = -2
+        Me.GCREtsv.Size = New System.Drawing.Size(59, 24)
+        Me.GCREtsv.TabIndex = 68
+        Me.GCREtsv.Text = "Active"
+        '
+        'GCREpl
+        '
+        Me.GCREpl.AutoSize = True
+        Me.GCREpl.Location = New System.Drawing.Point(3, 180)
+        Me.GCREpl.Name = "GCREpl"
+        Me.GCREpl.Size = New System.Drawing.Size(46, 15)
+        Me.GCREpl.TabIndex = 69
+        Me.GCREpl.Text = "Portrait"
+        '
+        'GCREp
+        '
+        Me.GCREp.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.GCREp.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.GCREtlp.SetColumnSpan(Me.GCREp, 2)
+        Me.GCREp.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GCREp.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.GCREp.Location = New System.Drawing.Point(3, 198)
+        Me.GCREp.Name = "GCREp"
+        Me.GCREp.Size = New System.Drawing.Size(191, 23)
+        Me.GCREp.TabIndex = 70
+        '
+        'GCREsocl
+        '
+        Me.GCREsocl.AutoSize = True
+        Me.GCREsocl.Location = New System.Drawing.Point(235, 0)
+        Me.GCREsocl.Name = "GCREsocl"
+        Me.GCREsocl.Size = New System.Drawing.Size(47, 15)
+        Me.GCREsocl.TabIndex = 71
+        Me.GCREsocl.Text = "Sockets"
+        '
+        'GCREsocm
+        '
+        Me.GCREsocm.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.GCREsocm.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.GCREsocm.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GCREsocm.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.GCREsocm.Location = New System.Drawing.Point(235, 63)
+        Me.GCREsocm.Name = "GCREsocm"
+        Me.GCREsocm.Size = New System.Drawing.Size(161, 23)
+        Me.GCREsocm.TabIndex = 25
+        '
+        'GCREsoct
+        '
+        Me.GCREsoct.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.GCREsoct.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.GCREsoct.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GCREsoct.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.GCREsoct.Location = New System.Drawing.Point(402, 63)
+        Me.GCREsoct.Name = "GCREsoct"
+        Me.GCREsoct.Size = New System.Drawing.Size(161, 23)
+        Me.GCREsoct.TabIndex = 24
+        '
+        'GCREsocml
+        '
+        Me.GCREsocml.AutoSize = True
+        Me.GCREsocml.Location = New System.Drawing.Point(235, 45)
+        Me.GCREsocml.Name = "GCREsocml"
+        Me.GCREsocml.Size = New System.Drawing.Size(41, 15)
+        Me.GCREsocml.TabIndex = 72
+        Me.GCREsocml.Text = "Model"
+        '
+        'GCREsoctl
+        '
+        Me.GCREsoctl.AutoSize = True
+        Me.GCREsoctl.Location = New System.Drawing.Point(402, 45)
+        Me.GCREsoctl.Name = "GCREsoctl"
+        Me.GCREsoctl.Size = New System.Drawing.Size(45, 15)
+        Me.GCREsoctl.TabIndex = 73
+        Me.GCREsoctl.Text = "Texture"
+        '
+        'GCREsoccb
+        '
+        Me.GCREsoccb.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GCREsoccb.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
+        Me.GCREsoccb.FormattingEnabled = True
+        Me.GCREsoccb.Items.AddRange(New Object() {"Head", "Hair", "Ponytail", "Moustache", "Beard", "Eye", "Body", "Hand", "Feet", "Back", "Shoulder", "Vanity"})
+        Me.GCREsoccb.Location = New System.Drawing.Point(235, 18)
+        Me.GCREsoccb.Name = "GCREsoccb"
+        Me.GCREsoccb.Size = New System.Drawing.Size(161, 24)
+        Me.GCREsoccb.TabIndex = 74
+        '
+        'GCREeil
+        '
+        Me.GCREeil.AutoSize = True
+        Me.GCREeil.Location = New System.Drawing.Point(235, 90)
+        Me.GCREeil.Name = "GCREeil"
+        Me.GCREeil.Size = New System.Drawing.Size(89, 15)
+        Me.GCREeil.TabIndex = 75
+        Me.GCREeil.Text = "Equipped Items"
+        '
+        'GCREsoctel
+        '
+        Me.GCREsoctel.AutoSize = True
+        Me.GCREsoctel.Dock = System.Windows.Forms.DockStyle.Left
+        Me.GCREsoctel.Location = New System.Drawing.Point(569, 60)
+        Me.GCREsoctel.Name = "GCREsoctel"
+        Me.GCREsoctel.Size = New System.Drawing.Size(29, 30)
+        Me.GCREsoctel.TabIndex = 76
+        Me.GCREsoctel.Text = ".dds"
+        '
+        'GCREpel
+        '
+        Me.GCREpel.AutoSize = True
+        Me.GCREpel.Dock = System.Windows.Forms.DockStyle.Left
+        Me.GCREpel.Location = New System.Drawing.Point(200, 195)
+        Me.GCREpel.Name = "GCREpel"
+        Me.GCREpel.Size = New System.Drawing.Size(29, 29)
+        Me.GCREpel.TabIndex = 77
+        Me.GCREpel.Text = ".dds"
+        '
+        'GCREage
+        '
+        Me.GCREage.Dock = System.Windows.Forms.DockStyle.Left
+        Me.GCREage.Location = New System.Drawing.Point(402, 18)
+        Me.GCREage.Name = "GCREage"
+        Me.GCREage.Size = New System.Drawing.Size(80, 23)
+        Me.GCREage.TabIndex = 78
+        '
+        'GCREagel
+        '
+        Me.GCREagel.AutoSize = True
+        Me.GCREagel.Location = New System.Drawing.Point(402, 0)
+        Me.GCREagel.Name = "GCREagel"
+        Me.GCREagel.Size = New System.Drawing.Size(28, 15)
+        Me.GCREagel.TabIndex = 79
+        Me.GCREagel.Text = "Age"
+        '
+        'GWAMgb
+        '
+        Me.GWAMgb.Controls.Add(Me.GWAMm)
+        Me.GWAMgb.Controls.Add(Me.GWAMcb)
+        Me.GWAMgb.Controls.Add(Me.GWAMp)
+        Me.GWAMgb.Controls.Add(Me.GWAMtlp)
+        Me.GWAMgb.Location = New System.Drawing.Point(618, 206)
+        Me.GWAMgb.Name = "GWAMgb"
+        Me.GWAMgb.Padding = New System.Windows.Forms.Padding(2, 11, 2, 2)
+        Me.GWAMgb.Size = New System.Drawing.Size(300, 252)
+        Me.GWAMgb.TabIndex = 2
+        Me.GWAMgb.TabStop = False
+        Me.GWAMgb.Text = "GWAM"
+        '
+        'GWAMm
+        '
+        Me.GWAMm.BorderColour = System.Drawing.Color.Empty
+        Me.GWAMm.CustomColour = False
+        Me.GWAMm.FlatBottom = False
+        Me.GWAMm.FlatTop = False
+        Me.GWAMm.Location = New System.Drawing.Point(270, 0)
+        Me.GWAMm.Name = "GWAMm"
+        Me.GWAMm.Padding = New System.Windows.Forms.Padding(5)
+        Me.GWAMm.Size = New System.Drawing.Size(24, 24)
+        Me.GWAMm.TabIndex = 42
+        Me.GWAMm.Text = "-"
+        '
+        'GWAMcb
+        '
+        Me.GWAMcb.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
+        Me.GWAMcb.FormattingEnabled = True
+        Me.GWAMcb.Location = New System.Drawing.Point(58, 0)
+        Me.GWAMcb.Name = "GWAMcb"
+        Me.GWAMcb.Size = New System.Drawing.Size(179, 24)
+        Me.GWAMcb.TabIndex = 43
+        '
+        'GWAMp
+        '
+        Me.GWAMp.BorderColour = System.Drawing.Color.Empty
+        Me.GWAMp.CustomColour = False
+        Me.GWAMp.FlatBottom = False
+        Me.GWAMp.FlatTop = False
+        Me.GWAMp.Location = New System.Drawing.Point(243, 0)
+        Me.GWAMp.Name = "GWAMp"
+        Me.GWAMp.Padding = New System.Windows.Forms.Padding(5)
+        Me.GWAMp.Size = New System.Drawing.Size(24, 24)
+        Me.GWAMp.TabIndex = 41
+        Me.GWAMp.Text = "+"
+        '
+        'GWAMtlp
+        '
+        Me.GWAMtlp.ColumnCount = 4
+        Me.GWAMtlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.GWAMtlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.GWAMtlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.05263!))
+        Me.GWAMtlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.2807!))
+        Me.GWAMtlp.Controls.Add(Me.GWAManil, 0, 0)
+        Me.GWAMtlp.Controls.Add(Me.GWAMani, 0, 1)
+        Me.GWAMtlp.Controls.Add(Me.GWAMdtl, 1, 0)
+        Me.GWAMtlp.Controls.Add(Me.GWAMdt, 1, 1)
+        Me.GWAMtlp.Controls.Add(Me.GWAMapl, 0, 6)
+        Me.GWAMtlp.Controls.Add(Me.GWAMap, 0, 7)
+        Me.GWAMtlp.Controls.Add(Me.GWAMsfl, 2, 0)
+        Me.GWAMtlp.Controls.Add(Me.GWAMsf, 2, 1)
+        Me.GWAMtlp.Controls.Add(Me.GWAMrl, 0, 2)
+        Me.GWAMtlp.Controls.Add(Me.GWAMr, 0, 3)
+        Me.GWAMtlp.Controls.Add(Me.GWAMminl, 1, 2)
+        Me.GWAMtlp.Controls.Add(Me.GWAMmin, 1, 3)
+        Me.GWAMtlp.Controls.Add(Me.GWAMmaxl, 2, 2)
+        Me.GWAMtlp.Controls.Add(Me.GWAMmax, 2, 3)
+        Me.GWAMtlp.Controls.Add(Me.GWAManl, 0, 8)
+        Me.GWAMtlp.Controls.Add(Me.GWAManSR, 0, 9)
+        Me.GWAMtlp.Controls.Add(Me.GWAMef, 0, 11)
+        Me.GWAMtlp.Controls.Add(Me.GWAMefl, 0, 10)
+        Me.GWAMtlp.Controls.Add(Me.GWAMan, 1, 9)
+        Me.GWAMtlp.Controls.Add(Me.GWAMefel, 3, 11)
+        Me.GWAMtlp.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GWAMtlp.Location = New System.Drawing.Point(2, 27)
+        Me.GWAMtlp.Name = "GWAMtlp"
+        Me.GWAMtlp.Padding = New System.Windows.Forms.Padding(1)
+        Me.GWAMtlp.RowCount = 10
+        Me.GWAMtlp.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.GWAMtlp.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.GWAMtlp.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.GWAMtlp.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.GWAMtlp.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.GWAMtlp.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.GWAMtlp.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.GWAMtlp.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.GWAMtlp.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.GWAMtlp.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.GWAMtlp.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.GWAMtlp.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.GWAMtlp.Size = New System.Drawing.Size(296, 223)
+        Me.GWAMtlp.TabIndex = 44
+        '
+        'GWAManil
+        '
+        Me.GWAManil.AutoSize = True
+        Me.GWAManil.Location = New System.Drawing.Point(4, 1)
+        Me.GWAManil.Name = "GWAManil"
+        Me.GWAManil.Size = New System.Drawing.Size(63, 15)
+        Me.GWAManil.TabIndex = 0
+        Me.GWAManil.Text = "Animation"
+        '
+        'GWAMani
+        '
+        Me.GWAMani.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GWAMani.Location = New System.Drawing.Point(4, 19)
+        Me.GWAMani.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
+        Me.GWAMani.Name = "GWAMani"
+        Me.GWAMani.Size = New System.Drawing.Size(91, 23)
+        Me.GWAMani.TabIndex = 49
+        '
+        'GWAMdtl
+        '
+        Me.GWAMdtl.AutoSize = True
+        Me.GWAMdtl.Location = New System.Drawing.Point(101, 1)
+        Me.GWAMdtl.Name = "GWAMdtl"
+        Me.GWAMdtl.Size = New System.Drawing.Size(78, 15)
+        Me.GWAMdtl.TabIndex = 50
+        Me.GWAMdtl.Text = "Damage Type"
+        '
+        'GWAMdt
+        '
+        Me.GWAMdt.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
+        Me.GWAMdt.FormattingEnabled = True
+        Me.GWAMdt.Items.AddRange(New Object() {"Ballistic", "Bio", "Electric", "EMP", "General", "Heat"})
+        Me.GWAMdt.Location = New System.Drawing.Point(101, 19)
+        Me.GWAMdt.Name = "GWAMdt"
+        Me.GWAMdt.Size = New System.Drawing.Size(91, 24)
+        Me.GWAMdt.TabIndex = 51
+        '
+        'GWAMapl
+        '
+        Me.GWAMapl.AutoSize = True
+        Me.GWAMtlp.SetColumnSpan(Me.GWAMapl, 4)
+        Me.GWAMapl.Location = New System.Drawing.Point(4, 90)
+        Me.GWAMapl.Name = "GWAMapl"
+        Me.GWAMapl.Size = New System.Drawing.Size(78, 15)
+        Me.GWAMapl.TabIndex = 60
+        Me.GWAMapl.Text = "Action Points"
+        '
+        'GWAMap
+        '
+        Me.GWAMap.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GWAMap.Location = New System.Drawing.Point(4, 108)
+        Me.GWAMap.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
+        Me.GWAMap.Name = "GWAMap"
+        Me.GWAMap.Size = New System.Drawing.Size(91, 23)
+        Me.GWAMap.TabIndex = 61
+        '
+        'GWAMsfl
+        '
+        Me.GWAMsfl.AutoSize = True
+        Me.GWAMtlp.SetColumnSpan(Me.GWAMsfl, 2)
+        Me.GWAMsfl.Location = New System.Drawing.Point(198, 1)
+        Me.GWAMsfl.Name = "GWAMsfl"
+        Me.GWAMsfl.Size = New System.Drawing.Size(65, 15)
+        Me.GWAMsfl.TabIndex = 52
+        Me.GWAMsfl.Text = "Shots Fired"
+        '
+        'GWAMrl
+        '
+        Me.GWAMrl.AutoSize = True
+        Me.GWAMrl.Location = New System.Drawing.Point(4, 46)
+        Me.GWAMrl.Name = "GWAMrl"
+        Me.GWAMrl.Size = New System.Drawing.Size(40, 15)
+        Me.GWAMrl.TabIndex = 53
+        Me.GWAMrl.Text = "Range"
+        '
+        'GWAMr
+        '
+        Me.GWAMr.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GWAMr.Location = New System.Drawing.Point(4, 64)
+        Me.GWAMr.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
+        Me.GWAMr.Name = "GWAMr"
+        Me.GWAMr.Size = New System.Drawing.Size(91, 23)
+        Me.GWAMr.TabIndex = 55
+        '
+        'GWAMminl
+        '
+        Me.GWAMminl.AutoSize = True
+        Me.GWAMminl.Location = New System.Drawing.Point(101, 46)
+        Me.GWAMminl.Name = "GWAMminl"
+        Me.GWAMminl.Size = New System.Drawing.Size(57, 15)
+        Me.GWAMminl.TabIndex = 56
+        Me.GWAMminl.Text = "Min Dmg"
+        '
+        'GWAMmin
+        '
+        Me.GWAMmin.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GWAMmin.Location = New System.Drawing.Point(101, 64)
+        Me.GWAMmin.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
+        Me.GWAMmin.Name = "GWAMmin"
+        Me.GWAMmin.Size = New System.Drawing.Size(91, 23)
+        Me.GWAMmin.TabIndex = 58
+        '
+        'GWAMmaxl
+        '
+        Me.GWAMmaxl.AutoSize = True
+        Me.GWAMtlp.SetColumnSpan(Me.GWAMmaxl, 2)
+        Me.GWAMmaxl.Location = New System.Drawing.Point(198, 46)
+        Me.GWAMmaxl.Name = "GWAMmaxl"
+        Me.GWAMmaxl.Size = New System.Drawing.Size(59, 15)
+        Me.GWAMmaxl.TabIndex = 57
+        Me.GWAMmaxl.Text = "Max Dmg"
+        '
+        'GWAMmax
+        '
+        Me.GWAMtlp.SetColumnSpan(Me.GWAMmax, 2)
+        Me.GWAMmax.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GWAMmax.Location = New System.Drawing.Point(198, 64)
+        Me.GWAMmax.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
+        Me.GWAMmax.Name = "GWAMmax"
+        Me.GWAMmax.Size = New System.Drawing.Size(94, 23)
+        Me.GWAMmax.TabIndex = 59
+        '
+        'GWAManl
+        '
+        Me.GWAManl.AutoSize = True
+        Me.GWAMtlp.SetColumnSpan(Me.GWAManl, 4)
+        Me.GWAManl.Location = New System.Drawing.Point(4, 134)
+        Me.GWAManl.Name = "GWAManl"
+        Me.GWAManl.Size = New System.Drawing.Size(76, 15)
+        Me.GWAManl.TabIndex = 64
+        Me.GWAManl.Text = "Attack Name"
+        '
+        'GWAManSR
+        '
+        Me.GWAManSR.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GWAManSR.Location = New System.Drawing.Point(4, 152)
+        Me.GWAManSR.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
+        Me.GWAManSR.Name = "GWAManSR"
+        Me.GWAManSR.Size = New System.Drawing.Size(91, 23)
+        Me.GWAManSR.TabIndex = 62
+        '
+        'GWAMef
+        '
+        Me.GWAMef.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.GWAMef.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.GWAMtlp.SetColumnSpan(Me.GWAMef, 3)
+        Me.GWAMef.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GWAMef.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.GWAMef.Location = New System.Drawing.Point(4, 196)
+        Me.GWAMef.Name = "GWAMef"
+        Me.GWAMef.Size = New System.Drawing.Size(249, 23)
+        Me.GWAMef.TabIndex = 66
+        '
+        'GWAMefl
+        '
+        Me.GWAMefl.AutoSize = True
+        Me.GWAMefl.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GWAMefl.Location = New System.Drawing.Point(4, 178)
+        Me.GWAMefl.Name = "GWAMefl"
+        Me.GWAMefl.Size = New System.Drawing.Size(91, 15)
+        Me.GWAMefl.TabIndex = 65
+        Me.GWAMefl.Text = "Effect"
+        '
+        'GWAMan
+        '
+        Me.GWAMan.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.GWAMan.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.GWAMtlp.SetColumnSpan(Me.GWAMan, 3)
+        Me.GWAMan.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GWAMan.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.GWAMan.Location = New System.Drawing.Point(101, 152)
+        Me.GWAMan.Name = "GWAMan"
+        Me.GWAMan.Size = New System.Drawing.Size(191, 23)
+        Me.GWAMan.TabIndex = 63
+        '
+        'GWAMefel
+        '
+        Me.GWAMefel.AutoSize = True
+        Me.GWAMefel.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GWAMefel.Location = New System.Drawing.Point(259, 193)
+        Me.GWAMefel.Name = "GWAMefel"
+        Me.GWAMefel.Size = New System.Drawing.Size(33, 29)
+        Me.GWAMefel.TabIndex = 6
+        Me.GWAMefel.Text = ".veg"
+        '
+        'GENTgb
+        '
+        Me.GENTgb.Controls.Add(Me.GENTu)
+        Me.GENTgb.Controls.Add(Me.GENTn)
+        Me.GENTgb.Controls.Add(Me.GENTl)
+        Me.GENTgb.Controls.Add(Me.GENTh)
+        Me.GENTgb.Controls.Add(Me.GENTihpl)
+        Me.GENTgb.Controls.Add(Me.GENTmhpl)
+        Me.GENTgb.Controls.Add(Me.GENTihp)
+        Me.GENTgb.Controls.Add(Me.GENTmhp)
+        Me.GENTgb.Controls.Add(Me.GENTuSR)
+        Me.GENTgb.Controls.Add(Me.GENTnSR)
+        Me.GENTgb.Controls.Add(Me.GENTlSR)
+        Me.GENTgb.Controls.Add(Me.GENThSR)
+        Me.GENTgb.Location = New System.Drawing.Point(618, 22)
+        Me.GENTgb.Name = "GENTgb"
+        Me.GENTgb.Size = New System.Drawing.Size(300, 168)
+        Me.GENTgb.TabIndex = 1
+        Me.GENTgb.TabStop = False
+        Me.GENTgb.Text = "GENT"
+        '
+        'GENTu
+        '
+        Me.GENTu.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.GENTu.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.GENTu.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.GENTu.Location = New System.Drawing.Point(56, 110)
+        Me.GENTu.Name = "GENTu"
+        Me.GENTu.Size = New System.Drawing.Size(238, 23)
+        Me.GENTu.TabIndex = 58
+        '
+        'GENTn
+        '
+        Me.GENTn.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.GENTn.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.GENTn.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.GENTn.Location = New System.Drawing.Point(56, 80)
+        Me.GENTn.Name = "GENTn"
+        Me.GENTn.Size = New System.Drawing.Size(238, 23)
+        Me.GENTn.TabIndex = 57
+        '
+        'GENTl
+        '
+        Me.GENTl.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.GENTl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.GENTl.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.GENTl.Location = New System.Drawing.Point(56, 51)
+        Me.GENTl.Name = "GENTl"
+        Me.GENTl.Size = New System.Drawing.Size(238, 23)
+        Me.GENTl.TabIndex = 56
+        '
+        'GENTh
+        '
+        Me.GENTh.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.GENTh.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.GENTh.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.GENTh.Location = New System.Drawing.Point(56, 22)
+        Me.GENTh.Name = "GENTh"
+        Me.GENTh.Size = New System.Drawing.Size(238, 23)
+        Me.GENTh.TabIndex = 37
+        '
+        'GENTihpl
+        '
+        Me.GENTihpl.AutoSize = True
+        Me.GENTihpl.Location = New System.Drawing.Point(150, 141)
+        Me.GENTihpl.Name = "GENTihpl"
+        Me.GENTihpl.Size = New System.Drawing.Size(77, 15)
+        Me.GENTihpl.TabIndex = 55
+        Me.GENTihpl.Text = "Initial Health:"
+        '
+        'GENTmhpl
+        '
+        Me.GENTmhpl.AutoSize = True
+        Me.GENTmhpl.Location = New System.Drawing.Point(6, 141)
+        Me.GENTmhpl.Name = "GENTmhpl"
+        Me.GENTmhpl.Size = New System.Drawing.Size(71, 15)
+        Me.GENTmhpl.TabIndex = 54
+        Me.GENTmhpl.Text = "Max Health:"
+        '
+        'GENTihp
+        '
+        Me.GENTihp.Location = New System.Drawing.Point(233, 139)
+        Me.GENTihp.Maximum = New Decimal(New Integer() {2147483647, 0, 0, 0})
+        Me.GENTihp.Name = "GENTihp"
+        Me.GENTihp.Size = New System.Drawing.Size(61, 23)
+        Me.GENTihp.TabIndex = 53
+        '
+        'GENTmhp
+        '
+        Me.GENTmhp.Location = New System.Drawing.Point(83, 139)
+        Me.GENTmhp.Maximum = New Decimal(New Integer() {2147483647, 0, 0, 0})
+        Me.GENTmhp.Name = "GENTmhp"
+        Me.GENTmhp.Size = New System.Drawing.Size(61, 23)
+        Me.GENTmhp.TabIndex = 52
+        '
+        'GENTuSR
+        '
+        Me.GENTuSR.Location = New System.Drawing.Point(6, 110)
+        Me.GENTuSR.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
+        Me.GENTuSR.Name = "GENTuSR"
+        Me.GENTuSR.Size = New System.Drawing.Size(44, 23)
+        Me.GENTuSR.TabIndex = 51
+        '
+        'GENTnSR
+        '
+        Me.GENTnSR.Location = New System.Drawing.Point(6, 80)
+        Me.GENTnSR.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
+        Me.GENTnSR.Name = "GENTnSR"
+        Me.GENTnSR.Size = New System.Drawing.Size(44, 23)
+        Me.GENTnSR.TabIndex = 50
+        '
+        'GENTlSR
+        '
+        Me.GENTlSR.Location = New System.Drawing.Point(6, 51)
+        Me.GENTlSR.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
+        Me.GENTlSR.Name = "GENTlSR"
+        Me.GENTlSR.Size = New System.Drawing.Size(44, 23)
+        Me.GENTlSR.TabIndex = 49
+        '
+        'GENThSR
+        '
+        Me.GENThSR.Location = New System.Drawing.Point(6, 22)
+        Me.GENThSR.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
+        Me.GENThSR.Name = "GENThSR"
+        Me.GENThSR.Size = New System.Drawing.Size(44, 23)
+        Me.GENThSR.TabIndex = 48
+        '
+        'EEN2gb
+        '
+        Me.EEN2gb.Controls.Add(Me.EEN2dsb)
+        Me.EEN2gb.Controls.Add(Me.EEN2dgv)
+        Me.EEN2gb.Controls.Add(Me.EEN2skll)
+        Me.EEN2gb.Controls.Add(Me.EEN2acttl)
+        Me.EEN2gb.Controls.Add(Me.EEN2invtl)
+        Me.EEN2gb.Controls.Add(Me.EEN2s5l)
+        Me.EEN2gb.Controls.Add(Me.EEN2s4l)
+        Me.EEN2gb.Controls.Add(Me.EEN2s3l)
+        Me.EEN2gb.Controls.Add(Me.EEN2s5)
+        Me.EEN2gb.Controls.Add(Me.EEN2s4)
+        Me.EEN2gb.Controls.Add(Me.EEN2s3)
+        Me.EEN2gb.Controls.Add(Me.EEN2s2)
+        Me.EEN2gb.Controls.Add(Me.EEN2s1)
+        Me.EEN2gb.Controls.Add(Me.EEN2sel)
+        Me.EEN2gb.Controls.Add(Me.EEN2actt)
+        Me.EEN2gb.Controls.Add(Me.EEN2invt)
+        Me.EEN2gb.Controls.Add(Me.EEN2skl)
+        Me.EEN2gb.Location = New System.Drawing.Point(6, 22)
+        Me.EEN2gb.Name = "EEN2gb"
+        Me.EEN2gb.Size = New System.Drawing.Size(606, 256)
+        Me.EEN2gb.TabIndex = 0
+        Me.EEN2gb.TabStop = False
+        Me.EEN2gb.Text = "EEN2"
+        '
+        'EEN2dsb
+        '
+        Me.EEN2dsb.Location = New System.Drawing.Point(583, 48)
+        Me.EEN2dsb.Maximum = 500
+        Me.EEN2dsb.Name = "EEN2dsb"
+        Me.EEN2dsb.Size = New System.Drawing.Size(18, 202)
+        Me.EEN2dsb.TabIndex = 35
+        '
+        'EEN2skll
+        '
+        Me.EEN2skll.AutoSize = True
+        Me.EEN2skll.Location = New System.Drawing.Point(276, 26)
+        Me.EEN2skll.Name = "EEN2skll"
+        Me.EEN2skll.Size = New System.Drawing.Size(24, 15)
+        Me.EEN2skll.TabIndex = 34
+        Me.EEN2skll.Text = ".skl"
+        '
+        'EEN2acttl
+        '
+        Me.EEN2acttl.AutoSize = True
+        Me.EEN2acttl.Location = New System.Drawing.Point(271, 84)
+        Me.EEN2acttl.Name = "EEN2acttl"
+        Me.EEN2acttl.Size = New System.Drawing.Size(29, 15)
+        Me.EEN2acttl.TabIndex = 33
+        Me.EEN2acttl.Text = ".dds"
+        '
+        'EEN2invtl
+        '
+        Me.EEN2invtl.AutoSize = True
+        Me.EEN2invtl.Location = New System.Drawing.Point(271, 55)
+        Me.EEN2invtl.Name = "EEN2invtl"
+        Me.EEN2invtl.Size = New System.Drawing.Size(29, 15)
+        Me.EEN2invtl.TabIndex = 32
+        Me.EEN2invtl.Text = ".dds"
+        '
+        'EEN2s5l
+        '
+        Me.EEN2s5l.AutoSize = True
+        Me.EEN2s5l.Location = New System.Drawing.Point(271, 229)
+        Me.EEN2s5l.Name = "EEN2s5l"
+        Me.EEN2s5l.Size = New System.Drawing.Size(29, 15)
+        Me.EEN2s5l.TabIndex = 31
+        Me.EEN2s5l.Text = ".veg"
+        '
+        'EEN2s4l
+        '
+        Me.EEN2s4l.AutoSize = True
+        Me.EEN2s4l.Location = New System.Drawing.Point(271, 200)
+        Me.EEN2s4l.Name = "EEN2s4l"
+        Me.EEN2s4l.Size = New System.Drawing.Size(29, 15)
+        Me.EEN2s4l.TabIndex = 30
+        Me.EEN2s4l.Text = ".dds"
+        '
+        'EEN2s3l
+        '
+        Me.EEN2s3l.AutoSize = True
+        Me.EEN2s3l.Location = New System.Drawing.Point(267, 171)
+        Me.EEN2s3l.Name = "EEN2s3l"
+        Me.EEN2s3l.Size = New System.Drawing.Size(33, 15)
+        Me.EEN2s3l.TabIndex = 29
+        Me.EEN2s3l.Text = ".amx"
+        '
+        'EEN2s5
+        '
+        Me.EEN2s5.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.EEN2s5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.EEN2s5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.EEN2s5.Location = New System.Drawing.Point(6, 225)
+        Me.EEN2s5.Name = "EEN2s5"
+        Me.EEN2s5.Size = New System.Drawing.Size(259, 23)
+        Me.EEN2s5.TabIndex = 28
+        '
+        'EEN2s4
+        '
+        Me.EEN2s4.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.EEN2s4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.EEN2s4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.EEN2s4.Location = New System.Drawing.Point(6, 196)
+        Me.EEN2s4.Name = "EEN2s4"
+        Me.EEN2s4.Size = New System.Drawing.Size(259, 23)
+        Me.EEN2s4.TabIndex = 27
+        '
+        'EEN2s3
+        '
+        Me.EEN2s3.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.EEN2s3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.EEN2s3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.EEN2s3.Location = New System.Drawing.Point(6, 167)
+        Me.EEN2s3.Name = "EEN2s3"
+        Me.EEN2s3.Size = New System.Drawing.Size(255, 23)
+        Me.EEN2s3.TabIndex = 26
+        '
+        'EEN2s2
+        '
+        Me.EEN2s2.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.EEN2s2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.EEN2s2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.EEN2s2.Location = New System.Drawing.Point(6, 138)
+        Me.EEN2s2.Name = "EEN2s2"
+        Me.EEN2s2.Size = New System.Drawing.Size(294, 23)
+        Me.EEN2s2.TabIndex = 25
+        '
+        'EEN2s1
+        '
+        Me.EEN2s1.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.EEN2s1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.EEN2s1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.EEN2s1.Location = New System.Drawing.Point(6, 109)
+        Me.EEN2s1.Name = "EEN2s1"
+        Me.EEN2s1.Size = New System.Drawing.Size(294, 23)
+        Me.EEN2s1.TabIndex = 24
+        '
+        'EEN2sel
+        '
+        Me.EEN2sel.AutoSize = True
+        Me.EEN2sel.Location = New System.Drawing.Point(306, 23)
+        Me.EEN2sel.Name = "EEN2sel"
+        Me.EEN2sel.Offset = 1
+        Me.EEN2sel.Size = New System.Drawing.Size(79, 19)
+        Me.EEN2sel.TabIndex = 3
+        Me.EEN2sel.Text = "Selectable"
+        '
+        'EEN2actt
+        '
+        Me.EEN2actt.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.EEN2actt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.EEN2actt.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.EEN2actt.Location = New System.Drawing.Point(6, 80)
+        Me.EEN2actt.Name = "EEN2actt"
+        Me.EEN2actt.Size = New System.Drawing.Size(259, 23)
+        Me.EEN2actt.TabIndex = 2
+        '
+        'EEN2invt
+        '
+        Me.EEN2invt.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.EEN2invt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.EEN2invt.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.EEN2invt.Location = New System.Drawing.Point(6, 51)
+        Me.EEN2invt.Name = "EEN2invt"
+        Me.EEN2invt.Size = New System.Drawing.Size(259, 23)
+        Me.EEN2invt.TabIndex = 1
+        '
+        'EEN2skl
+        '
+        Me.EEN2skl.BackColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(26, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.EEN2skl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.EEN2skl.ForeColor = System.Drawing.Color.FromArgb(CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.EEN2skl.Location = New System.Drawing.Point(6, 22)
+        Me.EEN2skl.Name = "EEN2skl"
+        Me.EEN2skl.Size = New System.Drawing.Size(264, 23)
+        Me.EEN2skl.TabIndex = 0
+        '
+        'GCREtmr
+        '
+        Me.GCREtmr.Interval = 7
+        '
+        'EEN2tmr
+        '
+        Me.EEN2tmr.Interval = 7
+        '
         'UI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(948, 495)
+        Me.ClientSize = New System.Drawing.Size(1874, 571)
+        Me.Controls.Add(Me.CRTgb)
         Me.Controls.Add(Me.Mapgb)
-        Me.Controls.Add(Me.DarkMenuStrip1)
+        Me.Controls.Add(Me.MainMenuStrip)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
-        Me.MainMenuStrip = Me.DarkMenuStrip1
         Me.MaximizeBox = False
         Me.Name = "UI"
         Me.Text = "Van Buren Editor"
@@ -1413,8 +2545,39 @@ Partial Class UI
         Me.EMEPgb.ResumeLayout(False)
         Me.EMEPgb.PerformLayout()
         CType(Me.EMEPnud, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.DarkMenuStrip1.ResumeLayout(False)
-        Me.DarkMenuStrip1.PerformLayout()
+        Me.MainMenuStrip.ResumeLayout(False)
+        Me.MainMenuStrip.PerformLayout()
+        CType(Me.GWAMsf, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.EEN2dgv, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.CRTgb.ResumeLayout(False)
+        Me.GCHRgb.ResumeLayout(False)
+        Me.GCHRgb.PerformLayout()
+        Me.GCREgb.ResumeLayout(False)
+        Me.GCREtlp.ResumeLayout(False)
+        Me.GCREtlp.PerformLayout()
+        CType(Me.GCREdgv, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GCREskv, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GCREspv, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GCREage, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GWAMgb.ResumeLayout(False)
+        Me.GWAMtlp.ResumeLayout(False)
+        Me.GWAMtlp.PerformLayout()
+        CType(Me.GWAMani, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GWAMap, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GWAMr, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GWAMmin, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GWAMmax, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GWAManSR, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GENTgb.ResumeLayout(False)
+        Me.GENTgb.PerformLayout()
+        CType(Me.GENTihp, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GENTmhp, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GENTuSR, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GENTnSR, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GENTlSR, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GENThSR, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.EEN2gb.ResumeLayout(False)
+        Me.EEN2gb.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1447,7 +2610,7 @@ Partial Class UI
     Friend WithEvents EME2s2 As DarkTextBox
     Friend WithEvents EME2s1 As DarkTextBox
     Friend WithEvents EME2dsb As DarkScrollBar
-    Friend WithEvents Timer1 As Timer
+    Friend WithEvents EME2tmr As Timer
     Friend WithEvents EMAPs3l As DarkLabel
     Friend WithEvents EMAPs2l As DarkLabel
     Friend WithEvents EMAPs1l As DarkLabel
@@ -1514,7 +2677,7 @@ Partial Class UI
     Friend WithEvents Triggernud As DarkNumericUpDown
     Friend WithEvents EPTHpm As DarkButton
     Friend WithEvents EPTHnud As DarkNumericUpDown
-    Friend WithEvents DarkMenuStrip1 As DarkMenuStrip
+    Friend WithEvents MainMenuStrip As DarkMenuStrip
     Friend WithEvents FileToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents NewToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents OpenToolStripMenuItem As ToolStripMenuItem
@@ -1534,5 +2697,96 @@ Partial Class UI
     Friend WithEvents WeaToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents OptionsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SetEnglishstfLocationToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolTip1 As ToolTip
+    Friend WithEvents ToolTip As ToolTip
+    Friend WithEvents CRTgb As DarkGroupBox
+    Friend WithEvents EEN2gb As DarkGroupBox
+    Friend WithEvents GWAMgb As DarkGroupBox
+    Friend WithEvents GENTgb As DarkGroupBox
+    Friend WithEvents GCREgb As DarkGroupBox
+    Friend WithEvents GCHRgb As DarkGroupBox
+    Friend WithEvents GCHRn As DarkTextBox
+    Friend WithEvents EEN2actt As DarkTextBox
+    Friend WithEvents EEN2invt As DarkTextBox
+    Friend WithEvents EEN2skl As DarkTextBox
+    Friend WithEvents EEN2sel As DarkCheckBox
+    Friend WithEvents EEN2s5l As DarkLabel
+    Friend WithEvents EEN2s4l As DarkLabel
+    Friend WithEvents EEN2s3l As DarkLabel
+    Friend WithEvents EEN2s5 As DarkTextBox
+    Friend WithEvents EEN2s4 As DarkTextBox
+    Friend WithEvents EEN2s3 As DarkTextBox
+    Friend WithEvents EEN2s2 As DarkTextBox
+    Friend WithEvents EEN2s1 As DarkTextBox
+    Friend WithEvents EEN2skll As DarkLabel
+    Friend WithEvents EEN2acttl As DarkLabel
+    Friend WithEvents EEN2invtl As DarkLabel
+    Friend WithEvents EEN2dsb As DarkScrollBar
+    Friend WithEvents EEN2dgv As DataGridView
+    Friend WithEvents GENTu As DarkTextBox
+    Friend WithEvents GENTn As DarkTextBox
+    Friend WithEvents GENTl As DarkTextBox
+    Friend WithEvents GENTh As DarkTextBox
+    Friend WithEvents GENTihpl As DarkLabel
+    Friend WithEvents GENTmhpl As DarkLabel
+    Friend WithEvents GENTihp As DarkNumericUpDown
+    Friend WithEvents GENTmhp As DarkNumericUpDown
+    Friend WithEvents GENTuSR As DarkNumericUpDown
+    Friend WithEvents GENTnSR As DarkNumericUpDown
+    Friend WithEvents GENTlSR As DarkNumericUpDown
+    Friend WithEvents GENThSR As DarkNumericUpDown
+    Friend WithEvents GWAMm As DarkButton
+    Friend WithEvents GWAMcb As DarkComboBox
+    Friend WithEvents GWAMp As DarkButton
+    Friend WithEvents GWAMtlp As TableLayoutPanel
+    Friend WithEvents GWAManil As DarkLabel
+    Friend WithEvents GWAMani As DarkNumericUpDown
+    Friend WithEvents GWAMdtl As DarkLabel
+    Friend WithEvents GWAMdt As DarkComboBox
+    Friend WithEvents GWAMmax As DarkNumericUpDown
+    Friend WithEvents GWAMmin As DarkNumericUpDown
+    Friend WithEvents GWAMmaxl As DarkLabel
+    Friend WithEvents GWAMminl As DarkLabel
+    Friend WithEvents GWAMr As DarkNumericUpDown
+    Friend WithEvents GWAMsf As DarkNumericUpDown
+    Friend WithEvents GWAMsfl As DarkLabel
+    Friend WithEvents GWAMrl As DarkLabel
+    Friend WithEvents GWAMapl As DarkLabel
+    Friend WithEvents GWAMap As DarkNumericUpDown
+    Friend WithEvents GWAManl As DarkLabel
+    Friend WithEvents GWAManSR As DarkNumericUpDown
+    Friend WithEvents GWAMef As DarkTextBox
+    Friend WithEvents GWAMefl As DarkLabel
+    Friend WithEvents GWAMan As DarkTextBox
+    Friend WithEvents GWAMefel As DarkLabel
+    Friend WithEvents GCREtlp As TableLayoutPanel
+    Friend WithEvents GCREskv As DarkNumericUpDown
+    Friend WithEvents GCREspv As DarkNumericUpDown
+    Friend WithEvents GCREspl As DarkLabel
+    Friend WithEvents GCREspcb As DarkComboBox
+    Friend WithEvents GCREskl As DarkLabel
+    Friend WithEvents GCREtrl As DarkLabel
+    Friend WithEvents GCREskcb As DarkComboBox
+    Friend WithEvents GCREtrcb As DarkComboBox
+    Friend WithEvents GCREtsl As DarkLabel
+    Friend WithEvents GCREtscb As DarkComboBox
+    Friend WithEvents GCREtrv As DarkCheckBox
+    Friend WithEvents GCREtsv As DarkCheckBox
+    Friend WithEvents GCREpl As DarkLabel
+    Friend WithEvents GCREp As DarkTextBox
+    Friend WithEvents GCREsoct As DarkTextBox
+    Friend WithEvents GCREsoctl As DarkLabel
+    Friend WithEvents GCREdsb As DarkScrollBar
+    Friend WithEvents GCREsoctel As DarkLabel
+    Friend WithEvents GCREdgv As DataGridView
+    Friend WithEvents GCREsocl As DarkLabel
+    Friend WithEvents GCREsocm As DarkTextBox
+    Friend WithEvents GCREsocml As DarkLabel
+    Friend WithEvents GCREsoccb As DarkComboBox
+    Friend WithEvents GCREeil As DarkLabel
+    Friend WithEvents GCREpel As DarkLabel
+    Friend WithEvents GCREtmr As Timer
+    Friend WithEvents EEN2tmr As Timer
+    Friend WithEvents GCREage As DarkNumericUpDown
+    Friend WithEvents GCREagel As DarkLabel
+    Friend WithEvents EnableSTFEdit As ToolStripMenuItem
 End Class

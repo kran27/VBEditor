@@ -65,6 +65,18 @@ Namespace My
                 Me("STFDir") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property STFEditEnabled() As Boolean
+            Get
+                Return CType(Me("STFEditEnabled"),Boolean)
+            End Get
+            Set
+                Me("STFEditEnabled") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

@@ -8,14 +8,29 @@ Public Class Map
     Property Triggers As List(Of Trigger)
     Property EPTH As List(Of EPTHc)
     Property EMSD As List(Of EMSDc)
-    Property EMNP As Byte() ' EMNP never changes, doesn't need unique class.
     Property EMEF As List(Of EMEFc)
+    Sub New()
+        EMAP = New EMAPc()
+        EMEP = New List(Of EMEPc)
+        EME2 = New List(Of EME2c)
+        EMEF = New List(Of EMEFc)
+        EMSD = New List(Of EMSDc)
+        EPTH = New List(Of EPTHc)
+        Triggers = New List(Of Trigger)
+        ECAM = Nothing
+    End Sub
 End Class
 Public Class CRT
     Property EEN2 As EEN2c
     Property GENT As GENTc
     Property GCRE As GCREc
     Property GCHR As GCHRc
+    Sub New()
+        EEN2 = New EEN2c()
+        GENT = New GENTc()
+        GCRE = New GCREc()
+        GCHR = New GCHRc()
+    End Sub
 End Class
 #End Region
 #Region "Header Classes"
@@ -135,25 +150,40 @@ End Class
 
 Public Class EEN2c
     Property skl As String
-    Property tex As String
     Property invtex As String
+    Property acttex As String
     Property sel As Boolean
     Property EEOV As EEOVc
+    Sub New()
+        skl = ""
+        invtex = ""
+        acttex = ""
+        sel = False
+        EEOV = New EEOVc()
+    End Sub
 End Class
 Public Class GENTc
     Property HoverSR As Integer ' String used when moused over
     Property LookSR As Integer ' String used when "Look" option is used
     Property NameSR As Integer ' String of the entities' name
-    Property Look2SR As Integer ' String seemingly also used on mouseover
+    Property UnkwnSR As Integer ' String used ???
     Property MaxHealth As Integer
     Property StartHealth As Integer
+    Sub New()
+        HoverSR = 0
+        LookSR = 0
+        NameSR = 0
+        UnkwnSR = 0
+        MaxHealth = 0
+        StartHealth = 0
+    End Sub
 End Class
 Public Class GCREc
-    Property Special As Special
+    Property Special As Integer()
     Property Age As Integer
     Property Skills As List(Of Skill)
-    Property Traits As Integer()
-    Property TagSkills As Integer()
+    Property Traits As List(Of Integer)
+    Property TagSkills As List(Of Integer)
     Property PortStr As String
     Property Hea As Socket
     Property Hai As Socket
@@ -169,6 +199,28 @@ Public Class GCREc
     Property Van As Socket
     Property Inventory As String()
     Property GWAM As List(Of GWAMc)
+    Sub New()
+        Special = New Integer() {0, 0, 0, 0, 0, 0, 0}
+        Age = 0
+        Skills = New List(Of Skill)
+        Traits = New List(Of Integer)
+        TagSkills = New List(Of Integer)
+        PortStr = ""
+        Hea = New Socket("", "")
+        Hai = New Socket("", "")
+        Pon = New Socket("", "")
+        Mus = New Socket("", "")
+        Bea = New Socket("", "")
+        Eye = New Socket("", "")
+        Bod = New Socket("", "")
+        Han = New Socket("", "")
+        Fee = New Socket("", "")
+        Bac = New Socket("", "")
+        Sho = New Socket("", "")
+        Van = New Socket("", "")
+        Inventory = New String() {}
+        GWAM = New List(Of GWAMc)
+    End Sub
 End Class
 Public Class GWAMc
     ' Offsets 0x18, 0x20, 0x38, and 0x39 have been observed to have values, none of them appear to affect the function.
@@ -183,9 +235,23 @@ Public Class GWAMc
     Property AP As Integer
     Property NameSR As Integer ' Name String Reference
     Property VegName As String
+    Sub New()
+        Anim = 0
+        DmgType = 0
+        ShotsFired = 0
+        Range = 0
+        MinDmg = 0
+        MaxDmg = 0
+        AP = 0
+        NameSR = 0
+        VegName = 0
+    End Sub
 End Class
 Public Class GCHRc
     Property name As String
+    Sub New()
+        name = ""
+    End Sub
 End Class
 #End Region
 #Region "Other Classes"
@@ -211,24 +277,6 @@ Public Class Point4
         Me.r = r
     End Sub
 End Class
-Public Class Special
-    Property S As Integer
-    Property P As Integer
-    Property E As Integer
-    Property C As Integer
-    Property I As Integer
-    Property A As Integer
-    Property L As Integer
-    Sub New(S As Integer, P As Integer, E As Integer, C As Integer, I As Integer, A As Integer, L As Integer)
-        Me.S = S
-        Me.P = P
-        Me.E = E
-        Me.C = C
-        Me.I = I
-        Me.A = A
-        Me.L = L
-    End Sub
-End Class
 Public Class Skill
     Property Index As Integer
     Property Value As Integer
@@ -240,7 +288,7 @@ End Class
 Public Class Socket
     Property Model As String
     Property Tex As String
-    Sub New(Model As Integer, Tex As Integer)
+    Sub New(Model As String, Tex As String)
         Me.Model = Model
         Me.Tex = Tex
     End Sub

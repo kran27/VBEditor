@@ -2,8 +2,7 @@
 ### A heavily work-in-progress editor for the proprietary file formats used in Fallout: Van Buren
 ---
 ### Current Features:
-* Edit attributes of .map files
+* Full support of .MAP and .CRT (possible issues, please report if found)
 ### Planned Features:
-* Support for most if not all file types
-* Creation of new files from scratch
-* Adding new data into existing files
+* Support for many more file types
+* Better UX

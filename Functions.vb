@@ -283,8 +283,8 @@ Friend Module Functions
     <Extension>
     Public Function To2MWTc(b As Byte()) As _2MWTc
         Dim mpf = Encoding.ASCII.GetString(b, 14, b(12))
-        Dim frozen = b(27 + mpf.Length) = 0
-        Dim dark = b(29 + mpf.Length) = 0
+        Dim dark = b(27 + mpf.Length) = 0
+        Dim frozen = b(29 + mpf.Length) = 0
         Dim cl = New List(Of _2MWTChunk)
         Dim io = 158 + mpf.Length
         For i = 1 To BitConverter.ToInt32(b, 154 + mpf.Length)
@@ -661,8 +661,8 @@ Friend Module Functions
         out.OverwriteBytes(8, BitConverter.GetBytes(158 + sl + wl))
         out.OverwriteBytes(12, New Byte() {c.mpf.Length})
         out.OverwriteBytes(14, Encoding.ASCII.GetBytes(c.mpf))
-        out.OverwriteBytes(27 + c.mpf.Length, New Byte() {If(c.frozen, 0, 1)})
-        out.OverwriteBytes(29 + c.mpf.Length, New Byte() {If(c.dark, 0, 1)})
+        out.OverwriteBytes(27 + c.mpf.Length, New Byte() {If(c.dark, 0, 1)})
+        out.OverwriteBytes(29 + c.mpf.Length, New Byte() {If(c.frozen, 0, 1)})
         out.OverwriteBytes(154 + c.mpf.Length, New Byte() {c.chunks.Count})
         Dim io = 158 + c.mpf.Length
         For Each w In c.chunks

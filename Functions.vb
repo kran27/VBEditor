@@ -1,5 +1,4 @@
-﻿Imports System.IO
-Imports System.Runtime.CompilerServices
+﻿Imports System.Runtime.CompilerServices
 Imports System.Text
 
 Friend Module Functions
@@ -284,6 +283,8 @@ Friend Module Functions
     <Extension>
     Public Function To2MWTc(b As Byte()) As _2MWTc
         Dim mpf = Encoding.ASCII.GetString(b, 14, b(12))
+        Dim frozen = b(27 + mpf.Length) = 0
+        Dim dark = b(29 + mpf.Length) = 0
         Dim cl = New List(Of _2MWTChunk)
         Dim io = 158 + mpf.Length
         For i = 1 To BitConverter.ToInt32(b, 154 + mpf.Length)
@@ -293,12 +294,12 @@ Friend Module Functions
             cl.Add(New _2MWTChunk(s, p3, pf))
             io += s.Length + 22
         Next
-        File.WriteAlltext("text", mpf)
-        File.WriteAllText("idk", cl.Count)
-        Dim tmp As New _2MWTc
-        tmp.mpf = mpf
-        tmp.chunks = cl
-        Return tmp
+        Return New _2MWTc With {
+            .mpf = mpf,
+            .frozen = frozen,
+            .dark = dark,
+            .chunks = cl
+            }
     End Function
 
 #End Region
@@ -652,16 +653,6 @@ Friend Module Functions
 
     <Extension>
     Public Function To2MWTb(c As _2MWTc) As Byte()
-        Dim unknown As Byte() = ' unresearched static data between chunk size and water chunk count
-                {&H9, &H0, &HFF, &HFF, &HFF, &HFF, &H0, &H0, &H20, &H41, &HCD, &HCC, &HCC, &H3D, &H0, &H1, &H0,
-                 &H1, &HCD, &HCC, &HCC, &H3C, &H1, &H0, &H0, &H0, &H0, &H0, &H0, &H0, &H0, &H0, &H0, &H0,
-                 &H0, &H0, &H80, &H3F, &H0, &H0, &H0, &H0, &H0, &H0, &H80, &H3F, &HCD, &HCC, &HCC, &H3D, &HCD,
-                 &HCC, &H4C, &H3E, &H0, &H0, &H80, &H3F, &H0, &H0, &H0, &H40, &HCD, &HCC, &HCC, &H3D, &H0, &H0,
-                 &H0, &H0, &HCD, &HCC, &HCC, &H3D, &H0, &H0, &H0, &H0, &H0, &H0, &H80, &H3F, &H0, &H0, &H0,
-                 &H0, &H0, &H0, &H80, &H3F, &H0, &H0, &H0, &H0, &HCD, &HCC, &HCC, &H3D, &HCD, &HCC, &HCC, &H3D,
-                 &HCD, &HCC, &HCC, &H3D, &H0, &H0, &H80, &H3F, &HCD, &HCC, &H4C, &H3E, &HCD, &HCC, &H4C, &H3E, &H0,
-                 &H0, &HB4, &H43, &H0, &H0, &HB4, &H43, &HCD, &HCC, &HCC, &H3D, &H0, &H0, &H80, &H3F, &H0, &H0,
-                 &H80, &H3F}
         Dim sl = c.chunks.Sum(Function(x) x.tex.Length) + c.mpf.Length ' length of strings
         Dim wl = c.chunks.Count * 22 ' added length for each water chunk
 
@@ -670,7 +661,8 @@ Friend Module Functions
         out.OverwriteBytes(8, BitConverter.GetBytes(158 + sl + wl))
         out.OverwriteBytes(12, New Byte() {c.mpf.Length})
         out.OverwriteBytes(14, Encoding.ASCII.GetBytes(c.mpf))
-        out.OverwriteBytes(14 + c.mpf.Length, unknown)
+        out.OverwriteBytes(27 + c.mpf.Length, New Byte() {If(c.frozen, 0, 1)})
+        out.OverwriteBytes(29 + c.mpf.Length, New Byte() {If(c.dark, 0, 1)})
         out.OverwriteBytes(154 + c.mpf.Length, New Byte() {c.chunks.Count})
         Dim io = 158 + c.mpf.Length
         For Each w In c.chunks
@@ -679,7 +671,7 @@ Friend Module Functions
             out.OverwriteBytes(io + 8, BitConverter.GetBytes(w.loc.y))
             out.OverwriteBytes(io + 12, New Byte() {w.tex.Length})
             out.OverwriteBytes(io + 14, Encoding.ASCII.GetBytes(w.tex))
-            out.OverwriteBytes(io + 14 + w.tex.Length, BitConverter.GetBytes(w.texloc.X))
+            out.OverwriteBytes(io + 14 + w.tex.Length, BitConverter.GetBytes(w.texloc.x))
             out.OverwriteBytes(io + 18 + w.tex.Length, BitConverter.GetBytes(w.texloc.y))
             io += 22 + w.tex.Length
         Next

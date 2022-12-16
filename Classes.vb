@@ -260,6 +260,8 @@ Public Class GCHRc
 End Class
 Public Class _2MWTc
     Property mpf as String
+    Property frozen As Boolean
+    Property dark As boolean
     Property chunks As List(Of _2MWTChunk)
     Sub New()
         mpf = ""

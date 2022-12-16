@@ -38,6 +38,8 @@ Partial Class UI
         Me.EMAPs1 = New AltUI.Controls.DarkTextBox()
         Me.Mapgb = New AltUI.Controls.DarkGroupBox()
         Me._2MWTgb = New AltUI.Controls.DarkGroupBox()
+        Me._2MWTdw = New AltUI.Controls.DarkCheckBox()
+        Me._2MWTfr = New AltUI.Controls.DarkCheckBox()
         Me._2MWTlmy = New AltUI.Controls.DarkTextBox()
         Me.DarkLabel3 = New AltUI.Controls.DarkLabel()
         Me._2MWTlmx = New AltUI.Controls.DarkTextBox()
@@ -391,6 +393,8 @@ Partial Class UI
         '
         '_2MWTgb
         '
+        Me._2MWTgb.Controls.Add(Me._2MWTdw)
+        Me._2MWTgb.Controls.Add(Me._2MWTfr)
         Me._2MWTgb.Controls.Add(Me._2MWTlmy)
         Me._2MWTgb.Controls.Add(Me.DarkLabel3)
         Me._2MWTgb.Controls.Add(Me._2MWTlmx)
@@ -410,6 +414,26 @@ Partial Class UI
         Me._2MWTgb.TabIndex = 41
         Me._2MWTgb.TabStop = false
         Me._2MWTgb.Text = "2MWT"
+        '
+        '_2MWTdw
+        '
+        Me._2MWTdw.AutoSize = true
+        Me._2MWTdw.Location = New System.Drawing.Point(427, 24)
+        Me._2MWTdw.Name = "_2MWTdw"
+        Me._2MWTdw.Offset = 1
+        Me._2MWTdw.Size = New System.Drawing.Size(84, 19)
+        Me._2MWTdw.TabIndex = 57
+        Me._2MWTdw.Text = "Dark Water"
+        '
+        '_2MWTfr
+        '
+        Me._2MWTfr.AutoSize = true
+        Me._2MWTfr.Location = New System.Drawing.Point(306, 24)
+        Me._2MWTfr.Name = "_2MWTfr"
+        Me._2MWTfr.Offset = 1
+        Me._2MWTfr.Size = New System.Drawing.Size(116, 19)
+        Me._2MWTfr.TabIndex = 56
+        Me._2MWTfr.Text = "Unmoving Water"
         '
         '_2MWTlmy
         '
@@ -2964,4 +2988,6 @@ End Sub
     Friend WithEvents _2MWTlmy As DarkTextBox
     Friend WithEvents DarkLabel3 As DarkLabel
     Friend WithEvents _2MWTlmx As DarkTextBox
+    Friend WithEvents _2MWTdw As DarkCheckBox
+    Friend WithEvents _2MWTfr As DarkCheckBox
 End Class

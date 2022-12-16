@@ -344,6 +344,8 @@ Public Class UI
 
     Private Sub _2MWTToUI(ByRef cf As Map)
         _2MWTmpf.Text = cf._2MWT.mpf
+        _2MWTfr.Checked = cf._2MWT.frozen
+        _2MWTdw.Checked = cf._2MWT.dark
         For i = 1 To cf._2MWT.chunks.Count
             _2MWTcb.Items.Add(i)
         Next
@@ -351,8 +353,8 @@ Public Class UI
         _2MWTx.Text = cf._2MWT.chunks(0).loc.x
         _2MWTy.Text = cf._2MWT.chunks(0).loc.y
         _2MWTz.Text = cf._2MWT.chunks(0).loc.z
-        _2MWTlmx.Text = cf._2MWT.chunks(0).texloc.X
-        _2MWTlmy.Text = cf._2MWT.chunks(0).texloc.Y
+        _2MWTlmx.Text = cf._2MWT.chunks(0).texloc.x
+        _2MWTlmy.Text = cf._2MWT.chunks(0).texloc.y
         _2MWTtex.Text = cf._2MWT.chunks(0).tex.Substring(0, cf._2MWT.chunks(0).tex.LastIndexOf("."))
     End Sub
 
@@ -1098,21 +1100,29 @@ Public Class UI
     Private Sub GCREage_ValueChanged(sender As Object, e As EventArgs) Handles GCREage.ValueChanged
         If sender.Enabled Then cf.GCRE.Age = GCREage.Value
     End Sub
-    
-        Private Sub _2MWTcb_SelectedIndexChanged(sender As Object, e As EventArgs) Handles _2MWTcb.SelectedIndexChanged
+
+    Private Sub _2MWTcb_SelectedIndexChanged(sender As Object, e As EventArgs) Handles _2MWTcb.SelectedIndexChanged
         _2MWTx.Text = cf._2MWT.chunks(_2MWTcb.SelectedIndex).loc.x
         _2MWTy.Text = cf._2MWT.chunks(_2MWTcb.SelectedIndex).loc.y
         _2MWTz.Text = cf._2MWT.chunks(_2MWTcb.SelectedIndex).loc.z
         Try
-            _2MWTtex.Text = cf._2MWT.chunks(_2MWTcb.SelectedIndex).tex.Substring(0, cf._2MWT.chunks(_2MWTcb.SelectedIndex). tex.LastIndexOf("."))
+            _2MWTtex.Text = cf._2MWT.chunks(_2MWTcb.SelectedIndex).tex.Substring(0, cf._2MWT.chunks(_2MWTcb.SelectedIndex).tex.LastIndexOf("."))
         Catch : _2MWTtex.Text = ""
-        end try
+        End Try
         _2MWTlmx.Text = cf._2MWT.chunks(_2MWTcb.SelectedIndex).texloc.x
         _2MWTlmy.Text = cf._2MWT.chunks(_2MWTcb.SelectedIndex).texloc.y
     End Sub
 
     Private Sub _2MWTmpf_TextChanged(sender As Object, e As EventArgs) Handles _2MWTmpf.TextChanged
         If sender.Enabled Then cf._2MWT.mpf = _2MWTmpf.Text
+    End Sub
+
+    Private Sub _2MWTfr_CheckedChanged(sender As Object, e As EventArgs) Handles _2MWTfr.CheckedChanged
+        If sender.enabled Then cf._2MWT.frozen = sender.checked
+    End Sub
+
+    Private Sub _2MWTdw_CheckedChanged(sender As Object, e As EventArgs) Handles _2MWTdw.CheckedChanged
+        If sender.enabled Then cf._2MWT.dark = sender.checked
     End Sub
 
     Private Sub _2MWTtex_TextChanged(sender As Object, e As EventArgs) Handles _2MWTtex.TextChanged
@@ -1400,7 +1410,7 @@ Public Class UI
         For Each c As Control In _2MWTgb.Controls
             c.Enabled = True
         Next
-        cf._2MWT.chunks.Add(New _2MWTChunk("", new Point3(0,0,0), new Point2(0,0)))
+        cf._2MWT.chunks.Add(New _2MWTChunk("", New Point3(0, 0, 0), New Point2(0, 0)))
         _2MWTcb.Items.Add(_2MWTcb.Items.Count + 1)
         _2MWTcb.SelectedIndex = _2MWTcb.Items.Count - 1
     End Sub
@@ -1564,6 +1574,7 @@ Public Class UI
         End Select
         MyBase.OnKeyUp(e)
     End Sub
+
 #End Region
 
 End Class

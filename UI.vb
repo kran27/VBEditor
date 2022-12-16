@@ -4,14 +4,17 @@ Imports AltUI.Controls
 Imports AltUI.Forms
 
 Public Class UI
+
 #Region "Variables"
+
     Private stf As List(Of String)
     Private f As String
     Private ext As String
-    Private cf ' As CRT ' Current file, ambiguous type (I set the type while coding to avoid errors)
+    Private cf 'As Map ' Current file, ambiguous type (I set the type while coding to avoid errors)
     Private ReadOnly DontWipe As String() = New String() {"Triggertcb", "GCREspcb", "GCREskcb", "GCREtrcb", "GCREtscb", "GCREsoccb"}
     Private HCtrl As Boolean
     Private HN As Boolean : Private H1 As Boolean : Private H2 As Boolean : Private H3 As Boolean : Private H4 As Boolean : Private H5 As Boolean : Private H6 As Boolean : Private H7 As Boolean : Private H8 As Boolean : Private H9 As Boolean : Private H0 As Boolean
+
 #End Region
 
     Private Sub InitialSetup() Handles MyBase.Load
@@ -119,6 +122,7 @@ Public Class UI
                     cf.EME2 = (From x In f.GetRegions("EME2") Select x.ToEME2c).ToList
                     cf.EMEP = (From x In f.GetRegions("EMEP") Select x.ToEMEPc).ToList
                     Try : cf.ECAM = f.GetRegions("ECAM")(0).ToECAMc : Catch : End Try
+                    Try : cf._2MWT = f.GetRegions("2MWT")(0).To2MWTc : Catch : End Try
                     cf.Triggers = f.GetTriggers
                     cf.EPTH = (From x In f.GetRegions("EPTH") Select x.ToEPTHc).ToList
                     cf.EMSD = (From x In f.GetRegions("EMSD") Select x.ToEMSDc).ToList
@@ -157,6 +161,7 @@ Public Class UI
                     b.AddRange(cf.EME2.SelectMany(Function(x) x.ToEME2b()))
                     b.AddRange(cf.EMEP.SelectMany(Function(x) x.ToEMEPb()))
                     If cf.ECAM IsNot Nothing Then b.AddRange(cf.ECAM.ToECAMb())
+                    If _2MWTcb.Items.Count > 0 Then b.AddRange(cf._2MWT.To2MWTb())
                     b.AddRange(cf.Triggers.SelectMany(Function(x) x.ToTriggerB()))
                     b.AddRange(cf.EPTH.SelectMany(Function(x) x.ToEPTHb()))
                     b.AddRange(cf.EMSD.SelectMany(Function(x) x.ToEMSDb()))
@@ -193,9 +198,10 @@ Public Class UI
     End Sub
 
 #Region "File-Specific UI Setup"
+
     Private Sub MapSetupUI(ByRef cf As Map) ' Only way I found to bypass the issue of functions like .Any() not being found
         Mapgb.Location = New Point(12, 27)
-        Size = New Size(964, 534)
+        Size = New Size(964, 600)
         CRTgb.Hide()
         Mapgb.Show()
         ResetUI()
@@ -294,6 +300,7 @@ Public Class UI
             Next
             EMEFcb.Enabled = True : EMEFp.Enabled = True
         End If
+        If cf._2MWT IsNot Nothing Then _2MWTToUI()
     End Sub
 
     Private Sub CRTSetupUI(ByRef cf As CRT) ' Only way I found to bypass the issue of functions like .Any() not being found
@@ -326,9 +333,28 @@ Public Class UI
 
         GCREToUI()
     End Sub
+
 #End Region
 
 #Region "Load classes into UI"
+
+    Private Sub _2MWTToUI()
+        _2MWTToUI(cf)
+    End Sub
+
+    Private Sub _2MWTToUI(ByRef cf As Map)
+        _2MWTmpf.Text = cf._2MWT.mpf
+        For i = 1 To cf._2MWT.chunks.Count
+            _2MWTcb.Items.Add(i)
+        Next
+        _2MWTcb.SelectedIndex = 0
+        _2MWTx.Text = cf._2MWT.chunks(0).loc.x
+        _2MWTy.Text = cf._2MWT.chunks(0).loc.y
+        _2MWTz.Text = cf._2MWT.chunks(0).loc.z
+        _2MWTlmx.Text = cf._2MWT.chunks(0).texloc.X
+        _2MWTlmy.Text = cf._2MWT.chunks(0).texloc.Y
+        _2MWTtex.Text = cf._2MWT.chunks(0).tex.Substring(0, cf._2MWT.chunks(0).tex.LastIndexOf("."))
+    End Sub
 
     Private Sub EMAPToUI()
         EMAPslb.BorderColour = cf.EMAP.col
@@ -1072,14 +1098,55 @@ Public Class UI
     Private Sub GCREage_ValueChanged(sender As Object, e As EventArgs) Handles GCREage.ValueChanged
         If sender.Enabled Then cf.GCRE.Age = GCREage.Value
     End Sub
+    
+        Private Sub _2MWTcb_SelectedIndexChanged(sender As Object, e As EventArgs) Handles _2MWTcb.SelectedIndexChanged
+        _2MWTx.Text = cf._2MWT.chunks(_2MWTcb.SelectedIndex).loc.x
+        _2MWTy.Text = cf._2MWT.chunks(_2MWTcb.SelectedIndex).loc.y
+        _2MWTz.Text = cf._2MWT.chunks(_2MWTcb.SelectedIndex).loc.z
+        Try
+            _2MWTtex.Text = cf._2MWT.chunks(_2MWTcb.SelectedIndex).tex.Substring(0, cf._2MWT.chunks(_2MWTcb.SelectedIndex). tex.LastIndexOf("."))
+        Catch : _2MWTtex.Text = ""
+        end try
+        _2MWTlmx.Text = cf._2MWT.chunks(_2MWTcb.SelectedIndex).texloc.x
+        _2MWTlmy.Text = cf._2MWT.chunks(_2MWTcb.SelectedIndex).texloc.y
+    End Sub
+
+    Private Sub _2MWTmpf_TextChanged(sender As Object, e As EventArgs) Handles _2MWTmpf.TextChanged
+        If sender.Enabled Then cf._2MWT.mpf = _2MWTmpf.Text
+    End Sub
+
+    Private Sub _2MWTtex_TextChanged(sender As Object, e As EventArgs) Handles _2MWTtex.TextChanged
+        If sender.Enabled Then cf._2MWT.chunks(_2MWTcb.SelectedIndex).tex = _2MWTtex.Text & ".dds"
+    End Sub
+
+    Private Sub _2MWTx_TextChanged(sender As Object, e As EventArgs) Handles _2MWTx.TextChanged
+        If sender.Enabled Then cf._2MWT.chunks(_2MWTcb.SelectedIndex).loc.x = _2MWTx.Text
+    End Sub
+
+    Private Sub _2MWTy_TextChanged(sender As Object, e As EventArgs) Handles _2MWTy.TextChanged
+        If sender.Enabled Then cf._2MWT.chunks(_2MWTcb.SelectedIndex).loc.y = _2MWTy.Text
+    End Sub
+
+    Private Sub _2MWTz_TextChanged(sender As Object, e As EventArgs) Handles _2MWTz.TextChanged
+        If sender.Enabled Then cf._2MWT.chunks(_2MWTcb.SelectedIndex).loc.z = _2MWTz.Text
+    End Sub
+
+    Private Sub _2MWTlmx_TextChanged(sender As Object, e As EventArgs) Handles _2MWTlmx.TextChanged
+        If sender.Enabled Then cf._2MWT.chunks(_2MWTcb.SelectedIndex).texloc.x = _2MWTlmx.Text
+    End Sub
+
+    Private Sub _2MWTlmy_TextChanged(sender As Object, e As EventArgs) Handles _2MWTlmy.TextChanged
+        If sender.Enabled Then cf._2MWT.chunks(_2MWTcb.SelectedIndex).texloc.y = _2MWTlmy.Text
+    End Sub
 
     ' Prevent invalid floats from being entered into text boxes (Add any float textboxes to the "Handles" section)
-    Private Sub FloatsOnly(sender As TextBox, e As KeyPressEventArgs) _
+    Private Shared Sub FloatsOnly(sender As TextBox, e As KeyPressEventArgs) _
         Handles ECAMx.KeyPress, ECAMy.KeyPress, ECAMz.KeyPress, ECAMr.KeyPress, EMEPx.KeyPress, EMEPy.KeyPress,
                 EMEPz.KeyPress, EMEPr.KeyPress, EMEFx.KeyPress, EMEFy.KeyPress, EMEFz.KeyPress, EMEFr.KeyPress,
                 EMSDx.KeyPress, EMSDy.KeyPress, EMSDz.KeyPress, EME2x.KeyPress, EME2y.KeyPress, EME2z.KeyPress,
                 EME2r.KeyPress, EPTHx.KeyPress, EPTHy.KeyPress, EPTHz.KeyPress, EPTHr.KeyPress, Triggerx.KeyPress,
-                Triggery.KeyPress, Triggerz.KeyPress
+                Triggery.KeyPress, Triggerz.KeyPress, _2MWTx.KeyPress, _2MWTy.KeyPress, _2MWTz.KeyPress,
+                _2MWTlmx.KeyPress, _2MWTlmy.KeyPress
         ' This code inserts the pressed character into the existing text (unless it's a backspace), and adds a 0 either at the start, or after "-", if present.
         ' By doing this, it allows any number to be typed, but only if it's valid, while still allowing you to start with a "-" sign
         ' It's done this way so everything here happens before the text is updated, and if it's not a valid number, the text is never written.
@@ -1100,6 +1167,7 @@ Public Class UI
 #End Region
 
 #Region "Scroll Bars"
+
     Private Sub EME2dgv_ScrollChanged() Handles EME2dgv.Scroll
         EME2dsb.ScrollTo(EME2dgv.FirstDisplayedScrollingRowIndex / (EME2dgv.Rows.Count - EME2dgv.DisplayedRowCount(False)) * EME2dsb.Maximum)
     End Sub
@@ -1147,6 +1215,7 @@ Public Class UI
     Private Sub GCREtmr_Tick(sender As Object, e As EventArgs) Handles GCREtmr.Tick
         GCREdgv.FirstDisplayedScrollingRowIndex = GCREdsb.Value / GCREdsb.Maximum * (GCREdgv.Rows.Count - GCREdgv.DisplayedRowCount(False))
     End Sub
+
 #End Region
 
 #Region "Remove/Add Chunks"
@@ -1327,6 +1396,31 @@ Public Class UI
         GWAMToUI()
     End Sub
 
+    Private Sub _2MWTp_Click(sender As Object, e As EventArgs) Handles _2MWTp.Click
+        For Each c As Control In _2MWTgb.Controls
+            c.Enabled = True
+        Next
+        cf._2MWT.chunks.Add(New _2MWTChunk("", new Point3(0,0,0), new Point2(0,0)))
+        _2MWTcb.Items.Add(_2MWTcb.Items.Count + 1)
+        _2MWTcb.SelectedIndex = _2MWTcb.Items.Count - 1
+    End Sub
+
+    Private Sub _2MWTm_Click(sender As Object, e As EventArgs) Handles _2MWTm.Click
+        Dim i = _2MWTcb.SelectedIndex
+        If cf._2MWT.chunks.Count = 1 Then
+            cf.EMSD = New List(Of EMSDc)
+            MapSetupUI(cf)
+            For Each c As Control In _2MWTgb.Controls
+                c.Enabled = False
+            Next
+            _2MWTcb.Enabled = True : _2MWTp.Enabled = True
+        Else
+            cf._2MWT.chunks.RemoveAt(i)
+            _2MWTcb.Items.RemoveAt(i)
+            _2MWTcb.SelectedIndex = Math.Max(0, i - 1)
+        End If
+    End Sub
+
 #End Region
 
 #Region ".stf Stuff"
@@ -1387,6 +1481,7 @@ Public Class UI
 #End Region
 
 #Region "Custom Accelerators"
+
     Protected Overrides Sub OnKeyDown(e As KeyEventArgs)
         Select Case e.KeyCode
             Case Keys.ControlKey
@@ -1469,7 +1564,6 @@ Public Class UI
         End Select
         MyBase.OnKeyUp(e)
     End Sub
-
 #End Region
 
 End Class

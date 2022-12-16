@@ -1,10 +1,11 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports System.Windows.Forms.VisualStyles.VisualStyleElement.Tab
 
 Friend Module Functions
+
 #Region "Byte array to Class"
+
     ' Functions to convert from F3-readable byte arrays extracted from files, into easily-manipulatable custom classes
     <Extension>
     Public Function ToEMAPc(b As Byte()) As EMAPc
@@ -20,6 +21,7 @@ Friend Module Functions
             .le = b(s3o + s3l)
         }
     End Function
+
     <Extension>
     Public Function ToEMTRc(b As Byte()) As EMTRc
         Dim l As New List(Of Point3)
@@ -31,6 +33,7 @@ Friend Module Functions
             .r = l
         }
     End Function
+
     <Extension>
     Public Function ToExTRc(b As Byte()) As ExTRc
         Dim type = Encoding.ASCII.GetString(b.Skip(1).Take(1).ToArray())
@@ -39,12 +42,14 @@ Friend Module Functions
             .s = If(type = "B", b(12), Encoding.ASCII.GetString(b.Skip(14).Take(b(12)).ToArray()))
             }
     End Function
+
     <Extension>
     Public Function ToECAMc(b As Byte()) As ECAMc
         Return New ECAMc With {
             .p = New Point4(BitConverter.ToSingle(b, 12), BitConverter.ToSingle(b, 16), BitConverter.ToSingle(b, 20), BitConverter.ToSingle(b, 24))
         }
     End Function
+
     <Extension>
     Public Function ToEMEPc(b As Byte()) As EMEPc
         Return New EMEPc With {
@@ -52,6 +57,7 @@ Friend Module Functions
             .p = New Point4(BitConverter.ToSingle(b, 73), BitConverter.ToSingle(b, 77), BitConverter.ToSingle(b, 81), BitConverter.ToSingle(b, 105))
         }
     End Function
+
     <Extension>
     Public Function ToEMEFc(b As Byte()) As EMEFc
         Return New EMEFc With {
@@ -60,6 +66,7 @@ Friend Module Functions
             .s2 = Encoding.ASCII.GetString(b.Skip(41 + b(12)).Take(b(39 + b(12))).ToArray())
                         }
     End Function
+
     <Extension>
     Public Function ToEMSDc(b As Byte()) As EMSDc
         Return New EMSDc With {
@@ -68,6 +75,7 @@ Friend Module Functions
             .l = New Point3(BitConverter.ToSingle(b, 14 + b(12)), BitConverter.ToSingle(b, 18 + b(12)), BitConverter.ToSingle(b, 22 + b(12)))
         }
     End Function
+
     <Extension>
     Public Function ToEPTHc(b As Byte()) As EPTHc
         Dim l As New List(Of Point4)
@@ -79,6 +87,7 @@ Friend Module Functions
             .p = l
         }
     End Function
+
     <Extension>
     Public Function ToEME2c(b As Byte()) As EME2c
         Dim cl = b.Locate(Encoding.ASCII.GetBytes("EEOV"))(0)
@@ -88,6 +97,7 @@ Friend Module Functions
             .EEOV = b.Skip(cl).Take(BitConverter.ToInt32(b, cl + 8)).ToArray().ToEEOVc
         }
     End Function
+
     <Extension>
     Public Function ToEEOVc(b As Byte()) As EEOVc
         Dim s1o = 12 + 2 : Dim s1l = b(s1o - 2)
@@ -124,6 +134,7 @@ Friend Module Functions
             .inv = inv.ToArray()
         }
     End Function
+
     <Extension>
     Public Function ToEEN2c(b As Byte()) As EEN2c
         Dim cl = b.Locate(Encoding.ASCII.GetBytes("EEOV"))(0)
@@ -138,6 +149,7 @@ Friend Module Functions
             .EEOV = b.Skip(cl).Take(BitConverter.ToInt32(b, cl + 8)).ToArray().ToEEOVc
             }
     End Function
+
     <Extension>
     Public Function ToGENTc(b As Byte()) As GENTc
         Return New GENTc() With {
@@ -149,12 +161,14 @@ Friend Module Functions
         .StartHealth = BitConverter.ToInt32(b, 40)
             }
     End Function
+
     <Extension>
     Public Function ToGCHRc(b As Byte()) As GCHRc
         Return New GCHRc() With {
             .name = Encoding.ASCII.GetString(b, 14, b(12))
             }
     End Function
+
     <Extension>
     Public Function ToGWAMc(b As Byte()) As GWAMc
         Return New GWAMc() With {
@@ -169,9 +183,12 @@ Friend Module Functions
             .VegName = Encoding.ASCII.GetString(b, 78, b(76))
         }
     End Function
+
     <Extension>
     Public Function ToGCREc(b As Byte()) As GCREc
+
 #Region "Offsets, Lengths"
+
         Dim sl = b(72) * 8 ' Skills added length
         Dim cl = b(76 + sl) * 8 ' Characters added length
         Dim tl = b(80 + sl + cl) * 4 ' Traits added length
@@ -203,8 +220,11 @@ Friend Module Functions
         Dim Vanmo = Shoto + 2 + b(Shoto - 2)
         Dim Vanto = Vanmo + 2 + b(Vanmo - 2)
         Dim psl = sl + cl + tl + tsl + pl + b(Heamo - 2) + b(Heato - 2) + b(Haimo - 2) + b(Haito - 2) + b(Ponmo - 2) + b(Ponto - 2) + b(Musmo - 2) + b(Musto - 2) + b(Beamo - 2) + b(Beato - 2) + b(Eyemo - 2) + b(Eyeto - 2) + b(Bodmo - 2) + b(Bodto - 2) + b(Hanmo - 2) + b(Hanto - 2) + b(Feemo - 2) + b(Feeto - 2) + b(Bacmo - 2) + b(Bacto - 2) + b(Shomo - 2) + b(Shoto - 2) + b(Vanmo - 2) + b(Vanto - 2)
+
 #End Region
+
 #Region "Build Sections"
+
         Dim gl = b.Locate(Encoding.ASCII.GetBytes("GWAM"))
         Dim tr = New List(Of Integer)
         Dim io = 84 + cl + sl
@@ -233,7 +253,9 @@ Friend Module Functions
             If Not itemN.Length = 0 Then inv.Add(itemN)
             io += b(io - 2) + 2
         Next
+
 #End Region
+
         Dim il = inv.Sum(Function(x) x.Length + 2)
         Return New GCREc() With {
             .Special = New Integer() {b(12), b(16), b(20), b(24), b(28), b(32), b(36)},
@@ -259,8 +281,30 @@ Friend Module Functions
             }
     End Function
 
+    <Extension>
+    Public Function To2MWTc(b As Byte()) As _2MWTc
+        Dim mpf = Encoding.ASCII.GetString(b, 14, b(12))
+        Dim cl = New List(Of _2MWTChunk)
+        Dim io = 158 + mpf.Length
+        For i = 1 To BitConverter.ToInt32(b, 154 + mpf.Length)
+            Dim p3 = New Point3(BitConverter.ToSingle(b, io), BitConverter.ToSingle(b, io + 4), BitConverter.ToSingle(b, io + 8))
+            Dim s = Encoding.ASCII.GetString(b, io + 14, b(io + 12))
+            Dim pf = New Point2(BitConverter.ToSingle(b, io + 14 + s.Length), BitConverter.ToSingle(b, io + 18 + s.Length))
+            cl.Add(New _2MWTChunk(s, p3, pf))
+            io += s.Length + 22
+        Next
+        File.WriteAlltext("text", mpf)
+        File.WriteAllText("idk", cl.Count)
+        Dim tmp As New _2MWTc
+        tmp.mpf = mpf
+        tmp.chunks = cl
+        Return tmp
+    End Function
+
 #End Region
+
 #Region "Class to byte array"
+
     ' Functions that read from internal classes and rebuild chunks that F3 can read
     <Extension>
     Public Function ToEMAPb(c As EMAPc) As Byte()
@@ -282,6 +326,7 @@ Friend Module Functions
         out.OverwriteBytes(32 + c.s1.Length + c.s2.Length + c.s3.Length, New Byte() {1})
         Return out
     End Function
+
     ' convert EMEP to a byte array
     <Extension>
     Public Function ToEMEPb(c As EMEPc) As Byte()
@@ -295,6 +340,7 @@ Friend Module Functions
         out.OverwriteBytes(105, BitConverter.GetBytes(c.p.r))
         Return out
     End Function
+
     ' convert ECAM to a byte array
     <Extension>
     Public Function ToECAMb(c As ECAMc) As Byte()
@@ -307,6 +353,7 @@ Friend Module Functions
         out.OverwriteBytes(24, BitConverter.GetBytes(c.p.r))
         Return out
     End Function
+
     ' convert EPTH to a byte array
     <Extension>
     Public Function ToEPTHb(c As EPTHc) As Byte()
@@ -326,6 +373,7 @@ Friend Module Functions
         Next
         Return out
     End Function
+
     ' convert EMTR to a byte array
     <Extension>
     Public Function ToEMTRb(c As EMTRc) As Byte()
@@ -343,6 +391,7 @@ Friend Module Functions
         Next
         Return out
     End Function
+
     ' convert ExTR to a byte array
     <Extension>
     Public Function ToExTRb(c As ExTRc) As Byte()
@@ -373,6 +422,7 @@ Friend Module Functions
                 Return Array.Empty(Of Byte)
         End Select
     End Function
+
     ' convert EMSD to a byte array
     <Extension>
     Public Function ToEMSDb(c As EMSDc) As Byte()
@@ -389,6 +439,7 @@ Friend Module Functions
         out.OverwriteBytes(28 + c.s1.Length + c.s2.Length, New Byte() {1, 1})
         Return out
     End Function
+
     ' convert EMEF to a byte array
     <Extension>
     Public Function ToEMEFb(c As EMEFc) As Byte()
@@ -407,6 +458,7 @@ Friend Module Functions
         out.OverwriteBytes(41 + c.s1.Length + c.s2.Length, New Byte() {1})
         Return out
     End Function
+
     ' convert EME2 to a byte array
     <Extension>
     Public Function ToEME2b(c As EME2c) As Byte()
@@ -424,6 +476,7 @@ Friend Module Functions
         out.OverwriteBytes(39 + c.name.Length, EEOV)
         Return out
     End Function
+
     ' convert EEOV to a byte array
     <Extension>
     Public Function ToEEOVb(c As EEOVc) As Byte()
@@ -454,6 +507,7 @@ Friend Module Functions
         Next
         Return out
     End Function
+
     ' convert Trigger to a byte array
     <Extension>
     Public Function ToTriggerB(c As Trigger) As Byte()
@@ -462,6 +516,7 @@ Friend Module Functions
         b.AddRange(c.ExTR.ToExTRb())
         Return b.ToArray()
     End Function
+
     ' Convert GCHR to a byte array
     <Extension>
     Public Function ToGCHRb(c As GCHRc) As Byte()
@@ -472,6 +527,7 @@ Friend Module Functions
         out.OverwriteBytes(14, Encoding.ASCII.GetBytes(c.name))
         Return out
     End Function
+
     ' Convert EEN2 to a byte array
     <Extension>
     Public Function ToEEN2b(c As EEN2c) As Byte()
@@ -489,6 +545,7 @@ Friend Module Functions
         out.OverwriteBytes(23 + c.skl.Length + c.invtex.Length + c.acttex.Length, EEOV)
         Return out
     End Function
+
     ' Convert GENT to a byte array
     <Extension>
     Public Function ToGENTb(c As GENTc) As Byte()
@@ -504,6 +561,7 @@ Friend Module Functions
         out.OverwriteBytes(40, BitConverter.GetBytes(c.StartHealth))
         Return out
     End Function
+
     ' Convert GWAM to a byte array
     <Extension>
     Public Function ToGWAMb(c As GWAMc) As Byte()
@@ -523,6 +581,7 @@ Friend Module Functions
         out.OverwriteBytes(out.Length - 2, New Byte() {1})
         Return out
     End Function
+
     ' Convert GCRE to a byte array
     <Extension>
     Public Function ToGCREb(c As GCREc) As Byte()
@@ -543,7 +602,9 @@ Friend Module Functions
             inv.AddRange(New Byte() {i.Length, 0})
             inv.AddRange(Encoding.ASCII.GetBytes(i))
         Next
+
 #Region "Dynamic Lengths"
+
         Dim sl = c.Skills.Count * 8 ' Skills length
         Dim tl = c.Traits.Count * 4 ' Traits length
         Dim tsl = c.TagSkills.Count * 4 ' Tag Skills length
@@ -551,7 +612,9 @@ Friend Module Functions
         Dim socl = c.Hea.Model.Length + c.Hea.Tex.Length + c.Hai.Tex.Length + c.Hai.Model.Length + c.Pon.Tex.Length + c.Pon.Model.Length + c.Mus.Tex.Length + c.Mus.Model.Length + c.Bea.Tex.Length + c.Bea.Model.Length + c.Eye.Tex.Length + c.Eye.Model.Length + c.Bod.Tex.Length + c.Bod.Model.Length + c.Han.Tex.Length + c.Han.Model.Length + c.Fee.Tex.Length + c.Fee.Model.Length + c.Bac.Tex.Length + c.Bac.Model.Length + c.Sho.Tex.Length + c.Sho.Model.Length + c.Van.Tex.Length + c.Van.Model.Length
         ' TDL = Total Dynamic Length
         Dim TDL = sl + tl + tsl + il + GWAM.Count + c.PortStr.Length + socl
+
 #End Region
+
         Dim out = New Byte(276 + TDL) {}
         out.OverwriteBytes(0, Encoding.ASCII.GetBytes("GCRE"))
         out.OverwriteBytes(4, New Byte() {4})
@@ -586,8 +649,47 @@ Friend Module Functions
         out.OverwriteBytes(277 + sl + tl + tsl + c.PortStr.Length + socl + il, GWAM.ToArray())
         Return out
     End Function
+
+    <Extension>
+    Public Function To2MWTb(c As _2MWTc) As Byte()
+        Dim unknown As Byte() = ' unresearched static data between chunk size and water chunk count
+                {&H9, &H0, &HFF, &HFF, &HFF, &HFF, &H0, &H0, &H20, &H41, &HCD, &HCC, &HCC, &H3D, &H0, &H1, &H0,
+                 &H1, &HCD, &HCC, &HCC, &H3C, &H1, &H0, &H0, &H0, &H0, &H0, &H0, &H0, &H0, &H0, &H0, &H0,
+                 &H0, &H0, &H80, &H3F, &H0, &H0, &H0, &H0, &H0, &H0, &H80, &H3F, &HCD, &HCC, &HCC, &H3D, &HCD,
+                 &HCC, &H4C, &H3E, &H0, &H0, &H80, &H3F, &H0, &H0, &H0, &H40, &HCD, &HCC, &HCC, &H3D, &H0, &H0,
+                 &H0, &H0, &HCD, &HCC, &HCC, &H3D, &H0, &H0, &H0, &H0, &H0, &H0, &H80, &H3F, &H0, &H0, &H0,
+                 &H0, &H0, &H0, &H80, &H3F, &H0, &H0, &H0, &H0, &HCD, &HCC, &HCC, &H3D, &HCD, &HCC, &HCC, &H3D,
+                 &HCD, &HCC, &HCC, &H3D, &H0, &H0, &H80, &H3F, &HCD, &HCC, &H4C, &H3E, &HCD, &HCC, &H4C, &H3E, &H0,
+                 &H0, &HB4, &H43, &H0, &H0, &HB4, &H43, &HCD, &HCC, &HCC, &H3D, &H0, &H0, &H80, &H3F, &H0, &H0,
+                 &H80, &H3F}
+        Dim sl = c.chunks.Sum(Function(x) x.tex.Length) + c.mpf.Length ' length of strings
+        Dim wl = c.chunks.Count * 22 ' added length for each water chunk
+
+        Dim out = New Byte(157 + sl + wl) {}
+        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("2MWT"))
+        out.OverwriteBytes(8, BitConverter.GetBytes(158 + sl + wl))
+        out.OverwriteBytes(12, New Byte() {c.mpf.Length})
+        out.OverwriteBytes(14, Encoding.ASCII.GetBytes(c.mpf))
+        out.OverwriteBytes(14 + c.mpf.Length, unknown)
+        out.OverwriteBytes(154 + c.mpf.Length, New Byte() {c.chunks.Count})
+        Dim io = 158 + c.mpf.Length
+        For Each w In c.chunks
+            out.OverwriteBytes(io, BitConverter.GetBytes(w.loc.x))
+            out.OverwriteBytes(io + 4, BitConverter.GetBytes(w.loc.z))
+            out.OverwriteBytes(io + 8, BitConverter.GetBytes(w.loc.y))
+            out.OverwriteBytes(io + 12, New Byte() {w.tex.Length})
+            out.OverwriteBytes(io + 14, Encoding.ASCII.GetBytes(w.tex))
+            out.OverwriteBytes(io + 14 + w.tex.Length, BitConverter.GetBytes(w.texloc.X))
+            out.OverwriteBytes(io + 18 + w.tex.Length, BitConverter.GetBytes(w.texloc.y))
+            io += 22 + w.tex.Length
+        Next
+        Return out
+    End Function
+
 #End Region
+
 #Region ".stf Stuff"
+
     Public Function STFToTXT(b As Byte()) As List(Of String)
         b.PreParse()
         Dim s As New List(Of String)
@@ -600,6 +702,7 @@ Friend Module Functions
         Next
         Return s
     End Function
+
     Public Function TXTToSTF(s As String()) As Byte()
         Dim b As New List(Of Byte)
         b.AddRange(New Byte() {3, 0, 0, 0, 1, 0, 0, 0})
@@ -614,7 +717,6 @@ Friend Module Functions
         b.AddRange(s.ToFixedBytes())
         Return b.ToArray()
     End Function
-
 
     ' Replace CrLf with "|~" and replace "–" with "-"
     <Extension>
@@ -633,6 +735,7 @@ Friend Module Functions
             End If
         Next
     End Sub
+
     ' Turn the string array into the chunk of bytes, replacing "|~" with CrLf
     <Extension>
     Public Function ToFixedBytes(ByRef s As String()) As Byte()
@@ -649,9 +752,12 @@ Friend Module Functions
     End Function
 
 #End Region
+
 #Region "Byte array search"
+
     ' Code for finding location of given byte array within another
     Private ReadOnly Empty(-1) As Integer
+
     <Extension>
     Public Function Locate(ByVal self() As Byte, ByVal candidate() As Byte) As Integer()
         If IsEmptyLocate(self, candidate) Then
@@ -669,6 +775,7 @@ Friend Module Functions
         Loop
         Return If(list.Count = 0, Empty, list.ToArray())
     End Function
+
     Private Function IsMatch(ByVal array() As Byte, ByVal position As Integer, ByVal candidate() As Byte) As Boolean
         If candidate.Length > (array.Length - position) Then
             Return False
@@ -680,50 +787,45 @@ Friend Module Functions
         Next i
         Return True
     End Function
+
     Private Function IsEmptyLocate(ByVal array() As Byte, ByVal candidate() As Byte) As Boolean
         Return array Is Nothing OrElse candidate Is Nothing OrElse array.Length = 0 OrElse candidate.Length = 0 OrElse candidate.Length > array.Length
     End Function
+
 #End Region
+
     ' Finds all locations of a given header, reads size, copies that section into byte array, puts array in list.
     <Extension>
     Public Function GetRegions(f As String, hs As String) As List(Of Byte())
-        Dim hl As New List(Of Byte())
         Dim file = IO.File.ReadAllBytes(f)
         Dim hn = Encoding.ASCII.GetBytes(hs)
         Dim hc = file.Locate(hn)
-        For Each l In hc
-            Dim tb = file.Skip(l + 8).Take(4).ToArray()
-            Dim tl = BitConverter.ToInt32(tb, 0)
-            Dim h1 = file.Skip(l).Take(tl).ToArray()
-            hl.Add(h1)
-        Next
-        Return hl
+        Return _
+            (From l In hc Let tl = BitConverter.ToInt32(file, l + 8)
+             Select file.Skip(l).Take(tl).ToArray()).ToList()
     End Function
+
     ' Finds all triggers for .map files, and the subsequent trigger info chunk
     <Extension>
     Public Function GetTriggers(f As String) As List(Of Trigger)
-        Dim hl As New List(Of Trigger)
         Dim file = IO.File.ReadAllBytes(f)
         Dim hc = file.Locate(Encoding.ASCII.GetBytes("EMTR"))
-        For Each l In hc
-            Dim tb = file.Skip(l + 8).Take(4).ToArray()
-            Dim tl = BitConverter.ToInt32(tb, 0)
-            Dim h1 = file.Skip(l).Take(tl).ToArray()
-            Dim h2 = file.Skip(l + tl).Take(file(l + tl + 8)).ToArray
-            hl.Add(New Trigger With {.EMTR = h1.ToEMTRc, .ExTR = h2.ToExTRc})
-        Next
-        Return hl
+        Return _
+            (From l In hc Let tl = BitConverter.ToInt32(file, l + 8) Let h1 = file.Skip(l).Take(tl).ToArray()
+             Let h2 = file.Skip(l + tl).Take(file(l + tl + 8)).ToArray
+             Select New Trigger With {.EMTR = h1.ToEMTRc, .ExTR = h2.ToExTRc}).ToList()
     End Function
+
     ' Writes from "newBytes" into "b", starting at the given index
     <Extension>
     Public Sub OverwriteBytes(ByRef b As Byte(), startIndex As Integer, newBytes As Byte())
-        For i = startIndex To startIndex + newBytes.Length - 1
-            b(i) = newBytes(i - startIndex)
-        Next
+        Buffer.BlockCopy(newBytes, 0, b, startIndex, newBytes.Length)
     End Sub
+
     ' Convert DataGridView Rows to string array using LINQ
     <Extension>
     Public Function ToStringArray(r As DataGridViewRowCollection) As String()
         Return (From row As DataGridViewRow In r Where TypeOf row.Cells.Item(0).Value Is String Select row.Cells.Item(0).Value).Cast(Of String)().ToArray()
     End Function
+
 End Module

@@ -5,9 +5,13 @@ Public Class Map
     Property EME2 As List(Of EME2c)
     Property EMEP As List(Of EMEPc)
     Property ECAM As ECAMc
+    ' First Possible 2MWT
+    Property _2MWT As _2MWTc
     Property Triggers As List(Of Trigger)
     Property EPTH As List(Of EPTHc)
     Property EMSD As List(Of EMSDc)
+    ' Last Possible 2MWT
+    ' EMNP
     Property EMEF As List(Of EMEFc)
     Sub New()
         EMAP = New EMAPc()
@@ -18,6 +22,7 @@ Public Class Map
         EPTH = New List(Of EPTHc)
         Triggers = New List(Of Trigger)
         ECAM = Nothing
+        _2MWT = New _2MWTc()
     End Sub
 End Class
 Public Class CRT
@@ -253,8 +258,24 @@ Public Class GCHRc
         name = ""
     End Sub
 End Class
+Public Class _2MWTc
+    Property mpf as String
+    Property chunks As List(Of _2MWTChunk)
+    Sub New()
+        mpf = ""
+        chunks = new List(Of _2MWTChunk)
+    End Sub
+End Class
 #End Region
 #Region "Other Classes"
+Public Class Point2
+    Property x As Single
+    Property y As Single
+    Sub New(x As Single, y As Single)
+        Me.x = x
+        Me.y = y
+    End Sub
+End Class
 Public Class Point3
     Property x As Single
     Property z As Single
@@ -291,6 +312,16 @@ Public Class Socket
     Sub New(Model As String, Tex As String)
         Me.Model = Model
         Me.Tex = Tex
+    End Sub
+End Class
+Public Class _2MWTChunk
+    Property tex As String
+    Property loc As point3
+    Property texloc as Point2
+    Sub New(tex As String, loc As point3, texloc As Point2)
+        Me.tex = tex
+        Me.loc = loc
+        Me.texloc = texloc
     End Sub
 End Class
 #End Region

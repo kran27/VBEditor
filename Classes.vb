@@ -29,7 +29,7 @@ Public Class Map
         EPTH = New List(Of EPTHc)
         Triggers = New List(Of Trigger)
         ECAM = Nothing
-        _2MWT = New _2MWTc()
+        _2MWT = Nothing
     End Sub
 
 End Class

@@ -300,7 +300,15 @@ Public Class UI
             Next
             EMEFcb.Enabled = True : EMEFp.Enabled = True
         End If
-        If cf._2MWT IsNot Nothing Then _2MWTToUI()
+        If (cf._2MWT is nothing) OrElse Not cf._2MWT.chunks.Any()  Then
+            For Each c As Control In _2MWTgb.Controls
+                c.Enabled = False
+            Next
+            _2MWTcb.Enabled = True
+            _2MWTp.Enabled = True
+        Else
+            _2MWTToUI()
+        End If
     End Sub
 
     Private Sub CRTSetupUI(ByRef cf As CRT) ' Only way I found to bypass the issue of functions like .Any() not being found
@@ -343,19 +351,27 @@ Public Class UI
     End Sub
 
     Private Sub _2MWTToUI(ByRef cf As Map)
-        _2MWTmpf.Text = cf._2MWT.mpf
-        _2MWTfr.Checked = cf._2MWT.frozen
-        _2MWTdw.Checked = cf._2MWT.dark
-        For i = 1 To cf._2MWT.chunks.Count
-            _2MWTcb.Items.Add(i)
-        Next
-        _2MWTcb.SelectedIndex = 0
-        _2MWTx.Text = cf._2MWT.chunks(0).loc.x
-        _2MWTy.Text = cf._2MWT.chunks(0).loc.y
-        _2MWTz.Text = cf._2MWT.chunks(0).loc.z
-        _2MWTlmx.Text = cf._2MWT.chunks(0).texloc.x
-        _2MWTlmy.Text = cf._2MWT.chunks(0).texloc.y
-        _2MWTtex.Text = cf._2MWT.chunks(0).tex.Substring(0, cf._2MWT.chunks(0).tex.LastIndexOf("."))
+        If cf._2MWT.chunks.Count = 0 Then
+            For Each c As Control In _2MWTgb.Controls
+                c.Enabled = False
+            Next
+            _2MWTcb.Enabled = True
+            _2MWTp.Enabled = True
+        Else
+            _2MWTmpf.Text = cf._2MWT.mpf
+            _2MWTfr.Checked = cf._2MWT.frozen
+            _2MWTdw.Checked = cf._2MWT.dark
+            For i = 1 To cf._2MWT.chunks.Count
+                _2MWTcb.Items.Add(i)
+            Next
+            _2MWTcb.SelectedIndex = 0
+            _2MWTx.Text = cf._2MWT.chunks(0).loc.x
+            _2MWTy.Text = cf._2MWT.chunks(0).loc.y
+            _2MWTz.Text = cf._2MWT.chunks(0).loc.z
+            _2MWTlmx.Text = cf._2MWT.chunks(0).texloc.x
+            _2MWTlmy.Text = cf._2MWT.chunks(0).texloc.y
+            Try :  cf._2MWT.chunks(0).tex.Substring(0, cf._2MWT.chunks(0).tex.LastIndexOf(".")) : Catch : _2MWTtex.Text = "" : End Try
+        End If
     End Sub
 
     Private Sub EMAPToUI()
@@ -1165,13 +1181,15 @@ Public Class UI
                 EME2r.KeyPress, EPTHx.KeyPress, EPTHy.KeyPress, EPTHz.KeyPress, EPTHr.KeyPress, Triggerx.KeyPress,
                 Triggery.KeyPress, Triggerz.KeyPress, _2MWTx.KeyPress, _2MWTy.KeyPress, _2MWTz.KeyPress,
                 _2MWTlmx.KeyPress, _2MWTlmy.KeyPress
-        ' This code inserts the pressed character into the existing text (unless it's a backspace), and adds a 0 either at the start, or after "-", if present.
-        ' By doing this, it allows any number to be typed, but only if it's valid, while still allowing you to start with a "-" sign
-        ' It's done this way so everything here happens before the text is updated, and if it's not a valid number, the text is never written.
-        If Not Char.IsControl(e.KeyChar) Then
-            If Not Single.TryParse((0 & sender.Text.Insert(sender.SelectionStart, e.KeyChar)).Replace("0-", "-0"), 0F) Then
-                e.Handled = True
+        If (Char.IsDigit(e.KeyChar) Or e.KeyChar = "." Or e.KeyChar = "-" Or e.KeyChar = Chr(8)) Then
+            Dim text As String = sender.Text
+            If (e.KeyChar = ".") Then
+                If text.IndexOf(".") > -1 Then e.Handled = True
+            ElseIf (e.KeyChar = "-") Then
+                If text.IndexOf("-") > -1 or sender.SelectionStart <> 0 Then e.Handled = True
             End If
+        Else
+            e.Handled = True
         End If
     End Sub
 
@@ -1415,6 +1433,7 @@ Public Class UI
     End Sub
 
     Private Sub _2MWTp_Click(sender As Object, e As EventArgs) Handles _2MWTp.Click
+        If cf._2MWT Is Nothing Then cf._2MWT = New _2MWTc
         For Each c As Control In _2MWTgb.Controls
             c.Enabled = True
         Next
@@ -1425,8 +1444,9 @@ Public Class UI
 
     Private Sub _2MWTm_Click(sender As Object, e As EventArgs) Handles _2MWTm.Click
         Dim i = _2MWTcb.SelectedIndex
-        If cf._2MWT.chunks.Count = 1 Then
-            cf.EMSD = New List(Of EMSDc)
+        dim co As Integer = cf._2MWT.chunks.Count
+        If co = 1 Then
+            cf._2MWT.chunks = New List(Of _2MWTChunk)
             MapSetupUI(cf)
             For Each c As Control In _2MWTgb.Controls
                 c.Enabled = False

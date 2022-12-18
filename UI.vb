@@ -147,26 +147,26 @@ Public Class UI
                 Case ".con"
                 Case ".crt"
                     Dim cf As CRT = Me.cf
-                    b.AddRange(cf.EEN2.ToEEN2b)
-                    b.AddRange(cf.GENT.ToGENTb)
-                    b.AddRange(cf.GCRE.ToGCREb)
-                    If GCHRn.Text <> "" Then b.AddRange(cf.GCHR.ToGCHRb)
+                    b.AddRange(cf.EEN2.ToByte)
+                    b.AddRange(cf.GENT.ToByte)
+                    b.AddRange(cf.GCRE.ToByte)
+                    If GCHRn.Text <> "" Then b.AddRange(cf.GCHR.ToByte)
                     If My.Settings.STFEditEnabled Then File.WriteAllBytes(My.Settings.STFDir, TXTToSTF(stf.ToArray()))
                 Case ".dor"
                 Case ".int"
                 Case ".itm"
                 Case ".map"
                     Dim cf As Map = Me.cf
-                    b.AddRange(cf.EMAP.ToEMAPb)
-                    b.AddRange(cf.EME2.SelectMany(Function(x) x.ToEME2b()))
-                    b.AddRange(cf.EMEP.SelectMany(Function(x) x.ToEMEPb()))
-                    If cf.ECAM IsNot Nothing Then b.AddRange(cf.ECAM.ToECAMb())
-                    If _2MWTcb.Items.Count > 0 Then b.AddRange(cf._2MWT.To2MWTb())
-                    b.AddRange(cf.Triggers.SelectMany(Function(x) x.ToTriggerB()))
-                    b.AddRange(cf.EPTH.SelectMany(Function(x) x.ToEPTHb()))
-                    b.AddRange(cf.EMSD.SelectMany(Function(x) x.ToEMSDb()))
+                    b.AddRange(cf.EMAP.ToByte)
+                    b.AddRange(cf.EME2.SelectMany(Function(x) x.ToByte()))
+                    b.AddRange(cf.EMEP.SelectMany(Function(x) x.ToByte()))
+                    If cf.ECAM IsNot Nothing Then b.AddRange(cf.ECAM.ToByte())
+                    If _2MWTcb.Items.Count > 0 Then b.AddRange(cf._2MWT.ToByte())
+                    b.AddRange(cf.Triggers.SelectMany(Function(x) x.ToByte()))
+                    b.AddRange(cf.EPTH.SelectMany(Function(x) x.ToByte()))
+                    b.AddRange(cf.EMSD.SelectMany(Function(x) x.ToByte()))
                     b.AddRange(New Byte() {&H45, &H4D, &H4E, &H50, &H0, &H0, &H0, &H0, &H10, &H0, &H0, &H0, &H0, &H0, &H0, &H0}) ' EMNP Chunk
-                    b.AddRange(cf.EMEF.SelectMany(Function(x) x.ToEMEFb()))
+                    b.AddRange(cf.EMEF.SelectMany(Function(x) x.ToByte()))
                 Case ".use"
                 Case ".wea"
             End Select
@@ -182,7 +182,7 @@ Public Class UI
                     en = c3.Enabled
                     c3.Enabled = False
                     If TypeOf c3 Is DarkTextBox Then
-                        c3.Text = ""
+                        Try : c3.Text = "" : Catch : MsgBox(c3.Name) : End Try
                     ElseIf TypeOf c3 Is DarkNumericUpDown Then
                         Try : c3.Value = c3.Minimum : Catch : End Try
                     ElseIf TypeOf c3 Is DarkComboBox AndAlso Not DontWipe.Contains(c3.Name) Then
@@ -586,23 +586,31 @@ Public Class UI
     End Sub
 
     Private Sub ECAMx_TextChanged(sender As Object, e As EventArgs) Handles ECAMx.TextChanged
-        If cf.ECAM Is Nothing Then cf.ECAM = New ECAMc()
-        If sender.Enabled Then cf.ECAM.p.x = (0 & ECAMx.Text).Replace("0-", "-0")
+        If sender.Enabled Then
+            If cf.ECAM Is Nothing Then cf.ECAM = New ECAMc()
+            cf.ECAM.p.x = (0 & ECAMx.Text).Replace("0-", "-0")
+        End If
     End Sub
 
     Private Sub ECAMy_TextChanged(sender As Object, e As EventArgs) Handles ECAMy.TextChanged
-        If cf.ECAM Is Nothing Then cf.ECAM = New ECAMc()
-        If sender.Enabled Then cf.ECAM.p.y = (0 & ECAMy.Text).Replace("0-", "-0")
+        If sender.Enabled Then
+            If cf.ECAM Is Nothing Then cf.ECAM = New ECAMc()
+            cf.ECAM.p.y = (0 & ECAMy.Text).Replace("0-", "-0")
+        End If
     End Sub
 
     Private Sub ECAMz_TextChanged(sender As Object, e As EventArgs) Handles ECAMz.TextChanged
-        If cf.ECAM Is Nothing Then cf.ECAM = New ECAMc()
-        If sender.Enabled Then cf.ECAM.p.z = (0 & ECAMz.Text).Replace("0-", "-0")
+        If sender.Enabled Then
+            If cf.ECAM Is Nothing Then cf.ECAM = New ECAMc()
+            cf.ECAM.p.z = (0 & ECAMz.Text).Replace("0-", "-0")
+        End If
     End Sub
 
     Private Sub ECAMr_TextChanged(sender As Object, e As EventArgs) Handles ECAMr.TextChanged
-        If cf.ECAM Is Nothing Then cf.ECAM = New ECAMc()
-        If sender.Enabled Then cf.ECAM.p.r = (0 & ECAMr.Text).Replace("0-", "-0")
+        If sender.Enabled Then
+            If cf.ECAM Is Nothing Then cf.ECAM = New ECAMc()
+            cf.ECAM.p.r = (0 & ECAMr.Text).Replace("0-", "-0")
+        End If
     End Sub
 
     Private Sub EMEFs1_TextChanged(sender As Object, e As EventArgs) Handles EMEFs1.TextChanged

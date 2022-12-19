@@ -410,7 +410,7 @@ Public Class UI
         EMEPx.Text = cf.EMEP(EMEPcb.SelectedIndex).p.x
         EMEPy.Text = cf.EMEP(EMEPcb.SelectedIndex).p.y
         EMEPz.Text = cf.EMEP(EMEPcb.SelectedIndex).p.z
-        EMEPr.Text = cf.EMEP(EMEPcb.SelectedIndex).p.r
+        EMEPr.Text = cf.EMEP(EMEPcb.SelectedIndex).r
     End Sub
 
     Private Sub ECAMToUI()
@@ -604,28 +604,28 @@ Public Class UI
     Private Sub ECAMx_TextChanged(sender As Object, e As EventArgs) Handles ECAMx.TextChanged
         If sender.Enabled Then
             If cf.ECAM Is Nothing Then cf.ECAM = New ECAMc()
-            cf.ECAM.p.x = (0 & ECAMx.Text).Replace("0-", "-0")
+            cf.ECAM.p.x = (0 & ECAMx.Text)
         End If
     End Sub
 
     Private Sub ECAMy_TextChanged(sender As Object, e As EventArgs) Handles ECAMy.TextChanged
         If sender.Enabled Then
             If cf.ECAM Is Nothing Then cf.ECAM = New ECAMc()
-            cf.ECAM.p.y = (0 & ECAMy.Text).Replace("0-", "-0")
+            cf.ECAM.p.y = (0 & ECAMy.Text)
         End If
     End Sub
 
     Private Sub ECAMz_TextChanged(sender As Object, e As EventArgs) Handles ECAMz.TextChanged
         If sender.Enabled Then
             If cf.ECAM Is Nothing Then cf.ECAM = New ECAMc()
-            cf.ECAM.p.z = (0 & ECAMz.Text).Replace("0-", "-0")
+            cf.ECAM.p.z = (0 & ECAMz.Text)
         End If
     End Sub
 
     Private Sub ECAMr_TextChanged(sender As Object, e As EventArgs) Handles ECAMr.TextChanged
         If sender.Enabled Then
             If cf.ECAM Is Nothing Then cf.ECAM = New ECAMc()
-            cf.ECAM.p.r = (0 & ECAMr.Text).Replace("0-", "-0")
+            cf.ECAM.p.r = (0 & ECAMr.Text)
         End If
     End Sub
 
@@ -638,19 +638,19 @@ Public Class UI
     End Sub
 
     Private Sub EMEFx_TextChanged(sender As Object, e As EventArgs) Handles EMEFx.TextChanged
-        If sender.Enabled Then cf.EMEF(EMEFcb.SelectedIndex).l.x = (0 & EMEFx.Text).Replace("0-", "-0")
+        If sender.Enabled Then cf.EMEF(EMEFcb.SelectedIndex).l.x = (0 & EMEFx.Text)
     End Sub
 
     Private Sub EMEFy_TextChanged(sender As Object, e As EventArgs) Handles EMEFy.TextChanged
-        If sender.Enabled Then cf.EMEF(EMEFcb.SelectedIndex).l.y = (0 & EMEFy.Text).Replace("0-", "-0")
+        If sender.Enabled Then cf.EMEF(EMEFcb.SelectedIndex).l.y = (0 & EMEFy.Text)
     End Sub
 
     Private Sub EMEFz_TextChanged(sender As Object, e As EventArgs) Handles EMEFz.TextChanged
-        If sender.Enabled Then cf.EMEF(EMEFcb.SelectedIndex).l.z = (0 & EMEFz.Text).Replace("0-", "-0")
+        If sender.Enabled Then cf.EMEF(EMEFcb.SelectedIndex).l.z = (0 & EMEFz.Text)
     End Sub
 
     Private Sub EMEFr_TextChanged(sender As Object, e As EventArgs) Handles EMEFr.TextChanged
-        If sender.Enabled Then cf.EMEF(EMEFcb.SelectedIndex).l.r = (0 & EMEFr.Text).Replace("0-", "-0")
+        If sender.Enabled Then cf.EMEF(EMEFcb.SelectedIndex).l.r = (0 & EMEFr.Text)
     End Sub
 
     Private Sub EMEPnud_ValueChanged(sender As Object, e As EventArgs) Handles EMEPnud.ValueChanged
@@ -658,23 +658,23 @@ Public Class UI
     End Sub
 
     Private Sub EMEPx_TextChanged(sender As Object, e As EventArgs) Handles EMEPx.TextChanged
-        If sender.Enabled Then cf.EMEP(EMEPcb.SelectedIndex).p.x = (0 & EMEPx.Text).Replace("0-", "-0")
+        If sender.Enabled Then cf.EMEP(EMEPcb.SelectedIndex).p.x = (0 & EMEPx.Text)
     End Sub
 
     Private Sub EMEPy_TextChanged(sender As Object, e As EventArgs) Handles EMEPy.TextChanged
-        If sender.Enabled Then cf.EMEP(EMEPcb.SelectedIndex).p.y = (0 & EMEPy.Text).Replace("0-", "-0")
+        If sender.Enabled Then cf.EMEP(EMEPcb.SelectedIndex).p.y = (0 & EMEPy.Text)
     End Sub
 
     Private Sub EMEPz_TextChanged(sender As Object, e As EventArgs) Handles EMEPz.TextChanged
-        If sender.Enabled Then cf.EMEP(EMEPcb.SelectedIndex).p.z = (0 & EMEPz.Text).Replace("0-", "-0")
+        If sender.Enabled Then cf.EMEP(EMEPcb.SelectedIndex).p.z = (0 & EMEPz.Text)
     End Sub
 
     Private Sub EMEPr_TextChanged(sender As Object, e As EventArgs) Handles EMEPr.TextChanged
-        If sender.Enabled Then cf.EMEP(EMEPcb.SelectedIndex).p.r = (0 & EMEPr.Text).Replace("0-", "-0")
+        If sender.Enabled Then cf.EMEP(EMEPcb.SelectedIndex).r = (0 & EMEPr.Text)
     End Sub
 
     Private Sub EME2dgv_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles EME2dgv.CellEndEdit
-        If sender.Enabled Then cf.EME2(EME2cb.SelectedIndex).EEOV.inv = EME2dgv.Rows.ToStringArray()
+        If sender.Enabled Then cf.EME2(EME2cb.SelectedIndex).EEOV.inv = EME2dgv.GetStringArray()
     End Sub
 
     Private Sub EME2n_TextChanged(sender As Object, e As EventArgs) Handles EME2n.TextChanged
@@ -702,19 +702,19 @@ Public Class UI
     End Sub
 
     Private Sub EME2x_TextChanged(sender As Object, e As EventArgs) Handles EME2x.TextChanged
-        If sender.Enabled Then cf.EME2(EME2cb.SelectedIndex).l.x = (0 & EME2x.Text).Replace("0-", "-0")
+        If sender.Enabled Then cf.EME2(EME2cb.SelectedIndex).l.x = (0 & EME2x.Text)
     End Sub
 
     Private Sub EME2y_TextChanged(sender As Object, e As EventArgs) Handles EME2y.TextChanged
-        If sender.Enabled Then cf.EME2(EME2cb.SelectedIndex).l.y = (0 & EME2y.Text).Replace("0-", "-0")
+        If sender.Enabled Then cf.EME2(EME2cb.SelectedIndex).l.y = (0 & EME2y.Text)
     End Sub
 
     Private Sub EME2z_TextChanged(sender As Object, e As EventArgs) Handles EME2z.TextChanged
-        If sender.Enabled Then cf.EME2(EME2cb.SelectedIndex).l.z = (0 & EME2z.Text).Replace("0-", "-0")
+        If sender.Enabled Then cf.EME2(EME2cb.SelectedIndex).l.z = (0 & EME2z.Text)
     End Sub
 
     Private Sub EME2r_TextChanged(sender As Object, e As EventArgs) Handles EME2r.TextChanged
-        If sender.Enabled Then cf.EME2(EME2cb.SelectedIndex).l.r = (0 & EME2r.Text).Replace("0-", "-0")
+        If sender.Enabled Then cf.EME2(EME2cb.SelectedIndex).l.r = (0 & EME2r.Text)
     End Sub
 
     Private Sub EMSDs1_TextChanged(sender As Object, e As EventArgs) Handles EMSDs1.TextChanged
@@ -726,15 +726,15 @@ Public Class UI
     End Sub
 
     Private Sub EMSDx_TextChanged(sender As Object, e As EventArgs) Handles EMSDx.TextChanged
-        If sender.Enabled Then cf.EMSD(EMSDcb.SelectedIndex).l.x = (0 & EMSDx.Text).Replace("0-", "-0")
+        If sender.Enabled Then cf.EMSD(EMSDcb.SelectedIndex).l.x = (0 & EMSDx.Text)
     End Sub
 
     Private Sub EMSDy_TextChanged(sender As Object, e As EventArgs) Handles EMSDy.TextChanged
-        If sender.Enabled Then cf.EMSD(EMSDcb.SelectedIndex).l.y = (0 & EMSDy.Text).Replace("0-", "-0")
+        If sender.Enabled Then cf.EMSD(EMSDcb.SelectedIndex).l.y = (0 & EMSDy.Text)
     End Sub
 
     Private Sub EMSDz_TextChanged(sender As Object, e As EventArgs) Handles EMSDz.TextChanged
-        If sender.Enabled Then cf.EMSD(EMSDcb.SelectedIndex).l.z = (0 & EMSDz.Text).Replace("0-", "-0")
+        If sender.Enabled Then cf.EMSD(EMSDcb.SelectedIndex).l.z = (0 & EMSDz.Text)
     End Sub
 
     Private Sub EPTHn_TextChanged(sender As Object, e As EventArgs) Handles EPTHn.TextChanged
@@ -742,19 +742,19 @@ Public Class UI
     End Sub
 
     Private Sub EPTHx_TextChanged(sender As Object, e As EventArgs) Handles EPTHx.TextChanged
-        If sender.Enabled Then cf.EPTH(EPTHcb.SelectedIndex).p(EPTHnud.Value - 1).x = (0 & EPTHx.Text).Replace("0-", "-0")
+        If sender.Enabled Then cf.EPTH(EPTHcb.SelectedIndex).p(EPTHnud.Value - 1).x = (0 & EPTHx.Text)
     End Sub
 
     Private Sub EPTHy_TextChanged(sender As Object, e As EventArgs) Handles EPTHy.TextChanged
-        If sender.Enabled Then cf.EPTH(EPTHcb.SelectedIndex).p(EPTHnud.Value - 1).y = (0 & EPTHy.Text).Replace("0-", "-0")
+        If sender.Enabled Then cf.EPTH(EPTHcb.SelectedIndex).p(EPTHnud.Value - 1).y = (0 & EPTHy.Text)
     End Sub
 
     Private Sub EPTHz_TextChanged(sender As Object, e As EventArgs) Handles EPTHz.TextChanged
-        If sender.Enabled Then cf.EPTH(EPTHcb.SelectedIndex).p(EPTHnud.Value - 1).z = (0 & EPTHz.Text).Replace("0-", "-0")
+        If sender.Enabled Then cf.EPTH(EPTHcb.SelectedIndex).p(EPTHnud.Value - 1).z = (0 & EPTHz.Text)
     End Sub
 
     Private Sub EPTHr_TextChanged(sender As Object, e As EventArgs) Handles EPTHr.TextChanged
-        If sender.Enabled Then cf.EPTH(EPTHcb.SelectedIndex).p(EPTHnud.Value - 1).r = (0 & EPTHr.Text).Replace("0-", "-0")
+        If sender.Enabled Then cf.EPTH(EPTHcb.SelectedIndex).p(EPTHnud.Value - 1).r = (0 & EPTHr.Text)
     End Sub
 
     Private Sub Triggern_TextChanged(sender As Object, e As EventArgs) Handles Triggern.TextChanged
@@ -766,15 +766,15 @@ Public Class UI
     End Sub
 
     Private Sub Triggerx_TextChanged(sender As Object, e As EventArgs) Handles Triggerx.TextChanged
-        If sender.Enabled Then cf.Triggers(Triggercb.SelectedIndex).EMTR.r(Triggernud.Value - 1).x = (0 & Triggerx.Text).Replace("0-", "-0")
+        If sender.Enabled Then cf.Triggers(Triggercb.SelectedIndex).EMTR.r(Triggernud.Value - 1).x = (0 & Triggerx.Text)
     End Sub
 
     Private Sub Triggery_TextChanged(sender As Object, e As EventArgs) Handles Triggery.TextChanged
-        If sender.Enabled Then cf.Triggers(Triggercb.SelectedIndex).EMTR.r(Triggernud.Value - 1).y = (0 & Triggery.Text).Replace("0-", "-0")
+        If sender.Enabled Then cf.Triggers(Triggercb.SelectedIndex).EMTR.r(Triggernud.Value - 1).y = (0 & Triggery.Text)
     End Sub
 
     Private Sub Triggerz_TextChanged(sender As Object, e As EventArgs) Handles Triggerz.TextChanged
-        If sender.Enabled Then cf.Triggers(Triggercb.SelectedIndex).EMTR.r(Triggernud.Value - 1).z = (0 & Triggerz.Text).Replace("0-", "-0")
+        If sender.Enabled Then cf.Triggers(Triggercb.SelectedIndex).EMTR.r(Triggernud.Value - 1).z = (0 & Triggerz.Text)
     End Sub
 
     Private Sub GENThSR_ValueChanged(sender As Object, e As EventArgs) Handles GENThSR.ValueChanged
@@ -874,7 +874,7 @@ Public Class UI
     End Sub
 
     Private Sub EEN2dgv_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles EEN2dgv.CellEndEdit
-        If sender.Enabled Then cf.EEN2.EEOV.inv = EEN2dgv.Rows.ToStringArray()
+        If sender.Enabled Then cf.EEN2.EEOV.inv = EEN2dgv.GetStringArray()
     End Sub
 
     Private Sub GENTmhp_ValueChanged(sender As Object, e As EventArgs) Handles GENTmhp.ValueChanged
@@ -1082,7 +1082,7 @@ Public Class UI
     End Sub
 
     Private Sub GCREdgv_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles GCREdgv.CellEndEdit
-        If sender.Enabled Then cf.GCRE.Inventory = GCREdgv.Rows.ToStringArray()
+        If sender.Enabled Then cf.GCRE.Inventory = GCREdgv.GetStringArray()
     End Sub
 
     Private Sub GCHRn_TextChanged(sender As Object, e As EventArgs) Handles GCHRn.TextChanged

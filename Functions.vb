@@ -45,8 +45,7 @@ Friend Module Functions
     <Extension>
     Public Function ToECAMc(ByRef b As Byte()) As ECAMc
         Return New ECAMc With {
-            .p =
-                New Point4(BitConverter.ToSingle(b, 12), BitConverter.ToSingle(b, 16), BitConverter.ToSingle(b, 20),
+            .p = New Point4(BitConverter.ToSingle(b, 12), BitConverter.ToSingle(b, 16), BitConverter.ToSingle(b, 20),
                            BitConverter.ToSingle(b, 24))
         }
     End Function
@@ -55,9 +54,8 @@ Friend Module Functions
     Public Function ToEMEPc(ByRef b As Byte()) As EMEPc
         Return New EMEPc With {
             .index = b(12),
-            .p =
-                New Point4(BitConverter.ToSingle(b, 73), BitConverter.ToSingle(b, 77), BitConverter.ToSingle(b, 81),
-                           BitConverter.ToSingle(b, 105))
+            .p = New Point3(BitConverter.ToSingle(b, 73), BitConverter.ToSingle(b, 77), BitConverter.ToSingle(b, 81)),
+            .r = BitConverter.ToSingle(b, 105)
         }
     End Function
 
@@ -65,8 +63,7 @@ Friend Module Functions
     Public Function ToEMEFc(ByRef b As Byte()) As EMEFc
         Return New EMEFc With {
             .s1 = Encoding.ASCII.GetString(b.Skip(14).Take(b(12)).ToArray()),
-            .l =
-                New Point4(BitConverter.ToSingle(b, 14 + b(12)), BitConverter.ToSingle(b, 18 + b(12)),
+            .l = New Point4(BitConverter.ToSingle(b, 14 + b(12)), BitConverter.ToSingle(b, 18 + b(12)),
                            BitConverter.ToSingle(b, 22 + b(12)), BitConverter.ToSingle(b, 26 + b(12))),
             .s2 = Encoding.ASCII.GetString(b.Skip(41 + b(12)).Take(b(39 + b(12))).ToArray())
                         }
@@ -77,8 +74,7 @@ Friend Module Functions
         Return New EMSDc With {
             .s1 = Encoding.ASCII.GetString(b.Skip(14).Take(b(12)).ToArray()),
             .s2 = Encoding.ASCII.GetString(b.Skip(28 + b(12)).Take(b(26 + b(12))).ToArray()),
-            .l =
-                New Point3(BitConverter.ToSingle(b, 14 + b(12)), BitConverter.ToSingle(b, 18 + b(12)),
+            .l = New Point3(BitConverter.ToSingle(b, 14 + b(12)), BitConverter.ToSingle(b, 18 + b(12)),
                            BitConverter.ToSingle(b, 22 + b(12)))
         }
     End Function
@@ -101,8 +97,7 @@ Friend Module Functions
         Dim cl = b.Locate(Encoding.ASCII.GetBytes("EEOV"))(0)
         Return New EME2c With {
             .name = Encoding.ASCII.GetString(b, 14, b(12)),
-            .l =
-                New Point4(BitConverter.ToSingle(b, 14 + b(12)), BitConverter.ToSingle(b, 18 + b(12)),
+            .l = New Point4(BitConverter.ToSingle(b, 14 + b(12)), BitConverter.ToSingle(b, 18 + b(12)),
                            BitConverter.ToSingle(b, 22 + b(12)), BitConverter.ToSingle(b, 26 + b(12))),
             .EEOV = b.Skip(cl).Take(BitConverter.ToInt32(b, cl + 8)).ToArray().ToEEOVc
         }
@@ -164,19 +159,19 @@ Friend Module Functions
     Public Function ToGENTc(ByRef b As Byte()) As GENTc
         Return New GENTc() With {
             .HoverSR = BitConverter.ToInt32(b, 12),
-                        .LookSR = BitConverter.ToInt32(b, 16),
-        .NameSR = BitConverter.ToInt32(b, 20),
-        .UnkwnSR = BitConverter.ToInt32(b, 24),
-        .MaxHealth = BitConverter.ToInt32(b, 36),
-        .StartHealth = BitConverter.ToInt32(b, 40)
-            }
+            .LookSR = BitConverter.ToInt32(b, 16),
+            .NameSR = BitConverter.ToInt32(b, 20),
+            .UnkwnSR = BitConverter.ToInt32(b, 24),
+            .MaxHealth = BitConverter.ToInt32(b, 36),
+            .StartHealth = BitConverter.ToInt32(b, 40)
+        }
     End Function
 
     <Extension>
     Public Function ToGCHRc(ByRef b As Byte()) As GCHRc
         Return New GCHRc() With {
             .name = Encoding.ASCII.GetString(b, 14, b(12))
-            }
+        }
     End Function
 
     <Extension>
@@ -198,7 +193,7 @@ Friend Module Functions
     Public Function ToGCREc(b As Byte()) As GCREc
 
 #Region "Offsets, Lengths"
-
+        
         Dim sl = b(72) * 8 ' Skills added length
         Dim cl = b(76 + sl) * 8 ' Characters added length
         Dim tl = b(80 + sl + cl) * 4 ' Traits added length
@@ -229,8 +224,11 @@ Friend Module Functions
         Dim Shoto = Shomo + 2 + b(Shomo - 2)
         Dim Vanmo = Shoto + 2 + b(Shoto - 2)
         Dim Vanto = Vanmo + 2 + b(Vanmo - 2)
-        Dim psl = sl + cl + tl + tsl + pl + b(Heamo - 2) + b(Heato - 2) + b(Haimo - 2) + b(Haito - 2) + b(Ponmo - 2) + b(Ponto - 2) + b(Musmo - 2) + b(Musto - 2) + b(Beamo - 2) + b(Beato - 2) + b(Eyemo - 2) + b(Eyeto - 2) + b(Bodmo - 2) + b(Bodto - 2) + b(Hanmo - 2) + b(Hanto - 2) + b(Feemo - 2) + b(Feeto - 2) + b(Bacmo - 2) + b(Bacto - 2) + b(Shomo - 2) + b(Shoto - 2) + b(Vanmo - 2) + b(Vanto - 2)
-
+        Dim psl = sl + cl + tl + tsl + pl + b(Heamo - 2) + b(Heato - 2) + b(Haimo - 2) + b(Haito - 2) + b(Ponmo - 2) +
+                  b(Ponto - 2) + b(Musmo - 2) + b(Musto - 2) + b(Beamo - 2) + b(Beato - 2) + b(Eyemo - 2) + b(Eyeto - 2) +
+                  b(Bodmo - 2) + b(Bodto - 2) + b(Hanmo - 2) + b(Hanto - 2) + b(Feemo - 2) + b(Feeto - 2) + b(Bacmo - 2) +
+                  b(Bacto - 2) + b(Shomo - 2) + b(Shoto - 2) + b(Vanmo - 2) + b(Vanto - 2)
+        
 #End Region
 
 #Region "Build Sections"
@@ -274,15 +272,14 @@ Friend Module Functions
             .Traits = tr,
             .TagSkills = ts,
             .PortStr = Encoding.ASCII.GetString(b, po, pl),
-            .Hea =
-                New Socket(Encoding.ASCII.GetString(b, Heamo, b(Heamo - 2)),
-                           Encoding.ASCII.GetString(b, Heato, b(Heato - 2))),
+            .Hea = New Socket(Encoding.ASCII.GetString(b, Heamo, b(Heamo - 2)),
+                              Encoding.ASCII.GetString(b, Heato, b(Heato - 2))),
             .Hai = New Socket(Encoding.ASCII.GetString(b, Haimo, b(Haimo - 2)),
-                           Encoding.ASCII.GetString(b, Haito, b(Haito - 2))),
+                              Encoding.ASCII.GetString(b, Haito, b(Haito - 2))),
             .Pon = New Socket(Encoding.ASCII.GetString(b, Ponmo, b(Ponmo - 2)),
-                           Encoding.ASCII.GetString(b, Ponto, b(Ponto - 2))),
+                              Encoding.ASCII.GetString(b, Ponto, b(Ponto - 2))),
             .Mus = New Socket(Encoding.ASCII.GetString(b, Musmo, b(Musmo - 2)),
-                           Encoding.ASCII.GetString(b, Musto, b(Musto - 2))),
+                              Encoding.ASCII.GetString(b, Musto, b(Musto - 2))),
             .Bea = New Socket(Encoding.ASCII.GetString(b, Beamo, b(Beamo - 2)),
                               Encoding.ASCII.GetString(b, Beato, b(Beato - 2))),
             .Eye = New Socket(Encoding.ASCII.GetString(b, Eyemo, b(Eyemo - 2)),
@@ -360,7 +357,7 @@ Friend Module Functions
         Return b.ToArray()
     End Function
 
-    ' Replace CrLf with "|~" and replace "–" with "-"
+    ' Replace CrLf with "|~" and replace em dash with minus/hyphen
     <Extension>
     Public Sub PreParse(ByRef b As Byte())
         Dim strStart = BitConverter.ToInt32(b, 12)
@@ -442,9 +439,8 @@ Friend Module Functions
         Dim file = IO.File.ReadAllBytes(f)
         Dim hn = Encoding.ASCII.GetBytes(hs)
         Dim hc = file.Locate(hn)
-        Return _
-            (From l In hc Let tl = BitConverter.ToInt32(file, l + 8)
-             Select file.Skip(l).Take(tl).ToArray()).ToList()
+        Return (From l In hc Let tl = BitConverter.ToInt32(file, l + 8)
+                Select file.Skip(l).Take(tl).ToArray()).ToList()
     End Function
 
     ' Finds all triggers for .map files, and the subsequent trigger info chunk
@@ -452,10 +448,9 @@ Friend Module Functions
     Public Function GetTriggers(f As String) As List(Of Trigger)
         Dim file = IO.File.ReadAllBytes(f)
         Dim hc = file.Locate(Encoding.ASCII.GetBytes("EMTR"))
-        Return _
-            (From l In hc Let tl = BitConverter.ToInt32(file, l + 8) Let h1 = file.Skip(l).Take(tl).ToArray()
-             Let h2 = file.Skip(l + tl).Take(file(l + tl + 8)).ToArray
-             Select New Trigger With {.EMTR = h1.ToEMTRc, .ExTR = h2.ToExTRc}).ToList()
+        Return (From l In hc Let tl = BitConverter.ToInt32(file, l + 8) Let h1 = file.Skip(l).Take(tl).ToArray()
+                Let h2 = file.Skip(l + tl).Take(file(l + tl + 8)).ToArray
+                Select New Trigger With {.EMTR = h1.ToEMTRc, .ExTR = h2.ToExTRc}).ToList()
     End Function
 
     ' Writes from "newBytes" into "b", starting at the given index
@@ -464,10 +459,15 @@ Friend Module Functions
         Buffer.BlockCopy(newBytes, 0, b, startIndex, newBytes.Length)
     End Sub
 
-    ' Convert DataGridView Rows to string array using LINQ
+    ' Get String array of rows in a DataGridView
     <Extension>
-    Public Function ToStringArray(r As DataGridViewRowCollection) As String()
-        Return (From row As DataGridViewRow In r Where TypeOf row.Cells.Item(0).Value Is String Select row.Cells.Item(0).Value).Cast(Of String)().ToArray()
+    Public Function GetStringArray(dgv As DataGridView) As String()
+        Return (From row As DataGridViewRow In dgv.Rows Select row.Cells.OfType(Of DataGridViewCell).Select(Function(c) c.Value.ToString()).ToArray())
+    End Function
+
+    <Extension>
+    Public Function ToByte(color As Color) As Byte()
+        Return {color.R, color.G, color.B}
     End Function
 
 End Module

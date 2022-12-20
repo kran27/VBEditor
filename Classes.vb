@@ -8,15 +8,10 @@ Public Class Map
     Property EME2 As List(Of EME2c)
     Property EMEP As List(Of EMEPc)
     Property ECAM As ECAMc
-
-    ' First Possible 2MWT
     Property _2MWT As _2MWTc
-
     Property Triggers As List(Of Trigger)
     Property EPTH As List(Of EPTHc)
     Property EMSD As List(Of EMSDc)
-
-    ' Last Possible 2MWT
     ' EMNP
     Property EMEF As List(Of EMEFc)
 
@@ -58,7 +53,6 @@ Public Class Trigger
 
     ' Triggers are made of 3 different headers (separate, unlike EME2 and EEOV), so there is a class to hold both types so they aren't separated.
     Property EMTR As EMTRc
-
     Property ExTR As ExTRc
 
     Sub New()
@@ -190,7 +184,7 @@ End Class
 Public Class EMEPc
     Property index As Integer
     Property p As Point3
-    Property r as Single
+    Property r As Single
 
     Sub New()
         index = 0
@@ -485,7 +479,7 @@ Public Class GCREc
     Function ToByte() As Byte()
         Dim GWAMb = New List(Of Byte)
         For Each g In GWAM
-            GWAM.AddRange(g.ToByte())
+            GWAMb.AddRange(g.ToByte())
         Next
         Dim socs = New Socket() {Hea, Hai, Pon, Mus, Bea, Eye, Bod, Han, Fee, Bac, Sho, Van}
         Dim sock = New List(Of Byte)
@@ -510,7 +504,7 @@ Public Class GCREc
                    Eye.Tex.Length + Eye.Model.Length + Bod.Tex.Length + Bod.Model.Length + Han.Tex.Length +
                    Han.Model.Length + Fee.Tex.Length + Fee.Model.Length + Bac.Tex.Length + Bac.Model.Length + Sho.Tex.Length +
                    Sho.Model.Length + Van.Tex.Length + Van.Model.Length
-        Dim TDL = sl + tl + tsl + il + GWAM.Count + PortStr.Length + socl ' Total Dynamic Length
+        Dim TDL = sl + tl + tsl + il + GWAMb.Count + PortStr.Length + socl ' Total Dynamic Length
 
         Dim out = New Byte(276 + TDL) {}
         out.OverwriteBytes(0, Encoding.ASCII.GetBytes("GCRE"))
@@ -662,6 +656,7 @@ Public Class Point2
         out.OverwriteBytes(4, BitConverter.GetBytes(y))
         Return out
     End Function
+
 End Class
 
 Public Class Point3
@@ -682,6 +677,7 @@ Public Class Point3
         out.OverwriteBytes(8, BitConverter.GetBytes(y))
         Return out
     End Function
+
 End Class
 
 Public Class Point4
@@ -705,6 +701,7 @@ Public Class Point4
         out.OverwriteBytes(12, BitConverter.GetBytes(r))
         Return out
     End Function
+
 End Class
 
 Public Class Skill
@@ -722,6 +719,7 @@ Public Class Skill
         out.OverwriteBytes(4, BitConverter.GetBytes(Value))
         Return out
     End Function
+
 End Class
 
 Public Class Socket
@@ -732,7 +730,7 @@ Public Class Socket
         Me.Model = Model
         Me.Tex = Tex
     End Sub
-    
+
 End Class
 
 Public Class _2MWTChunk
@@ -756,6 +754,7 @@ Public Class _2MWTChunk
         out.OverwriteBytes(14 + tex.Length, texloc.ToByte())
         Return out
     End Function
+
 End Class
 
 #End Region

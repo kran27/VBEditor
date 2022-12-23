@@ -193,7 +193,7 @@ Friend Module Functions
     Public Function ToGCREc(b As Byte()) As GCREc
 
 #Region "Offsets, Lengths"
-        
+
         Dim sl = b(72) * 8 ' Skills added length
         Dim cl = b(76 + sl) * 8 ' Characters added length
         Dim tl = b(80 + sl + cl) * 4 ' Traits added length
@@ -228,7 +228,7 @@ Friend Module Functions
                   b(Ponto - 2) + b(Musmo - 2) + b(Musto - 2) + b(Beamo - 2) + b(Beato - 2) + b(Eyemo - 2) + b(Eyeto - 2) +
                   b(Bodmo - 2) + b(Bodto - 2) + b(Hanmo - 2) + b(Hanto - 2) + b(Feemo - 2) + b(Feeto - 2) + b(Bacmo - 2) +
                   b(Bacto - 2) + b(Shomo - 2) + b(Shoto - 2) + b(Vanmo - 2) + b(Vanto - 2)
-        
+
 #End Region
 
 #Region "Build Sections"
@@ -325,6 +325,48 @@ Friend Module Functions
             }
     End Function
 
+    <Extension>
+    Public Function ToGITMc(b As Byte()) As GITMc
+        Dim Hea = b.ReadSocket(28)
+        Dim Eye = b.ReadSocket(52 + Hea.Length)
+        Dim Bod = b.ReadSocket(62 + Hea.Length + Eye.Length)
+        Dim Bac = b.ReadSocket(66 + Hea.Length + Eye.Length + Bod.Length)
+        Dim Han = b.ReadSocket(70 + Hea.Length + Eye.Length + Bod.Length + Bac.Length)
+        Dim Fee = b.ReadSocket(75 + Hea.Length + Eye.Length + Bod.Length + Bac.Length + Han.Length)
+        Dim Sho = b.ReadSocket(79 + Hea.Length + Eye.Length + Bod.Length + Bac.Length + Han.Length + Fee.Length)
+        Dim Van = b.ReadSocket(83 + Hea.Length + Eye.Length + Bod.Length + Bac.Length + Han.Length + Fee.Length + Sho.Length)
+        Dim IHS = b.ReadSocket(88 + Hea.Length + Eye.Length + Bod.Length + Bac.Length + Han.Length + Fee.Length + Sho.Length + Van.Length)
+
+        Return New GITMc() With {
+            .type = b(12),
+            .equip = b(20) <> 0,
+            .eqslot = b(24),
+            .Hea = Hea,
+            .hHai = b(32 + Hea.Length) <> 0,
+            .hBea = b(33 + Hea.Length) <> 0,
+            .hMus = b(34 + Hea.Length) <> 0,
+            .hEye = b(35 + Hea.Length) <> 0,
+            .hPon = b(36 + Hea.Length) <> 0,
+            .hVan = b(37 + Hea.Length) <> 0,
+            .Eye = Eye,
+            .Bod = Bod,
+            .Bac = Bac,
+            .Han = Han,
+            .Fee = Fee,
+            .Sho = Sho,
+            .Van = Van,
+            .IHS = IHS,
+            .reload = b(92 + Hea.Length + Eye.Length + Bod.Length + Bac.Length + Han.Length + Fee.Length + Sho.Length + Van.Length + IHS.Length)
+            }
+    End Function
+
+    <Extension>
+    Public Function ReadSocket(b As Byte(), i As Integer) As Socket
+        Dim model = Encoding.ASCII.GetString(b, i + 2, b(i))
+        Dim tex = Encoding.ASCII.GetString(b, i + 4 + b(i), b(i + 2 + b(i)))
+        Return New Socket(model, tex)
+    End Function
+
 #End Region
 
 #Region ".stf Stuff"
@@ -364,13 +406,13 @@ Friend Module Functions
         Dim l = b.Locate(New Byte() {&HD, &HA})
         For Each m In l
             If m >= strStart Then
-                b.OverwriteBytes(m, New Byte() {&H7C, &H7E})
+                b.Write(m, New Byte() {&H7C, &H7E})
             End If
         Next
         l = b.Locate(New Byte() {&H96})
         For Each m In l
             If m >= strStart Then
-                b.OverwriteBytes(m, New Byte() {&H2D})
+                b.Write(m, New Byte() {&H2D})
             End If
         Next
     End Sub
@@ -385,7 +427,7 @@ Friend Module Functions
         Dim b = bl.ToArray()
         Dim l = b.Locate(New Byte() {&H7C, &H7E})
         For Each m In l
-            b.OverwriteBytes(m, New Byte() {&HD, &HA})
+            b.Write(m, New Byte() {&HD, &HA})
         Next
         Return b
     End Function
@@ -394,41 +436,33 @@ Friend Module Functions
 
 #Region "Byte array search"
 
-    ' Code for finding location of given byte array within another
     Private ReadOnly Empty(-1) As Integer
 
+    ''' <summary>Searches for a byte array within another byte array.</summary>
+    ''' <returns>An integer array containing all locations of the given bytes</returns>
     <Extension>
     Public Function Locate(ByVal self() As Byte, ByVal candidate() As Byte) As Integer()
-        If IsEmptyLocate(self, candidate) Then
+        If _
+            self Is Nothing Or candidate Is Nothing Or self.Length = 0 Or candidate.Length = 0 Or
+            candidate.Length > self.Length Then
             Return Empty
         End If
         Dim list As New List(Of Integer)()
         Dim i As Integer = 0
-        Do While i < self.Length
-            If Not IsMatch(self, i, candidate) Then
-                i += 1
-                Continue Do
+        Do While i < self.Length - candidate.Length
+            Dim match As Boolean = True
+            For j As Integer = 0 To candidate.Length - 1
+                If self(i + j) <> candidate(j) Then
+                    match = False
+                    Exit For
+                End If
+            Next j
+            If match Then
+                list.Add(i)
             End If
-            list.Add(i)
             i += 1
         Loop
         Return If(list.Count = 0, Empty, list.ToArray())
-    End Function
-
-    Private Function IsMatch(ByVal array() As Byte, ByVal position As Integer, ByVal candidate() As Byte) As Boolean
-        If candidate.Length > (array.Length - position) Then
-            Return False
-        End If
-        For i As Integer = 0 To candidate.Length - 1
-            If array(position + i) <> candidate(i) Then
-                Return False
-            End If
-        Next i
-        Return True
-    End Function
-
-    Private Function IsEmptyLocate(ByVal array() As Byte, ByVal candidate() As Byte) As Boolean
-        Return array Is Nothing OrElse candidate Is Nothing OrElse array.Length = 0 OrElse candidate.Length = 0 OrElse candidate.Length > array.Length
     End Function
 
 #End Region
@@ -453,18 +487,64 @@ Friend Module Functions
                 Select New Trigger With {.EMTR = h1.ToEMTRc, .ExTR = h2.ToExTRc}).ToList()
     End Function
 
-    ' Writes from "newBytes" into "b", starting at the given index
+    ''' <summary>
+    ''' This function copies a byte array into another
+    ''' </summary>
     <Extension>
-    Public Sub OverwriteBytes(ByRef b As Byte(), startIndex As Integer, newBytes As Byte())
-        Buffer.BlockCopy(newBytes, 0, b, startIndex, newBytes.Length)
+    Public Sub Write(ByRef b As Byte(), offset As Integer, value As Byte())
+        Buffer.BlockCopy(value, 0, b, offset, value.Length)
     End Sub
 
-    ' Get String array of rows in a DataGridView
+    ''' <summary>
+    ''' This function copies an integer into a byte array
+    ''' </summary>
+    <Extension>
+    Public Sub Write(ByRef b As Byte(), offset As Integer, value As Integer)
+        b.Write(offset, BitConverter.GetBytes(value))
+    End Sub
+
+    ''' <summary>
+    ''' This function copies a string as ascii bytes into a byte array
+    ''' </summary>
+    <Extension>
+    Public Sub Write(ByRef b As Byte(), offset As Integer, value As String)
+        b.Write(offset, Encoding.ASCII.GetBytes(value))
+    End Sub
+
+    ''' <summary>
+    ''' This function copies a single precision float into a byte array
+    ''' </summary>
+    <Extension>
+    Public Sub Write(ByRef b As Byte(), offset As Integer, value As Single)
+        b.Write(offset, BitConverter.GetBytes(value))
+    End Sub
+
+    ''' <summary>
+    ''' This function copies a boolean into a byte array
+    ''' </summary>
+    <Extension>
+    Public Sub Write(ByRef b As Byte(), offset As Integer, value As Boolean)
+        b.Write(offset, New Byte() {If(value, 1, 0)})
+    End Sub
+
+    ''' <summary>
+    ''' This function reads the values in a DataGridView control into a string array
+    ''' </summary>
     <Extension>
     Public Function GetStringArray(dgv As DataGridView) As String()
-        Return (From row As DataGridViewRow In dgv.Rows Select row.Cells.OfType(Of DataGridViewCell).Select(Function(c) c.Value.ToString()).ToArray())
+        Dim s = New List(Of String)
+        For Each r As DataGridViewRow In dgv.Rows
+            If r.Cells(0).Value IsNot Nothing Then
+                s.Add(r.Cells(0).Value.ToString())
+            End If
+        Next
+        Return s.ToArray()
     End Function
 
+    ''' <summary>
+    ''' Returns the specified color as an array of bytes.
+    ''' </summary>
+    ''' <returns>An array of bytes with length 3.</returns>
     <Extension>
     Public Function ToByte(color As Color) As Byte()
         Return {color.R, color.G, color.B}

@@ -12,6 +12,7 @@ Public Class Map
     Property Triggers As List(Of Trigger)
     Property EPTH As List(Of EPTHc)
     Property EMSD As List(Of EMSDc)
+
     ' EMNP
     Property EMEF As List(Of EMEFc)
 
@@ -44,6 +45,19 @@ Public Class CRT
 
 End Class
 
+Public Class ITM
+    Property EEN2 As EEN2c
+    Property GENT As GENTc
+    Property GITM As GITMc
+
+    Sub New()
+        EEN2 = New EEN2c()
+        GENT = New GENTc()
+        GITM = New GITMc()
+    End Sub
+
+End Class
+
 #End Region
 
 #Region "Header Classes"
@@ -53,6 +67,7 @@ Public Class Trigger
 
     ' Triggers are made of 3 different headers (separate, unlike EME2 and EEOV), so there is a class to hold both types so they aren't separated.
     Property EMTR As EMTRc
+
     Property ExTR As ExTRc
 
     Sub New()
@@ -89,18 +104,18 @@ Public Class EMAPc
     Function ToByte() As Byte()
         Dim s = 49 + s1.Length + s2.Length + s3.Length
         Dim out = New Byte(s - 1) {}
-        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EMAP"))
-        out.OverwriteBytes(4, New Byte() {If(il, 0, 5)})
-        out.OverwriteBytes(8, New Byte() {s})
-        out.OverwriteBytes(16, New Byte() {s1.Length})
-        out.OverwriteBytes(18, Encoding.ASCII.GetBytes(s1))
-        out.OverwriteBytes(18 + s1.Length, New Byte() {s2.Length})
-        out.OverwriteBytes(20 + s1.Length, Encoding.ASCII.GetBytes(s2))
-        out.OverwriteBytes(20 + s1.Length + s2.Length, New Byte() {s3.Length})
-        out.OverwriteBytes(22 + s1.Length + s2.Length, Encoding.ASCII.GetBytes(s3))
-        out.OverwriteBytes(22 + s1.Length + s2.Length + s3.Length, New Byte() {le})
-        out.OverwriteBytes(24 + s1.Length + s2.Length + s3.Length, col.ToByte())
-        out.OverwriteBytes(32 + s1.Length + s2.Length + s3.Length, New Byte() {1})
+        out.Write(0, Encoding.ASCII.GetBytes("EMAP"))
+        out.Write(4, New Byte() {If(il, 0, 5)})
+        out.Write(8, New Byte() {s})
+        out.Write(16, New Byte() {s1.Length})
+        out.Write(18, Encoding.ASCII.GetBytes(s1))
+        out.Write(18 + s1.Length, New Byte() {s2.Length})
+        out.Write(20 + s1.Length, Encoding.ASCII.GetBytes(s2))
+        out.Write(20 + s1.Length + s2.Length, New Byte() {s3.Length})
+        out.Write(22 + s1.Length + s2.Length, Encoding.ASCII.GetBytes(s3))
+        out.Write(22 + s1.Length + s2.Length + s3.Length, New Byte() {le})
+        out.Write(24 + s1.Length + s2.Length + s3.Length, col.ToByte())
+        out.Write(32 + s1.Length + s2.Length + s3.Length, New Byte() {1})
         Return out
     End Function
 
@@ -120,13 +135,13 @@ Public Class EME2c
     Function ToByte() As Byte()
         Dim oEEOV = EEOV.ToByte()
         Dim out = New Byte(38 + name.Length + oEEOV.Length) {}
-        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EME2"))
-        out.OverwriteBytes(8, BitConverter.GetBytes(39 + name.Length + oEEOV.Length))
-        out.OverwriteBytes(12, New Byte() {name.Length})
-        out.OverwriteBytes(14, Encoding.ASCII.GetBytes(name))
-        out.OverwriteBytes(14 + name.Length, l.ToByte())
-        out.OverwriteBytes(38 + name.Length, New Byte() {1})
-        out.OverwriteBytes(39 + name.Length, oEEOV)
+        out.Write(0, Encoding.ASCII.GetBytes("EME2"))
+        out.Write(8, BitConverter.GetBytes(39 + name.Length + oEEOV.Length))
+        out.Write(12, New Byte() {name.Length})
+        out.Write(14, Encoding.ASCII.GetBytes(name))
+        out.Write(14 + name.Length, l.ToByte())
+        out.Write(38 + name.Length, New Byte() {1})
+        out.Write(39 + name.Length, oEEOV)
         Return out
     End Function
 
@@ -155,25 +170,25 @@ Public Class EEOVc
         Dim invl = inv.Sum(Function(e) e.Length + 2)
         Dim a = If(ps4 = 2, 2, 0)
         Dim out = New Byte(46 + s1.Length + s2.Length + s3.Length + s4.Length + s5.Length + invl + a) {}
-        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EEOV"))
-        If inv.Any() Then out.OverwriteBytes(4, New Byte() {2})
-        out.OverwriteBytes(8, BitConverter.GetBytes(47 + s1.Length + s2.Length + s3.Length + s4.Length + s5.Length + invl + a))
-        out.OverwriteBytes(12, New Byte() {s1.Length})
-        out.OverwriteBytes(14, Encoding.ASCII.GetBytes(s1))
-        out.OverwriteBytes(25 + s1.Length, New Byte() {s2.Length})
-        out.OverwriteBytes(27 + s1.Length, Encoding.ASCII.GetBytes(s2))
-        out.OverwriteBytes(27 + s1.Length + s2.Length, New Byte() {s3.Length})
-        out.OverwriteBytes(29 + s1.Length + s2.Length, Encoding.ASCII.GetBytes(s3))
-        out.OverwriteBytes(38 + s1.Length + s2.Length + s3.Length, New Byte() {s4.Length})
-        out.OverwriteBytes(40 + s1.Length + s2.Length + s3.Length, Encoding.ASCII.GetBytes(s4))
-        out.OverwriteBytes(40 + s1.Length + s2.Length + s3.Length + s4.Length, New Byte() {ps4})
-        out.OverwriteBytes(41 + s1.Length + s2.Length + s3.Length + s4.Length + a, New Byte() {s5.Length})
-        out.OverwriteBytes(43 + s1.Length + s2.Length + s3.Length + s4.Length + a, Encoding.ASCII.GetBytes(s5))
-        out.OverwriteBytes(43 + s1.Length + s2.Length + s3.Length + s4.Length + s5.Length + a, New Byte() {inv.Length})
+        out.Write(0, Encoding.ASCII.GetBytes("EEOV"))
+        If inv.Any() Then out.Write(4, New Byte() {2})
+        out.Write(8, BitConverter.GetBytes(47 + s1.Length + s2.Length + s3.Length + s4.Length + s5.Length + invl + a))
+        out.Write(12, New Byte() {s1.Length})
+        out.Write(14, Encoding.ASCII.GetBytes(s1))
+        out.Write(25 + s1.Length, New Byte() {s2.Length})
+        out.Write(27 + s1.Length, Encoding.ASCII.GetBytes(s2))
+        out.Write(27 + s1.Length + s2.Length, New Byte() {s3.Length})
+        out.Write(29 + s1.Length + s2.Length, Encoding.ASCII.GetBytes(s3))
+        out.Write(38 + s1.Length + s2.Length + s3.Length, New Byte() {s4.Length})
+        out.Write(40 + s1.Length + s2.Length + s3.Length, Encoding.ASCII.GetBytes(s4))
+        out.Write(40 + s1.Length + s2.Length + s3.Length + s4.Length, New Byte() {ps4})
+        out.Write(41 + s1.Length + s2.Length + s3.Length + s4.Length + a, New Byte() {s5.Length})
+        out.Write(43 + s1.Length + s2.Length + s3.Length + s4.Length + a, Encoding.ASCII.GetBytes(s5))
+        out.Write(43 + s1.Length + s2.Length + s3.Length + s4.Length + s5.Length + a, New Byte() {inv.Length})
         Dim i = 0
         For Each e In inv
-            out.OverwriteBytes(47 + s1.Length + s2.Length + s3.Length + s4.Length + s5.Length + a + i, New Byte() {e.Length})
-            out.OverwriteBytes(49 + s1.Length + s2.Length + s3.Length + s4.Length + s5.Length + a + i, Encoding.ASCII.GetBytes(e))
+            out.Write(47 + s1.Length + s2.Length + s3.Length + s4.Length + s5.Length + a + i, New Byte() {e.Length})
+            out.Write(49 + s1.Length + s2.Length + s3.Length + s4.Length + s5.Length + a + i, Encoding.ASCII.GetBytes(e))
             i += e.Length + 2
         Next
         Return out
@@ -194,11 +209,11 @@ Public Class EMEPc
 
     Function ToByte() As Byte()
         Dim out = New Byte(108) {}
-        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EMEP"))
-        out.OverwriteBytes(8, New Byte() {109})
-        out.OverwriteBytes(12, New Byte() {index})
-        out.OverwriteBytes(73, p.ToByte())
-        out.OverwriteBytes(105, BitConverter.GetBytes(r))
+        out.Write(0, Encoding.ASCII.GetBytes("EMEP"))
+        out.Write(8, New Byte() {109})
+        out.Write(12, New Byte() {index})
+        out.Write(73, p.ToByte())
+        out.Write(105, BitConverter.GetBytes(r))
         Return out
     End Function
 
@@ -213,9 +228,9 @@ Public Class ECAMc
 
     Function ToByte() As Byte()
         Dim out = New Byte(27) {}
-        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("ECAM"))
-        out.OverwriteBytes(8, New Byte() {28})
-        out.OverwriteBytes(12, p.ToByte())
+        out.Write(0, Encoding.ASCII.GetBytes("ECAM"))
+        out.Write(8, New Byte() {28})
+        out.Write(12, p.ToByte())
         Return out
     End Function
 
@@ -234,15 +249,15 @@ Public Class EMEFc
 
     Function ToByte() As Byte()
         Dim out = New Byte(41 + s1.Length + s2.Length) {}
-        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EMEF"))
-        out.OverwriteBytes(8, New Byte() {42 + s1.Length + s2.Length})
-        out.OverwriteBytes(12, New Byte() {s1.Length})
-        out.OverwriteBytes(14, Encoding.ASCII.GetBytes(s1))
-        out.OverwriteBytes(14 + s1.Length, l.ToByte())
-        out.OverwriteBytes(38 + s1.Length, New Byte() {1})
-        out.OverwriteBytes(39 + s1.Length, New Byte() {s2.Length})
-        out.OverwriteBytes(41 + s1.Length, Encoding.ASCII.GetBytes(s2))
-        out.OverwriteBytes(41 + s1.Length + s2.Length, New Byte() {1})
+        out.Write(0, Encoding.ASCII.GetBytes("EMEF"))
+        out.Write(8, New Byte() {42 + s1.Length + s2.Length})
+        out.Write(12, New Byte() {s1.Length})
+        out.Write(14, Encoding.ASCII.GetBytes(s1))
+        out.Write(14 + s1.Length, l.ToByte())
+        out.Write(38 + s1.Length, New Byte() {1})
+        out.Write(39 + s1.Length, New Byte() {s2.Length})
+        out.Write(41 + s1.Length, Encoding.ASCII.GetBytes(s2))
+        out.Write(41 + s1.Length + s2.Length, New Byte() {1})
         Return out
     End Function
 
@@ -261,14 +276,14 @@ Public Class EMSDc
 
     Function ToByte() As Byte()
         Dim out = New Byte(29 + s1.Length + s2.Length) {}
-        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EMSD"))
-        out.OverwriteBytes(8, New Byte() {30 + s1.Length + s2.Length})
-        out.OverwriteBytes(12, New Byte() {s1.Length})
-        out.OverwriteBytes(14, Encoding.ASCII.GetBytes(s1))
-        out.OverwriteBytes(14 + s1.Length, l.ToByte())
-        out.OverwriteBytes(26 + s1.Length, New Byte() {s2.Length})
-        out.OverwriteBytes(28 + s1.Length, Encoding.ASCII.GetBytes(s2))
-        out.OverwriteBytes(28 + s1.Length + s2.Length, New Byte() {1, 1})
+        out.Write(0, Encoding.ASCII.GetBytes("EMSD"))
+        out.Write(8, New Byte() {30 + s1.Length + s2.Length})
+        out.Write(12, New Byte() {s1.Length})
+        out.Write(14, Encoding.ASCII.GetBytes(s1))
+        out.Write(14 + s1.Length, l.ToByte())
+        out.Write(26 + s1.Length, New Byte() {s2.Length})
+        out.Write(28 + s1.Length, Encoding.ASCII.GetBytes(s2))
+        out.Write(28 + s1.Length + s2.Length, New Byte() {1, 1})
         Return out
     End Function
 
@@ -285,14 +300,14 @@ Public Class EPTHc
 
     Function ToByte() As Byte()
         Dim out = New Byte(17 + (p.Count * 24) + name.Length) {}
-        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EPTH"))
-        out.OverwriteBytes(8, New Byte() {18 + (p.Count * 24) + name.Length})
-        out.OverwriteBytes(12, New Byte() {name.Length})
-        out.OverwriteBytes(14, Encoding.ASCII.GetBytes(name))
-        out.OverwriteBytes(14 + name.Length, New Byte() {p.Count})
+        out.Write(0, Encoding.ASCII.GetBytes("EPTH"))
+        out.Write(8, New Byte() {18 + (p.Count * 24) + name.Length})
+        out.Write(12, New Byte() {name.Length})
+        out.Write(14, Encoding.ASCII.GetBytes(name))
+        out.Write(14 + name.Length, New Byte() {p.Count})
         Dim i = 0
         For Each l In p
-            out.OverwriteBytes(18 + name.Length + i, l.ToByte())
+            out.Write(18 + name.Length + i, l.ToByte())
             i += 24
         Next
         Return out
@@ -311,13 +326,13 @@ Public Class EMTRc
 
     Function ToByte() As Byte()
         Dim out = New Byte(19 + (r.Count * 12)) {}
-        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EMTR"))
-        out.OverwriteBytes(8, BitConverter.GetBytes(20 + (r.Count * 12)))
-        out.OverwriteBytes(12, New Byte() {n})
-        out.OverwriteBytes(16, New Byte() {r.Count})
+        out.Write(0, Encoding.ASCII.GetBytes("EMTR"))
+        out.Write(8, BitConverter.GetBytes(20 + (r.Count * 12)))
+        out.Write(12, New Byte() {n})
+        out.Write(16, New Byte() {r.Count})
         Dim i = 0
         For Each l In r
-            out.OverwriteBytes(20 + i, l.ToByte())
+            out.Write(20 + i, l.ToByte())
             i += 12
         Next
         Return out
@@ -338,25 +353,25 @@ Public Class ExTRc ' Called ExTR instead of E(T/S/B)TR for easier handling withi
         Select Case type
             Case "B"
                 Dim out = New Byte(18) {}
-                out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EBTR"))
-                out.OverwriteBytes(8, New Byte() {19})
-                out.OverwriteBytes(12, New Byte() {s})
-                out.OverwriteBytes(16, Encoding.ASCII.GetBytes("FFF"))
+                out.Write(0, Encoding.ASCII.GetBytes("EBTR"))
+                out.Write(8, New Byte() {19})
+                out.Write(12, New Byte() {s})
+                out.Write(16, Encoding.ASCII.GetBytes("FFF"))
                 Return out
             Case "S"
                 Dim out = New Byte(17 + s.Length) {}
-                out.OverwriteBytes(0, Encoding.ASCII.GetBytes("ESTR"))
-                out.OverwriteBytes(8, New Byte() {18 + s.Length})
-                out.OverwriteBytes(12, New Byte() {s.Length})
-                out.OverwriteBytes(14, Encoding.ASCII.GetBytes(s))
+                out.Write(0, Encoding.ASCII.GetBytes("ESTR"))
+                out.Write(8, New Byte() {18 + s.Length})
+                out.Write(12, New Byte() {s.Length})
+                out.Write(14, Encoding.ASCII.GetBytes(s))
                 Return out
             Case "T"
                 Dim out = New Byte(15 + s.Length) {}
-                out.OverwriteBytes(0, Encoding.ASCII.GetBytes("ETTR"))
-                out.OverwriteBytes(8, New Byte() {16 + s.Length})
-                out.OverwriteBytes(12, New Byte() {s.Length})
-                out.OverwriteBytes(14, Encoding.ASCII.GetBytes(s))
-                out.OverwriteBytes(14 + s.Length, New Byte() {1, 1})
+                out.Write(0, Encoding.ASCII.GetBytes("ETTR"))
+                out.Write(8, New Byte() {16 + s.Length})
+                out.Write(12, New Byte() {s.Length})
+                out.Write(14, Encoding.ASCII.GetBytes(s))
+                out.Write(14 + s.Length, New Byte() {1, 1})
                 Return out
             Case Else ' in case of another EMTR or other chunk following an EMTR
                 Return Array.Empty(Of Byte)
@@ -383,16 +398,16 @@ Public Class EEN2c
     Function ToByte() As Byte()
         Dim oEEOV = EEOV.ToByte
         Dim out = New Byte(22 + oEEOV.Length + skl.Length + invtex.Length + acttex.Length) {}
-        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("EEN2"))
-        out.OverwriteBytes(8, BitConverter.GetBytes(23 + oEEOV.Length + skl.Length + invtex.Length + acttex.Length))
-        out.OverwriteBytes(12, New Byte() {skl.Length})
-        out.OverwriteBytes(14, Encoding.ASCII.GetBytes(skl))
-        out.OverwriteBytes(14 + skl.Length, New Byte() {invtex.Length})
-        out.OverwriteBytes(16 + skl.Length, Encoding.ASCII.GetBytes(invtex))
-        out.OverwriteBytes(16 + skl.Length + invtex.Length, New Byte() {acttex.Length})
-        out.OverwriteBytes(18 + skl.Length + invtex.Length, Encoding.ASCII.GetBytes(acttex))
-        out.OverwriteBytes(19 + skl.Length + invtex.Length + acttex.Length, BitConverter.GetBytes(sel))
-        out.OverwriteBytes(23 + skl.Length + invtex.Length + acttex.Length, oEEOV)
+        out.Write(0, Encoding.ASCII.GetBytes("EEN2"))
+        out.Write(8, BitConverter.GetBytes(23 + oEEOV.Length + skl.Length + invtex.Length + acttex.Length))
+        out.Write(12, New Byte() {skl.Length})
+        out.Write(14, Encoding.ASCII.GetBytes(skl))
+        out.Write(14 + skl.Length, New Byte() {invtex.Length})
+        out.Write(16 + skl.Length, Encoding.ASCII.GetBytes(invtex))
+        out.Write(16 + skl.Length + invtex.Length, New Byte() {acttex.Length})
+        out.Write(18 + skl.Length + invtex.Length, Encoding.ASCII.GetBytes(acttex))
+        out.Write(19 + skl.Length + invtex.Length + acttex.Length, BitConverter.GetBytes(sel))
+        out.Write(23 + skl.Length + invtex.Length + acttex.Length, oEEOV)
         Return out
     End Function
 
@@ -417,15 +432,15 @@ Public Class GENTc
 
     Function ToByte() As Byte()
         Dim out = New Byte(43) {}
-        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("GENT"))
-        out.OverwriteBytes(4, New Byte() {1})
-        out.OverwriteBytes(8, BitConverter.GetBytes(44))
-        out.OverwriteBytes(12, BitConverter.GetBytes(HoverSR))
-        out.OverwriteBytes(16, BitConverter.GetBytes(LookSR))
-        out.OverwriteBytes(20, BitConverter.GetBytes(NameSR))
-        out.OverwriteBytes(24, BitConverter.GetBytes(UnkwnSR))
-        out.OverwriteBytes(36, BitConverter.GetBytes(MaxHealth))
-        out.OverwriteBytes(40, BitConverter.GetBytes(StartHealth))
+        out.Write(0, Encoding.ASCII.GetBytes("GENT"))
+        out.Write(4, New Byte() {1})
+        out.Write(8, BitConverter.GetBytes(44))
+        out.Write(12, BitConverter.GetBytes(HoverSR))
+        out.Write(16, BitConverter.GetBytes(LookSR))
+        out.Write(20, BitConverter.GetBytes(NameSR))
+        out.Write(24, BitConverter.GetBytes(UnkwnSR))
+        out.Write(36, BitConverter.GetBytes(MaxHealth))
+        out.Write(40, BitConverter.GetBytes(StartHealth))
         Return out
     End Function
 
@@ -484,10 +499,7 @@ Public Class GCREc
         Dim socs = New Socket() {Hea, Hai, Pon, Mus, Bea, Eye, Bod, Han, Fee, Bac, Sho, Van}
         Dim sock = New List(Of Byte)
         For Each s In socs
-            sock.AddRange(New Byte() {s.Model.Length, 0})
-            sock.AddRange(Encoding.ASCII.GetBytes(s.Model))
-            sock.AddRange(New Byte() {s.Tex.Length, 0})
-            sock.AddRange(Encoding.ASCII.GetBytes(s.Tex))
+            sock.AddRange(s.ToByte())
         Next
         Dim inv = New List(Of Byte)
         For Each i In Inventory
@@ -499,45 +511,41 @@ Public Class GCREc
         Dim tl = Traits.Count * 4 ' Traits length
         Dim tsl = TagSkills.Count * 4 ' Tag Skills length
         Dim il = Inventory.Sum(Function(i) i.Length + 2) ' Inventory Length
-        Dim socl = Hea.Model.Length + Hea.Tex.Length + Hai.Tex.Length + Hai.Model.Length + Pon.Tex.Length +
-                   Pon.Model.Length + Mus.Tex.Length + Mus.Model.Length + Bea.Tex.Length + Bea.Model.Length +
-                   Eye.Tex.Length + Eye.Model.Length + Bod.Tex.Length + Bod.Model.Length + Han.Tex.Length +
-                   Han.Model.Length + Fee.Tex.Length + Fee.Model.Length + Bac.Tex.Length + Bac.Model.Length + Sho.Tex.Length +
-                   Sho.Model.Length + Van.Tex.Length + Van.Model.Length
+        Dim socl = Hea.Length + Hai.Length + Pon.Length + Mus.Length + Bea.Length + Eye.Length + Bod.Length + Han.Length +
+                   Fee.Length + Bac.Length + Sho.Length + Van.Length ' Socket String Length
         Dim TDL = sl + tl + tsl + il + GWAMb.Count + PortStr.Length + socl ' Total Dynamic Length
 
         Dim out = New Byte(276 + TDL) {}
-        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("GCRE"))
-        out.OverwriteBytes(4, New Byte() {4})
-        out.OverwriteBytes(8, BitConverter.GetBytes(277 + TDL))
-        out.OverwriteBytes(12, BitConverter.GetBytes(Special(0)))
-        out.OverwriteBytes(16, BitConverter.GetBytes(Special(1)))
-        out.OverwriteBytes(20, BitConverter.GetBytes(Special(2)))
-        out.OverwriteBytes(24, BitConverter.GetBytes(Special(3)))
-        out.OverwriteBytes(28, BitConverter.GetBytes(Special(4)))
-        out.OverwriteBytes(32, BitConverter.GetBytes(Special(5)))
-        out.OverwriteBytes(36, BitConverter.GetBytes(Special(6)))
-        out.OverwriteBytes(56, BitConverter.GetBytes(Age))
-        out.OverwriteBytes(72, BitConverter.GetBytes(Skills.Count))
+        out.Write(0, Encoding.ASCII.GetBytes("GCRE"))
+        out.Write(4, New Byte() {4})
+        out.Write(8, BitConverter.GetBytes(277 + TDL))
+        out.Write(12, BitConverter.GetBytes(Special(0)))
+        out.Write(16, BitConverter.GetBytes(Special(1)))
+        out.Write(20, BitConverter.GetBytes(Special(2)))
+        out.Write(24, BitConverter.GetBytes(Special(3)))
+        out.Write(28, BitConverter.GetBytes(Special(4)))
+        out.Write(32, BitConverter.GetBytes(Special(5)))
+        out.Write(36, BitConverter.GetBytes(Special(6)))
+        out.Write(56, BitConverter.GetBytes(Age))
+        out.Write(72, BitConverter.GetBytes(Skills.Count))
         For i = 0 To Skills.Count - 1
-            out.OverwriteBytes(76 + (i * 8), BitConverter.GetBytes(Skills(i).Index))
-            out.OverwriteBytes(80 + (i * 8), BitConverter.GetBytes(Skills(i).Value))
+            out.Write(76 + (i * 8), Skills(i).ToByte())
         Next
-        out.OverwriteBytes(80 + sl, BitConverter.GetBytes(Traits.Count))
+        out.Write(80 + sl, BitConverter.GetBytes(Traits.Count))
         For i = 0 To Traits.Count - 1
-            out.OverwriteBytes(84 + sl + (i * 4), BitConverter.GetBytes(Traits(i)))
+            out.Write(84 + sl + (i * 4), BitConverter.GetBytes(Traits(i)))
         Next
-        out.OverwriteBytes(84 + sl + tl, BitConverter.GetBytes(TagSkills.Count))
+        out.Write(84 + sl + tl, BitConverter.GetBytes(TagSkills.Count))
         For i = 0 To TagSkills.Count - 1
-            out.OverwriteBytes(88 + sl + tl + (i * 4), BitConverter.GetBytes(TagSkills(i)))
+            out.Write(88 + sl + tl + (i * 4), BitConverter.GetBytes(TagSkills(i)))
         Next
-        out.OverwriteBytes(92 + sl + tl + tsl, BitConverter.GetBytes(PortStr.Length))
-        out.OverwriteBytes(94 + sl + tl + tsl, Encoding.ASCII.GetBytes(PortStr))
-        out.OverwriteBytes(129 + sl + tl + tsl + PortStr.Length, sock.ToArray())
-        out.OverwriteBytes(189 + sl + tl + tsl + PortStr.Length + socl, New Byte() {GWAM.Count})
-        out.OverwriteBytes(273 + sl + tl + tsl + PortStr.Length + socl, BitConverter.GetBytes(Inventory.Length))
-        out.OverwriteBytes(277 + sl + tl + tsl + PortStr.Length + socl, inv.ToArray())
-        out.OverwriteBytes(277 + sl + tl + tsl + PortStr.Length + socl + il, GWAMb.ToArray())
+        out.Write(92 + sl + tl + tsl, BitConverter.GetBytes(PortStr.Length))
+        out.Write(94 + sl + tl + tsl, Encoding.ASCII.GetBytes(PortStr))
+        out.Write(129 + sl + tl + tsl + PortStr.Length, sock.ToArray())
+        out.Write(189 + sl + tl + tsl + PortStr.Length + socl, New Byte() {GWAM.Count})
+        out.Write(273 + sl + tl + tsl + PortStr.Length + socl, BitConverter.GetBytes(Inventory.Length))
+        out.Write(277 + sl + tl + tsl + PortStr.Length + socl, inv.ToArray())
+        out.Write(277 + sl + tl + tsl + PortStr.Length + socl + il, GWAMb.ToArray())
         Return out
     End Function
 
@@ -568,19 +576,19 @@ Public Class GWAMc
 
     Function ToByte() As Byte()
         Dim out = New Byte(79 + VegName.Length) {}
-        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("GWAM"))
-        out.OverwriteBytes(4, New Byte() {5})
-        out.OverwriteBytes(8, BitConverter.GetBytes(80 + VegName.Length))
-        out.OverwriteBytes(12, BitConverter.GetBytes(Anim))
-        out.OverwriteBytes(16, BitConverter.GetBytes(DmgType))
-        out.OverwriteBytes(20, BitConverter.GetBytes(ShotsFired))
-        out.OverwriteBytes(36, BitConverter.GetBytes(Range))
-        out.OverwriteBytes(48, BitConverter.GetBytes(MinDmg))
-        out.OverwriteBytes(52, BitConverter.GetBytes(MaxDmg))
-        out.OverwriteBytes(62, BitConverter.GetBytes(AP))
-        out.OverwriteBytes(72, BitConverter.GetBytes(NameSR))
-        out.OverwriteBytes(78, Encoding.ASCII.GetBytes(VegName))
-        out.OverwriteBytes(out.Length - 2, New Byte() {1})
+        out.Write(0, Encoding.ASCII.GetBytes("GWAM"))
+        out.Write(4, New Byte() {5})
+        out.Write(8, BitConverter.GetBytes(80 + VegName.Length))
+        out.Write(12, BitConverter.GetBytes(Anim))
+        out.Write(16, BitConverter.GetBytes(DmgType))
+        out.Write(20, BitConverter.GetBytes(ShotsFired))
+        out.Write(36, BitConverter.GetBytes(Range))
+        out.Write(48, BitConverter.GetBytes(MinDmg))
+        out.Write(52, BitConverter.GetBytes(MaxDmg))
+        out.Write(62, BitConverter.GetBytes(AP))
+        out.Write(72, BitConverter.GetBytes(NameSR))
+        out.Write(78, Encoding.ASCII.GetBytes(VegName))
+        out.Write(out.Length - 2, New Byte() {1})
         Return out
     End Function
 
@@ -595,10 +603,10 @@ Public Class GCHRc
 
     Function ToByte() As Byte()
         Dim out = New Byte(13 + name.Length) {}
-        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("GCHR"))
-        out.OverwriteBytes(8, BitConverter.GetBytes(14 + name.Length))
-        out.OverwriteBytes(12, New Byte() {name.Length})
-        out.OverwriteBytes(14, Encoding.ASCII.GetBytes(name))
+        out.Write(0, Encoding.ASCII.GetBytes("GCHR"))
+        out.Write(8, BitConverter.GetBytes(14 + name.Length))
+        out.Write(12, New Byte() {name.Length})
+        out.Write(14, Encoding.ASCII.GetBytes(name))
         Return out
     End Function
 
@@ -620,18 +628,97 @@ Public Class _2MWTc
         Dim wl = chunks.Count * 22 ' added length for each water chunk
 
         Dim out = New Byte(157 + sl + wl) {}
-        out.OverwriteBytes(0, Encoding.ASCII.GetBytes("2MWT"))
-        out.OverwriteBytes(8, BitConverter.GetBytes(158 + sl + wl))
-        out.OverwriteBytes(12, New Byte() {mpf.Length})
-        out.OverwriteBytes(14, Encoding.ASCII.GetBytes(mpf))
-        out.OverwriteBytes(27 + mpf.Length, New Byte() {If(dark, 0, 1)})
-        out.OverwriteBytes(29 + mpf.Length, New Byte() {If(frozen, 0, 1)})
-        out.OverwriteBytes(154 + mpf.Length, New Byte() {chunks.Count})
+        out.Write(0, "2MWT")
+        out.Write(8, 158 + sl + wl)
+        out.Write(12, mpf.Length)
+        out.Write(14, mpf)
+        out.Write(27 + mpf.Length, If(dark, 0, 1))
+        out.Write(29 + mpf.Length, If(frozen, 0, 1))
+        out.Write(154 + mpf.Length, chunks.Count)
         Dim io = 158 + mpf.Length
         For Each w In chunks
-            out.OverwriteBytes(io, w.ToByte())
+            out.Write(io, w.ToByte())
             io += 22 + w.tex.Length
         Next
+        Return out
+    End Function
+
+End Class
+
+Public Class GITMc
+    Property type As UShort   '? Hai
+    Property equip As Boolean '? Pon
+    Property eqslot As UShort '? Mus
+    Property Hea As Socket    '? Bea
+    Property hHai As Boolean
+    Property hBea As Boolean
+    Property hMus As Boolean
+    Property hEye As Boolean
+    Property hPon As Boolean
+    Property hVan As Boolean
+    Property Eye As Socket
+    Property Bod As Socket
+    Property Bac As Socket
+    Property Han As Socket
+    Property Fee As Socket
+    Property Sho As Socket
+    Property Van As Socket
+    Property IHS As Socket
+    Property reload As Integer
+
+    Sub New()
+        type = 0
+        equip = False
+        eqslot = 0
+        Hea = New Socket("", "")
+        hHai = False
+        hBea = False
+        hMus = False
+        hEye = False
+        hPon = False
+        hVan = False
+        Eye = New Socket("", "")
+        Bod = New Socket("", "")
+        Bac = New Socket("", "")
+        Han = New Socket("", "")
+        Fee = New Socket("", "")
+        Sho = New Socket("", "")
+        Van = New Socket("", "")
+        IHS = New Socket("", "")
+        reload = 0
+    End Sub
+
+    Function ToByte() As Byte()
+        Dim socl = Hea.Length + Eye.Length + Bod.Length + Bac.Length + Han.Length + Fee.Length + Sho.Length + Van.Length + IHS.Length
+        Dim out = New Byte(95 + socl) {}
+        out.Write(0, "GITM")
+        out.Write(4, 1)
+        out.Write(8, 96 + socl)
+        out.Write(12, type)
+        out.Write(20, equip)
+        out.Write(24, eqslot)
+        out.Write(28, Hea.ToByte())
+        out.Write(32 + Hea.Length, hHai)
+        out.Write(33 + Hea.Length, hBea)
+        out.Write(34 + Hea.Length, hMus)
+        out.Write(35 + Hea.Length, hEye)
+        out.Write(36 + Hea.Length, hPon)
+        out.Write(37 + Hea.Length, hVan)
+        out.Write(41 + Hea.Length, 1)
+        out.Write(46 + Hea.Length, 1)
+        out.Write(51 + Hea.Length, 1)
+        out.Write(52 + Hea.Length, Eye.ToByte())
+        out.Write(56 + Hea.Length + Eye.Length, 1)
+        out.Write(61 + Hea.Length + Eye.Length, 1)
+        out.Write(62 + Hea.Length + Eye.Length, Bod.ToByte())
+        out.Write(66 + Hea.Length + Eye.Length + Bod.Length, Bac.ToByte())
+        out.Write(70 + Hea.Length + Eye.Length + Bod.Length + Bac.Length, Han.ToByte())
+        out.Write(75 + Hea.Length + Eye.Length + Bod.Length + Bac.Length + Han.Length, Fee.ToByte())
+        out.Write(79 + Hea.Length + Eye.Length + Bod.Length + Bac.Length + Han.Length + Fee.Length, Sho.ToByte())
+        out.Write(83 + Hea.Length + Eye.Length + Bod.Length + Bac.Length + Han.Length + Fee.Length + Sho.Length, Van.ToByte())
+        out.Write(87 + Hea.Length + Eye.Length + Bod.Length + Bac.Length + Han.Length + Fee.Length + Sho.Length + Van.Length, 1)
+        out.Write(88 + Hea.Length + Eye.Length + Bod.Length + Bac.Length + Han.Length + Fee.Length + Sho.Length + Van.Length, IHS.ToByte())
+        out.Write(92 + Hea.Length + Eye.Length + Bod.Length + Bac.Length + Han.Length + Fee.Length + Sho.Length + Van.Length + IHS.Length, reload)
         Return out
     End Function
 
@@ -652,8 +739,8 @@ Public Class Point2
 
     Function ToByte() As Byte()
         Dim out = New Byte(7) {}
-        out.OverwriteBytes(0, BitConverter.GetBytes(x))
-        out.OverwriteBytes(4, BitConverter.GetBytes(y))
+        out.Write(0, x)
+        out.Write(4, y)
         Return out
     End Function
 
@@ -672,9 +759,9 @@ Public Class Point3
 
     Function ToByte() As Byte()
         Dim out = New Byte(11) {}
-        out.OverwriteBytes(0, BitConverter.GetBytes(x))
-        out.OverwriteBytes(4, BitConverter.GetBytes(z))
-        out.OverwriteBytes(8, BitConverter.GetBytes(y))
+        out.Write(0, x)
+        out.Write(4, z)
+        out.Write(8, y)
         Return out
     End Function
 
@@ -695,10 +782,10 @@ Public Class Point4
 
     Function ToByte() As Byte()
         Dim out = New Byte(15) {}
-        out.OverwriteBytes(0, BitConverter.GetBytes(x))
-        out.OverwriteBytes(4, BitConverter.GetBytes(z))
-        out.OverwriteBytes(8, BitConverter.GetBytes(y))
-        out.OverwriteBytes(12, BitConverter.GetBytes(r))
+        out.Write(0, BitConverter.GetBytes(x))
+        out.Write(4, BitConverter.GetBytes(z))
+        out.Write(8, BitConverter.GetBytes(y))
+        out.Write(12, BitConverter.GetBytes(r))
         Return out
     End Function
 
@@ -715,8 +802,8 @@ Public Class Skill
 
     Function ToByte() As Byte()
         Dim out = New Byte(7) {}
-        out.OverwriteBytes(0, BitConverter.GetBytes(Index))
-        out.OverwriteBytes(4, BitConverter.GetBytes(Value))
+        out.Write(0, BitConverter.GetBytes(Index))
+        out.Write(4, BitConverter.GetBytes(Value))
         Return out
     End Function
 
@@ -726,10 +813,28 @@ Public Class Socket
     Property Model As String
     Property Tex As String
 
+    ''' <summary>
+    ''' Gets the length of both strings
+    ''' </summary>
+    ReadOnly Property Length As Integer
+        Get
+            Return Model.Length + Tex.Length
+        End Get
+    End Property
+
     Sub New(Model As String, Tex As String)
         Me.Model = Model
         Me.Tex = Tex
     End Sub
+
+    Function ToByte() As Byte()
+        Dim out = New Byte(3 + Model.Length + Tex.Length) {}
+        out.Write(0, New Byte() {Model.Length})
+        out.Write(2, Encoding.ASCII.GetBytes(Model))
+        out.Write(2 + Model.Length, New Byte() {Tex.Length})
+        out.Write(4 + Model.Length, Encoding.ASCII.GetBytes(Tex))
+        Return out
+    End Function
 
 End Class
 
@@ -746,12 +851,12 @@ Public Class _2MWTChunk
 
     Function ToByte() As Byte()
         Dim out = New Byte(21 + tex.Length) {}
-        out.OverwriteBytes(0, BitConverter.GetBytes(loc.x))
-        out.OverwriteBytes(4, BitConverter.GetBytes(loc.z))
-        out.OverwriteBytes(8, BitConverter.GetBytes(loc.y))
-        out.OverwriteBytes(12, New Byte() {tex.Length})
-        out.OverwriteBytes(14, Encoding.ASCII.GetBytes(tex))
-        out.OverwriteBytes(14 + tex.Length, texloc.ToByte())
+        out.Write(0, BitConverter.GetBytes(loc.x))
+        out.Write(4, BitConverter.GetBytes(loc.z))
+        out.Write(8, BitConverter.GetBytes(loc.y))
+        out.Write(12, New Byte() {tex.Length})
+        out.Write(14, Encoding.ASCII.GetBytes(tex))
+        out.Write(14 + tex.Length, texloc.ToByte())
         Return out
     End Function
 

@@ -28,6 +28,7 @@ Partial Class UI
     <DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(UI))
         Me.EMAPs3l = New AltUI.Controls.DarkLabel()
         Me.EMAPs2l = New AltUI.Controls.DarkLabel()
         Me.EMAPs1l = New AltUI.Controls.DarkLabel()
@@ -2704,6 +2705,7 @@ Partial Class UI
         Me.Controls.Add(Me.MainMenuStrip)
         Me.CornerStyle = AltUI.Forms.DarkForm.CornerPreference.[Default]
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Icon = CType(resources.GetObject("$this.Icon"),System.Drawing.Icon)
         Me.MaximizeBox = false
         Me.Name = "UI"
         Me.Text = "Van Buren Editor"

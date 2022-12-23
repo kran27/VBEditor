@@ -67,6 +67,13 @@ Public Class UI
     End Sub
 
     Private Sub NewItm() Handles ItmToolStripMenuItem.Click
+        If CheckAndLoadStf() Then
+            ext = ".itm"
+            cf = New ITM()
+            ITMSetupUI(cf)
+        Else
+            DarkMessageBox.ShowError($".STF Not selected, file creation aborted", ".STF Not Selected")
+        End If
     End Sub
 
     Private Sub NewMap() Handles MapToolStripMenuItem.Click
@@ -342,6 +349,11 @@ Public Class UI
         GCREToUI()
     End Sub
 
+    Private Sub ITMSetupUI(ByRef cf As ITM) ' Only way I found to bypass the issue of functions like .Any() not being found
+        Size = New Size(964, 610)
+        ResetUI()
+    End Sub
+
 #End Region
 
 #Region "Load classes into UI"
@@ -604,28 +616,28 @@ Public Class UI
     Private Sub ECAMx_TextChanged(sender As Object, e As EventArgs) Handles ECAMx.TextChanged
         If sender.Enabled Then
             If cf.ECAM Is Nothing Then cf.ECAM = New ECAMc()
-            cf.ECAM.p.x = (0 & ECAMx.Text)
+            cf.ECAM.p.x = ECAMx.Text
         End If
     End Sub
 
     Private Sub ECAMy_TextChanged(sender As Object, e As EventArgs) Handles ECAMy.TextChanged
         If sender.Enabled Then
             If cf.ECAM Is Nothing Then cf.ECAM = New ECAMc()
-            cf.ECAM.p.y = (0 & ECAMy.Text)
+            cf.ECAM.p.y = ECAMy.Text
         End If
     End Sub
 
     Private Sub ECAMz_TextChanged(sender As Object, e As EventArgs) Handles ECAMz.TextChanged
         If sender.Enabled Then
             If cf.ECAM Is Nothing Then cf.ECAM = New ECAMc()
-            cf.ECAM.p.z = (0 & ECAMz.Text)
+            cf.ECAM.p.z = ECAMz.Text
         End If
     End Sub
 
     Private Sub ECAMr_TextChanged(sender As Object, e As EventArgs) Handles ECAMr.TextChanged
         If sender.Enabled Then
             If cf.ECAM Is Nothing Then cf.ECAM = New ECAMc()
-            cf.ECAM.p.r = (0 & ECAMr.Text)
+            cf.ECAM.p.r = ECAMr.Text
         End If
     End Sub
 
@@ -638,19 +650,19 @@ Public Class UI
     End Sub
 
     Private Sub EMEFx_TextChanged(sender As Object, e As EventArgs) Handles EMEFx.TextChanged
-        If sender.Enabled Then cf.EMEF(EMEFcb.SelectedIndex).l.x = (0 & EMEFx.Text)
+        If sender.Enabled Then cf.EMEF(EMEFcb.SelectedIndex).l.x = EMEFx.Text
     End Sub
 
     Private Sub EMEFy_TextChanged(sender As Object, e As EventArgs) Handles EMEFy.TextChanged
-        If sender.Enabled Then cf.EMEF(EMEFcb.SelectedIndex).l.y = (0 & EMEFy.Text)
+        If sender.Enabled Then cf.EMEF(EMEFcb.SelectedIndex).l.y = EMEFy.Text
     End Sub
 
     Private Sub EMEFz_TextChanged(sender As Object, e As EventArgs) Handles EMEFz.TextChanged
-        If sender.Enabled Then cf.EMEF(EMEFcb.SelectedIndex).l.z = (0 & EMEFz.Text)
+        If sender.Enabled Then cf.EMEF(EMEFcb.SelectedIndex).l.z = EMEFz.Text
     End Sub
 
     Private Sub EMEFr_TextChanged(sender As Object, e As EventArgs) Handles EMEFr.TextChanged
-        If sender.Enabled Then cf.EMEF(EMEFcb.SelectedIndex).l.r = (0 & EMEFr.Text)
+        If sender.Enabled Then cf.EMEF(EMEFcb.SelectedIndex).l.r = EMEFr.Text
     End Sub
 
     Private Sub EMEPnud_ValueChanged(sender As Object, e As EventArgs) Handles EMEPnud.ValueChanged
@@ -658,19 +670,19 @@ Public Class UI
     End Sub
 
     Private Sub EMEPx_TextChanged(sender As Object, e As EventArgs) Handles EMEPx.TextChanged
-        If sender.Enabled Then cf.EMEP(EMEPcb.SelectedIndex).p.x = (0 & EMEPx.Text)
+        If sender.Enabled Then cf.EMEP(EMEPcb.SelectedIndex).p.x = EMEPx.Text
     End Sub
 
     Private Sub EMEPy_TextChanged(sender As Object, e As EventArgs) Handles EMEPy.TextChanged
-        If sender.Enabled Then cf.EMEP(EMEPcb.SelectedIndex).p.y = (0 & EMEPy.Text)
+        If sender.Enabled Then cf.EMEP(EMEPcb.SelectedIndex).p.y = EMEPy.Text
     End Sub
 
     Private Sub EMEPz_TextChanged(sender As Object, e As EventArgs) Handles EMEPz.TextChanged
-        If sender.Enabled Then cf.EMEP(EMEPcb.SelectedIndex).p.z = (0 & EMEPz.Text)
+        If sender.Enabled Then cf.EMEP(EMEPcb.SelectedIndex).p.z = EMEPz.Text
     End Sub
 
     Private Sub EMEPr_TextChanged(sender As Object, e As EventArgs) Handles EMEPr.TextChanged
-        If sender.Enabled Then cf.EMEP(EMEPcb.SelectedIndex).r = (0 & EMEPr.Text)
+        If sender.Enabled Then cf.EMEP(EMEPcb.SelectedIndex).r = EMEPr.Text
     End Sub
 
     Private Sub EME2dgv_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles EME2dgv.CellEndEdit
@@ -702,19 +714,19 @@ Public Class UI
     End Sub
 
     Private Sub EME2x_TextChanged(sender As Object, e As EventArgs) Handles EME2x.TextChanged
-        If sender.Enabled Then cf.EME2(EME2cb.SelectedIndex).l.x = (0 & EME2x.Text)
+        If sender.Enabled Then cf.EME2(EME2cb.SelectedIndex).l.x = EME2x.Text
     End Sub
 
     Private Sub EME2y_TextChanged(sender As Object, e As EventArgs) Handles EME2y.TextChanged
-        If sender.Enabled Then cf.EME2(EME2cb.SelectedIndex).l.y = (0 & EME2y.Text)
+        If sender.Enabled Then cf.EME2(EME2cb.SelectedIndex).l.y = EME2y.Text
     End Sub
 
     Private Sub EME2z_TextChanged(sender As Object, e As EventArgs) Handles EME2z.TextChanged
-        If sender.Enabled Then cf.EME2(EME2cb.SelectedIndex).l.z = (0 & EME2z.Text)
+        If sender.Enabled Then cf.EME2(EME2cb.SelectedIndex).l.z = EME2z.Text
     End Sub
 
     Private Sub EME2r_TextChanged(sender As Object, e As EventArgs) Handles EME2r.TextChanged
-        If sender.Enabled Then cf.EME2(EME2cb.SelectedIndex).l.r = (0 & EME2r.Text)
+        If sender.Enabled Then cf.EME2(EME2cb.SelectedIndex).l.r = EME2r.Text
     End Sub
 
     Private Sub EMSDs1_TextChanged(sender As Object, e As EventArgs) Handles EMSDs1.TextChanged
@@ -726,15 +738,15 @@ Public Class UI
     End Sub
 
     Private Sub EMSDx_TextChanged(sender As Object, e As EventArgs) Handles EMSDx.TextChanged
-        If sender.Enabled Then cf.EMSD(EMSDcb.SelectedIndex).l.x = (0 & EMSDx.Text)
+        If sender.Enabled Then cf.EMSD(EMSDcb.SelectedIndex).l.x = EMSDx.Text
     End Sub
 
     Private Sub EMSDy_TextChanged(sender As Object, e As EventArgs) Handles EMSDy.TextChanged
-        If sender.Enabled Then cf.EMSD(EMSDcb.SelectedIndex).l.y = (0 & EMSDy.Text)
+        If sender.Enabled Then cf.EMSD(EMSDcb.SelectedIndex).l.y = EMSDy.Text
     End Sub
 
     Private Sub EMSDz_TextChanged(sender As Object, e As EventArgs) Handles EMSDz.TextChanged
-        If sender.Enabled Then cf.EMSD(EMSDcb.SelectedIndex).l.z = (0 & EMSDz.Text)
+        If sender.Enabled Then cf.EMSD(EMSDcb.SelectedIndex).l.z = EMSDz.Text
     End Sub
 
     Private Sub EPTHn_TextChanged(sender As Object, e As EventArgs) Handles EPTHn.TextChanged
@@ -742,19 +754,19 @@ Public Class UI
     End Sub
 
     Private Sub EPTHx_TextChanged(sender As Object, e As EventArgs) Handles EPTHx.TextChanged
-        If sender.Enabled Then cf.EPTH(EPTHcb.SelectedIndex).p(EPTHnud.Value - 1).x = (0 & EPTHx.Text)
+        If sender.Enabled Then cf.EPTH(EPTHcb.SelectedIndex).p(EPTHnud.Value - 1).x = EPTHx.Text
     End Sub
 
     Private Sub EPTHy_TextChanged(sender As Object, e As EventArgs) Handles EPTHy.TextChanged
-        If sender.Enabled Then cf.EPTH(EPTHcb.SelectedIndex).p(EPTHnud.Value - 1).y = (0 & EPTHy.Text)
+        If sender.Enabled Then cf.EPTH(EPTHcb.SelectedIndex).p(EPTHnud.Value - 1).y = EPTHy.Text
     End Sub
 
     Private Sub EPTHz_TextChanged(sender As Object, e As EventArgs) Handles EPTHz.TextChanged
-        If sender.Enabled Then cf.EPTH(EPTHcb.SelectedIndex).p(EPTHnud.Value - 1).z = (0 & EPTHz.Text)
+        If sender.Enabled Then cf.EPTH(EPTHcb.SelectedIndex).p(EPTHnud.Value - 1).z = EPTHz.Text
     End Sub
 
     Private Sub EPTHr_TextChanged(sender As Object, e As EventArgs) Handles EPTHr.TextChanged
-        If sender.Enabled Then cf.EPTH(EPTHcb.SelectedIndex).p(EPTHnud.Value - 1).r = (0 & EPTHr.Text)
+        If sender.Enabled Then cf.EPTH(EPTHcb.SelectedIndex).p(EPTHnud.Value - 1).r = EPTHr.Text
     End Sub
 
     Private Sub Triggern_TextChanged(sender As Object, e As EventArgs) Handles Triggern.TextChanged
@@ -766,15 +778,15 @@ Public Class UI
     End Sub
 
     Private Sub Triggerx_TextChanged(sender As Object, e As EventArgs) Handles Triggerx.TextChanged
-        If sender.Enabled Then cf.Triggers(Triggercb.SelectedIndex).EMTR.r(Triggernud.Value - 1).x = (0 & Triggerx.Text)
+        If sender.Enabled Then cf.Triggers(Triggercb.SelectedIndex).EMTR.r(Triggernud.Value - 1).x = Triggerx.Text
     End Sub
 
     Private Sub Triggery_TextChanged(sender As Object, e As EventArgs) Handles Triggery.TextChanged
-        If sender.Enabled Then cf.Triggers(Triggercb.SelectedIndex).EMTR.r(Triggernud.Value - 1).y = (0 & Triggery.Text)
+        If sender.Enabled Then cf.Triggers(Triggercb.SelectedIndex).EMTR.r(Triggernud.Value - 1).y = Triggery.Text
     End Sub
 
     Private Sub Triggerz_TextChanged(sender As Object, e As EventArgs) Handles Triggerz.TextChanged
-        If sender.Enabled Then cf.Triggers(Triggercb.SelectedIndex).EMTR.r(Triggernud.Value - 1).z = (0 & Triggerz.Text)
+        If sender.Enabled Then cf.Triggers(Triggercb.SelectedIndex).EMTR.r(Triggernud.Value - 1).z = Triggerz.Text
     End Sub
 
     Private Sub GENThSR_ValueChanged(sender As Object, e As EventArgs) Handles GENThSR.ValueChanged
@@ -1181,11 +1193,11 @@ Public Class UI
                 EME2r.KeyPress, EPTHx.KeyPress, EPTHy.KeyPress, EPTHz.KeyPress, EPTHr.KeyPress, Triggerx.KeyPress,
                 Triggery.KeyPress, Triggerz.KeyPress, _2MWTx.KeyPress, _2MWTy.KeyPress, _2MWTz.KeyPress,
                 _2MWTlmx.KeyPress, _2MWTlmy.KeyPress
-        If (Char.IsDigit(e.KeyChar) Or e.KeyChar = "." Or e.KeyChar = "-" Or e.KeyChar = Chr(8)) Then
+        If Char.IsDigit(e.KeyChar) Or e.KeyChar = "." Or e.KeyChar = "-" Or e.KeyChar = Chr(8) Then
             Dim text As String = sender.Text
-            If (e.KeyChar = ".") Then
+            If e.KeyChar = "." Then
                 If text.IndexOf(".") > -1 Then e.Handled = True
-            ElseIf (e.KeyChar = "-") Then
+            ElseIf e.KeyChar = "-" Then
                 If text.IndexOf("-") > -1 or sender.SelectionStart <> 0 Then e.Handled = True
             End If
         Else
